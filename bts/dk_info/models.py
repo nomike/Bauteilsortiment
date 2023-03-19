@@ -111,7 +111,7 @@ class Category(models.Model):
 
 
 class Inventory(models.Model):
-    # component = models.ForeignKey(Component, on_delete=models.CASCADE)
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now)
     count = models.IntegerField()
 
@@ -129,7 +129,7 @@ class Purchase(models.Model):
 
 
 class PurchaseLine(models.Model):
-    # component = models.ForeignKey(Component, on_delete=models.CASCADE)
+    component = models.ForeignKey(Component, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     unit_price = models.FloatField()
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE)
