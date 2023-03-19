@@ -78,6 +78,11 @@ class Component(models.Model):
         raise NotImplementedError()
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=64, primary_key=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+
+
 class DigiKeyComponent(Component):
     cache_expiry = models.DateTimeField(default=timezone.now)
 
