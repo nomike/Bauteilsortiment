@@ -66,7 +66,7 @@ class ComponentType(models.Model):
 
 
 class Component(models.Model):
-    part_number = models.CharField(max_length=64, primary_key=True)
+    part_number = models.CharField(max_length=64)
     resell_price = models.DecimalField(
         null=True, max_digits=20, decimal_places=5)
     usual_order_quantity = models.IntegerField(default=1)
@@ -111,7 +111,7 @@ class Category(models.Model):
 
 
 class Inventory(models.Model):
-    component = models.ForeignKey(Component, on_delete=models.CASCADE)
+    # component = models.ForeignKey(Component, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now)
     count = models.IntegerField()
 
@@ -129,7 +129,7 @@ class Purchase(models.Model):
 
 
 class PurchaseLine(models.Model):
-    component = models.ForeignKey(Component, on_delete=models.CASCADE)
+    # component = models.ForeignKey(Component, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     unit_price = models.FloatField()
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE)
