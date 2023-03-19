@@ -60,7 +60,7 @@ class Merchant(models.Model):
 
 class Component(models.Model):
     storage_unit_compartment = models.ForeignKey(
-        StorageUnitCompartment, on_delete=models.CASCADE, null=True)
+        StorageUnitCompartment, on_delete=models.CASCADE, null=True, blank=True)
     part_number = models.CharField(max_length=64, primary_key=True)
     resell_price = models.DecimalField(
         null=True, max_digits=20, decimal_places=5)
