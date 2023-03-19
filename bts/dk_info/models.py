@@ -74,8 +74,8 @@ class Component(models.Model):
     product_description = models.CharField(max_length=254, null=True)
     order_unit_price = models.FloatField(null=True)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
-    # type = models.ForeignKey(
-    #     ComponentType, on_delete=models.CASCADE)
+    type = models.ForeignKey(
+        ComponentType, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.part_number
