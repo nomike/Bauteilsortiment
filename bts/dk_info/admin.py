@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import (AssortmentBox, Category, DigiKeyComponent, ComponentType, SubComponent, Inventory,
+from .models import (AssortmentBox, Category, Component, ComponentType, SubComponent, Inventory,
                      Merchant, Purchase, PurchaseLine, StorageUnit,
                      StorageUnitCompartment, StorageUnitType)
 
@@ -8,7 +8,7 @@ from .models import (AssortmentBox, Category, DigiKeyComponent, ComponentType, S
 admin.site.register(AssortmentBox)
 admin.site.register(Category)
 admin.site.register(ComponentType)
-admin.site.register(DigiKeyComponent)
+admin.site.register(Component)
 admin.site.register(Inventory)
 admin.site.register(Merchant)
 admin.site.register(Purchase)

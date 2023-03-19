@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from dk_info.models import Component
-from dk_info.models import DigiKeyComponent
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
@@ -29,17 +28,8 @@ def component(request, part_number):
     return render(request, 'Component/index.html', context)
 
 
-def digikey_component(request, part_number):
-    component = get_object_or_404(DigiKeyComponent, pk=part_number)
-
-    context = {
-        'component': component,
-    }
-    return render(request, 'Component/index.html', context)
-
-
-def digikey_component_update_cache(request, dk_part_number):
-    component = get_object_or_404(DigiKeyComponent, pk=dk_part_number)
+def component_update_cache(request, dk_part_number):
+    component = get_object_or_404(Component, pk=dk_part_number)
     component.update_cache()
     component.save()
 

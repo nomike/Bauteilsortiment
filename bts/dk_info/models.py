@@ -77,12 +77,26 @@ class Component(models.Model):
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     type = models.ForeignKey(
         ComponentType, on_delete=models.CASCADE, null=True, blank=True)
+    cache_expiry = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.part_number
 
     def update_cache(self):
-        raise NotImplementedError()
+        if self.merchant == Merchant.objetcs.get(name="Digikey"):
+            pd = digikey.product_details(self.part_number)
+            self.primary_datasheet = pd.primary_datasheet
+            self.detailed_description = pd.detailed_description
+            self.product_description = pd.product_description
+            for price in pd.standard_pricing:
+                if price.break_quantity >= self.usual_order_quantity:
+                    self.order_unit_price = price.unit_price
+            dt = timezone.now()
+            dt = dt + datetime.timedelta(days=10)
+            self.cache_expiry = dt
+        else:
+            raise NotImplemented(
+                f'Cache updating is not implemented for {self.merchant.name}.')
 
 
 class SubComponent(models.Model):
@@ -94,22 +108,6 @@ class Category(models.Model):
     name = models.CharField(max_length=64)
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
-
-
-class DigiKeyComponent(Component):
-    cache_expiry = models.DateTimeField(default=timezone.now)
-
-    def update_cache(self):
-        pd = digikey.product_details(self.part_number)
-        self.primary_datasheet = pd.primary_datasheet
-        self.detailed_description = pd.detailed_description
-        self.product_description = pd.product_description
-        for price in pd.standard_pricing:
-            if price.break_quantity >= self.usual_order_quantity:
-                self.order_unit_price = price.unit_price
-        dt = timezone.now()
-        dt = dt + datetime.timedelta(days=10)
-        self.cache_expiry = dt
 
 
 class Inventory(models.Model):
