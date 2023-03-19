@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <title>Component: {{ component.dk_part_number }}</title>
+</head>
+
+<body>
+    <h1>Detail page for {{ component.dk_part_number }}</h1>
+    <p>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>DigiKey Part Number</td>
+                <td>{{ component.dk_part_number }}</td>
+            </tr>
+            <tr>
+                <td>Detailed description</td>
+                <td>{{ component.detailed_description }}</td>
+            </tr>
+            <tr>
+                <td>Resell price</td>
+                <td>{{ component.resell_price }}</td>
+            </tr>
+            <tr>
+                <td>Cache expiry</td>
+                <td>{{ component.cache_expiry }}</td>
+            </tr>
+        </table>
+    </p>
+</body>
+
+</html>
