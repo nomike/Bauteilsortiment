@@ -83,7 +83,7 @@ class Component(models.Model):
         return self.part_number
 
     def update_cache(self):
-        if self.merchant == Merchant.objetcs.get(name="Digikey"):
+        if self.merchant == Merchant.objects.get(name="DigiKey"):
             pd = digikey.product_details(self.part_number)
             self.primary_datasheet = pd.primary_datasheet
             self.detailed_description = pd.detailed_description
