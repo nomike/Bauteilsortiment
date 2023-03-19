@@ -75,7 +75,7 @@ class Component(models.Model):
     order_unit_price = models.FloatField(null=True)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     type = models.ForeignKey(
-        ComponentType, on_delete=models.CASCADE, null=True)
+        ComponentType, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.part_number
