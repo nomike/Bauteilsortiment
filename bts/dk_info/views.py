@@ -20,8 +20,17 @@ def components(request):
     return render(request, 'Components/index.html', context)
 
 
-def component(request, dk_part_number):
-    component = get_object_or_404(Component, pk=dk_part_number)
+def component(request, part_number):
+    component = get_object_or_404(Component, pk=part_number)
+
+    context = {
+        'component': component,
+    }
+    return render(request, 'Component/index.html', context)
+
+
+def digikey_component(request, part_number):
+    component = get_object_or_404(DigiKeyComponent, pk=part_number)
 
     context = {
         'component': component,
