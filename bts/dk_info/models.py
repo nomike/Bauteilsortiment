@@ -85,7 +85,7 @@ class Component(models.Model):
 
 
 class SubComponent(models.Model):
-    name = models.CharField(max_length=64, primary_key=True)
+    name = models.CharField(max_length=64)
 
 
 class Category(models.Model):
