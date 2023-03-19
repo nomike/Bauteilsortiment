@@ -58,6 +58,10 @@ class Merchant(models.Model):
         return self.name
 
 
+class ComponentType(models.Model):
+    name = models.CharField(max_length=64, primary_key=True)
+
+
 class Component(models.Model):
     storage_unit_compartment = models.ForeignKey(
         StorageUnitCompartment, on_delete=models.CASCADE, null=True, blank=True)
@@ -70,16 +74,14 @@ class Component(models.Model):
     product_description = models.CharField(max_length=254, null=True)
     order_unit_price = models.FloatField(null=True)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+    type = models.ForeignKey(
+        ComponentType, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.part_number
 
     def update_cache(self):
         raise NotImplementedError()
-
-
-class ComponentType(models.Model):
-    name = models.CharField(max_length=64, primary_key=True)
 
 
 class SubComponent(models.Model):
