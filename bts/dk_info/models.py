@@ -80,7 +80,8 @@ class Component(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=64, primary_key=True)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    parent = models.ForeignKey(
+        'self', on_delete=models.CASCADE, null=True, blank=True)
 
 
 class DigiKeyComponent(Component):
