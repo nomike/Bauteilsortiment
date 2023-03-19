@@ -89,7 +89,7 @@ class SubComponent(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=64, primary_key=True)
+    name = models.CharField(max_length=64)
     # parent = models.ForeignKey(
     #     'self', on_delete=models.CASCADE, null=True, blank=True)
 
