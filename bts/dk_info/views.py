@@ -28,8 +28,8 @@ def component(request, part_number):
     return render(request, 'Component/index.html', context)
 
 
-def component_update_cache(request, dk_part_number):
-    component = get_object_or_404(Component, pk=dk_part_number)
+def component_update_cache(request, part_number):
+    component = get_object_or_404(Component, pk=part_number)
     component.update_cache()
     component.save()
 
