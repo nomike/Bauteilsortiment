@@ -61,6 +61,8 @@ class Merchant(models.Model):
 
 class ComponentType(models.Model):
     name = models.CharField(max_length=64)
+    parent = models.ForeignKey(
+        'self', on_delete=models.CASCADE, null=True, blank=True)
 
 
 class Component(models.Model):
