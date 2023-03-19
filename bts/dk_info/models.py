@@ -66,7 +66,6 @@ class ComponentType(models.Model):
 
 
 class Component(models.Model):
-    storage_unit_compartment = models.ManyToManyField(StorageUnitCompartment)
     part_number = models.CharField(max_length=64, primary_key=True)
     resell_price = models.DecimalField(
         null=True, max_digits=20, decimal_places=5)
@@ -88,6 +87,7 @@ class Component(models.Model):
 
 class SubComponent(models.Model):
     name = models.CharField(max_length=64)
+    storage_unit_compartment = models.ManyToManyField(StorageUnitCompartment)
 
 
 class Category(models.Model):
