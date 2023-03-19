@@ -47,6 +47,12 @@ class StorageUnitCompartment(models.Model):
     def __str__(self):
         return f'{self.storage_unit.assortment_box.name}/{self.storage_unit.number}/{self.name}'
 
+class Merchant(models.Model):
+    name = models.CharField(max_length=254, null=True)
+
+    def __str__(self):
+        return self.name
+
 class Component(models.Model):
     storage_unit_compartment = models.ForeignKey(StorageUnitCompartment, on_delete=models.CASCADE, null=True)
     part_number = models.CharField(max_length=64, primary_key=True)
@@ -56,6 +62,7 @@ class Component(models.Model):
     detailed_description = models.CharField(max_length=254, null=True)
     product_description = models.CharField(max_length=254, null=True)
     order_unit_price = models.FloatField(null=True)
+    merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.part_number
@@ -83,11 +90,8 @@ class Inventory(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
     count = models.IntegerField()
 
-class Merchant(models.Model):
-    name = models.CharField(max_length=254, null=True)
-
     def __str__(self):
-        return self.name
+        return f'{self.component.part_number} ({self.count})'
 
 class Purchase(models.Model):
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
