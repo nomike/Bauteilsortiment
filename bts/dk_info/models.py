@@ -78,6 +78,14 @@ class Component(models.Model):
         raise NotImplementedError()
 
 
+class ComponentType(models.Model):
+    name = models.CharField(max_length=64, primary_key=True)
+
+
+class SubComponent(models.Model):
+    name = models.CharField(max_length=64, primary_key=True)
+
+
 class Category(models.Model):
     name = models.CharField(max_length=64, primary_key=True)
     parent = models.ForeignKey(
