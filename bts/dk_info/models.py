@@ -59,7 +59,7 @@ class Merchant(models.Model):
 
 
 class ComponentType(models.Model):
-    name = models.CharField(max_length=64, primary_key=True)
+    name = models.CharField(max_length=64)
 
 
 class Component(models.Model):
