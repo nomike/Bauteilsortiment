@@ -2,12 +2,43 @@
 
 <head>
     <title>Component: {{ component.part_number }}</title>
+    <style>
+        #component {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        #component td,
+        #component th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        
+        #component tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        #component tr:hover {
+            background-color: #ddd;
+        }
+        
+        #component th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
 </head>
+
 
 <body>
     <h1>Detail page for {{ component.part_number }}</h1>
+    <p id="breadcumbs"><a href="./">Back to components...</a></p>
     <p>
-        <table>
+        <table id="component">
             <tr>
                 <th>Attribute</th>
                 <th>Value</th>
@@ -15,6 +46,10 @@
             <tr>
                 <td>Part Number</td>
                 <td>{{ component.part_number }}</td>
+            </tr>
+            <tr>
+                <td>Product description</td>
+                <td>{{ component.product_description }}</td>
             </tr>
             <tr>
                 <td>Detailed description</td>
@@ -25,8 +60,28 @@
                 <td>{{ component.resell_price }}</td>
             </tr>
             <tr>
+                <td>Usual order quantity</td>
+                <td>{{ component.usual_order_quantity }}</td>
+            </tr>
+            <tr>
+                <td>Primary datasheet</td>
+                <td><a href="{{ component.primary_datasheet }}">{{ component.primary_datasheet }}</a>/td>
+            </tr>
+            <tr>
+                <td>Order unit price</td>
+                <td>{{ component.order_unit_price }}</td>
+            </tr>
+            <tr>
+                <td>Merchant</td>
+                <td>{{ component.merchant }}</td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>{{ component.type }}</td>
+            </tr>
+            <tr>
                 <td>Cache expiry</td>
-                <td>{{ component.cache_expiry }}</td>
+                <td>{{ component.cache_expiry }} <a href="{{ component.part_number|urlencode}}/update_cache">force update cache</a></td>
             </tr>
         </table>
     </p>
