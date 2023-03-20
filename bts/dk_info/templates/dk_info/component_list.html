@@ -11,14 +11,20 @@
     <p>
         <table id="components" class="maintable">
             <tr>
-                {% for field in object_list.0.list_fields %}
+                {% for field in object_list.0.meta_list_fields %}
                 <th>{{ field }}</th>
                 {% endfor %}
             </tr>
             {% for component in object_list %}
             <tr>
-                {% for field in object_list.0.list_fields %}
-                <td>{{ component|hash:field }}</td>
+                {% for field in object_list.0.meta_list_fields %}
+                <td>
+                    {% if field in component.meta_list_detail_link_fields %}
+                    <a href="{% url 'component_detail' component.id %}">
+                    {% endif %}
+                    {{ component|hash:field }}
+                    </a>
+                </td>
                 {% endfor %}
             </tr>
             {% endfor %}

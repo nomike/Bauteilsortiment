@@ -69,7 +69,9 @@ class ComponentType(models.Model):
 
 
 class Component(models.Model):
-    list_fields = ["part_number", "type", "merchant"]
+    meta_list_fields = ["part_number", "type", "merchant"]
+    meta_list_detail_link_fields = ["part_number"]
+
     part_number = models.CharField(
         max_length=64, verbose_name="Part number")
     resell_price = models.DecimalField(
