@@ -1,0 +1,29 @@
+<html>
+{% load static %} {% load view_extras %}
+
+<head>
+    <title>List of all Components</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+
+<body>
+    <h1>List of all Components</h1>
+    <p>
+        <table id="components" class="maintable">
+            <tr>
+                {% for field in object_list.0.list_fields %}
+                <th>{{ field }}</th>
+                {% endfor %}
+            </tr>
+            {% for component in object_list %}
+            <tr>
+                {% for field in object_list.0.list_fields %}
+                <td>{{ component|hash:field }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </p>
+</body>
+
+</html>

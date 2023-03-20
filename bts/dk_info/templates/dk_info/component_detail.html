@@ -1,0 +1,29 @@
+<html>
+{% load static %}
+
+<head>
+    <title>Object: {{ object }}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+
+
+<body>
+    <h1>Detail page for {{ object }}</h1>
+    <p id="breadcrumbs"><a href="{ % url 'objects' %}">objects</a> / {{ object }}</p>
+    <p>
+        <table id="object" class="maintable">
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            {% for name, value in fields %}
+            <tr>
+                <td>{{ name }}</td>
+                <td>{{ object.primary_datasheet }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </p>
+</body>
+
+</html>
