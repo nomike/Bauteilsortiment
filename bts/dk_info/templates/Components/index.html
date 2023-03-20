@@ -1,17 +1,29 @@
 <html>
+{% load static %}
 
 <head>
     <title>List of all Components</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
 </head>
 
 <body>
     <h1>List of all Components</h1>
     <p>
-        <ul>
+        <table id="components" class="maintable">
+            <tr>
+                <th>Part number</th>
+                <th>Type</th>
+                <th>Merchant</th>
+            </tr>
             {% for component in components %}
-            <li><a href="{% url 'component_details' component.id %}">{{ component }}</a></li>
+            <tr>
+                <td><a href="{% url 'component_details' component.id %}">{{ component }}</a></li>
+                </td>
+                <td>{{ component.type }}</td>
+                <td>{{ component.merchant }}</td>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
     </p>
 </body>
 
