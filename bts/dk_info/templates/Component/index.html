@@ -2,13 +2,13 @@
 {% load static %}
 
 <head>
-    <title>Component: {{ component.part_number }}</title>
+    <title>Component: {{ component }}</title>
     <link rel="stylesheet" href="{% static 'style.css' %}" />
 </head>
 
 
 <body>
-    <h1>Detail page for {{ component.part_number }}</h1>
+    <h1>Detail page for {{ component }}</h1>
     <p id="breadcrumbs"><a href="{% url 'components' %}">components</a> / {{ component.part_number }}</p>
     <p>
         <table id="component" class="maintable">
@@ -16,46 +16,15 @@
                 <th>Attribute</th>
                 <th>Value</th>
             </tr>
+            {% for name, value in fields %}
             <tr>
-                <td>Part Number</td>
-                <td>{{ component.part_number }}</td>
+                <td>{{ name }}</td>
+                <td>
+                    {% if name == "primary_datasheet" %}
+                    <a href="{{ component.primary_datasheet }}">{{ value }}</a> {% elif name == "cache_expiry" %} {{ value }} <a href="{% url 'component_update_cache' component.id %}?force">force update cache</a> {% else %} {{ value }} {% endif %}
+                </td>
             </tr>
-            <tr>
-                <td>Product description</td>
-                <td>{{ component.product_description }}</td>
-            </tr>
-            <tr>
-                <td>Detailed description</td>
-                <td>{{ component.detailed_description }}</td>
-            </tr>
-            <tr>
-                <td>Resell price</td>
-                <td>{{ component.resell_price }}</td>
-            </tr>
-            <tr>
-                <td>Usual order quantity</td>
-                <td>{{ component.usual_order_quantity }}</td>
-            </tr>
-            <tr>
-                <td>Primary datasheet</td>
-                <td><a href="{{ component.primary_datasheet }}">{{ component.primary_datasheet }}</a></td>
-            </tr>
-            <tr>
-                <td>Order unit price</td>
-                <td>{{ component.order_unit_price }}</td>
-            </tr>
-            <tr>
-                <td>Merchant</td>
-                <td>{{ component.merchant }}</td>
-            </tr>
-            <tr>
-                <td>Type</td>
-                <td>{{ component.type }}</td>
-            </tr>
-            <tr>
-                <td>Cache expiry</td>
-                <td>{{ component.cache_expiry }} <a href="{% url 'component_update_cache' component.id %}">force update cache</a></td>
-            </tr>
+            {% endfor %}
         </table>
     </p>
 </body>
