@@ -19,8 +19,8 @@ def components(request):
     return render(request, 'Components/index.html', context)
 
 
-def component(request, part_number):
-    component = get_object_or_404(Component, pk=part_number)
+def component(request, component_id):
+    component = get_object_or_404(Component, pk=component_id)
 
     context = {
         'component': component,
@@ -28,9 +28,9 @@ def component(request, part_number):
     return render(request, 'Component/index.html', context)
 
 
-def component_update_cache(request, part_number):
-    component = get_object_or_404(Component, pk=part_number)
+def component_update_cache(request, component_id):
+    component = get_object_or_404(Component, pk=component_id)
     component.update_cache()
     component.save()
 
-    return HttpResponse(f"Cache updated for {component.part_number}.")
+    return HttpResponse(f"Cache updated for {component}.")
