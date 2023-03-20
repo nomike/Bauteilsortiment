@@ -73,7 +73,7 @@ class Component(models.Model):
     resell_price = models.DecimalField(
         null=True, max_digits=20, decimal_places=5)
     usual_order_quantity = models.IntegerField(default=1)
-    primary_datasheet = models.CharField(max_length=254, null=True)
+    primary_datasheet = models.URLField(max_length=254, null=True)
     detailed_description = models.CharField(max_length=254, null=True)
     product_description = models.CharField(max_length=254, null=True)
     order_unit_price = models.FloatField(null=True)
