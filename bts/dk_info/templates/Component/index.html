@@ -1,42 +1,15 @@
 <html>
+{% load static %}
 
 <head>
     <title>Component: {{ component.part_number }}</title>
-    <style>
-        #component {
-            font-family: Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-        
-        #component td,
-        #component th {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        
-        #component tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        
-        #component tr:hover {
-            background-color: #ddd;
-        }
-        
-        #component th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #04AA6D;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
 </head>
 
 
 <body>
     <h1>Detail page for {{ component.part_number }}</h1>
-    <p id="breadcumbs"><a href="./">Back to components...</a></p>
+    <p id="breadcrumbs"><a href="{% url 'components' %}">components</a> / {{ component.part_number }}</p>
     <p>
         <table id="component">
             <tr>
@@ -81,7 +54,7 @@
             </tr>
             <tr>
                 <td>Cache expiry</td>
-                <td>{{ component.cache_expiry }} <a href="{{ component.part_number|urlencode}}/update_cache">force update cache</a></td>
+                <td>{{ component.cache_expiry }} <a href="{% url 'component_update_cache' component.id %}">force update cache</a></td>
             </tr>
         </table>
     </p>
