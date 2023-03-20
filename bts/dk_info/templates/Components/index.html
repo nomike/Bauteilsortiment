@@ -9,7 +9,7 @@
     <p>
         <ul>
             {% for component in components %}
-            <li><a href="../component/{{ component.part_number|urlencode}}">{{ component.part_number }}</a></li>
+            <li><a href="{% url 'component_details' component.id %}">{{ component }}</a></li>
             {% endfor %}
         </ul>
     </p>
