@@ -64,6 +64,9 @@ class ComponentType(models.Model):
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Component(models.Model):
     part_number = models.CharField(max_length=64)
@@ -82,21 +85,21 @@ class Component(models.Model):
     def __str__(self):
         return self.part_number
 
-    def update_cache(self):
-        if self.merchant == Merchant.objects.get(name="DigiKey"):
-            pd = digikey.product_details(self.part_number)
-            self.primary_datasheet = pd.primary_datasheet
-            self.detailed_description = pd.detailed_description
-            self.product_description = pd.product_description
-            for price in pd.standard_pricing:
-                if price.break_quantity >= self.usual_order_quantity:
-                    self.order_unit_price = price.unit_price
-            dt = timezone.now()
-            dt = dt + datetime.timedelta(days=10)
-            self.cache_expiry = dt
-        else:
-            raise NotImplemented(
-                f'Cache updating is not implemented for {self.merchant.name}.')
+    def update_cache(self, force: bool = False):
+        if force or self.cache_expiry < timezone.now():
+            if self.merchant == Merchant.objects.get(name="DigiKey"):
+                pd = digikey.product_details(self.part_number)
+                self.primary_datasheet = pd.primary_datasheet
+                self.detailed_description = pd.detailed_description
+                self.product_description = pd.product_description
+                for price in pd.standard_pricing:
+                    if price.break_quantity >= self.usual_order_quantity:
+                        self.order_unit_price = price.unit_price
+                dt = timezone.now()
+                dt = dt + datetime.timedelta(days=10)
+                self.cache_expiry = dt
+            else:
+                pass
 
 
 class SubComponent(models.Model):
@@ -108,6 +111,9 @@ class Category(models.Model):
     name = models.CharField(max_length=64)
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Inventory(models.Model):
