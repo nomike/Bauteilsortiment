@@ -69,7 +69,9 @@ class ComponentType(models.Model):
 
 
 class Component(models.Model):
-    part_number = models.CharField(max_length=64)
+    list_fields = ["part_number", "type", "merchant"]
+    part_number = models.CharField(
+        max_length=64, verbose_name="Part number")
     resell_price = models.DecimalField(
         null=True, max_digits=20, decimal_places=5)
     usual_order_quantity = models.IntegerField(default=1)
