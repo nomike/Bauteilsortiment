@@ -14,6 +14,8 @@ os.environ['DIGIKEY_STORAGE_PATH'] = './cache'
 
 
 class AssortmentBox(models.Model):
+    meta_list_fields = ["name", "url"]
+    meta_list_detail_link_fields = ["name"]
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -135,6 +137,9 @@ class Inventory(models.Model):
 
 
 class Purchase(models.Model):
+    meta_list_fields = ["id", "merchant", "order_number", "timestamp"]
+    meta_list_detail_link_fields = ["id"]
+
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     order_number = models.CharField(max_length=64)
     timestamp = models.DateTimeField(default=timezone.now)
