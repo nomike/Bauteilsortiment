@@ -1,9 +1,13 @@
 
+import inspect
+
+import dk_info.models
+from django.db import models
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
-from dk_info.models import Component
+from dk_info.models import Component, ComponentType, Merchant
 
 # Create your views here.
 
@@ -16,15 +20,30 @@ def component_update_cache(request, component_id):
     return HttpResponseRedirect(reverse('component_details', args=(component.id,)))
 
 
-class ComponentListView(ListView):
-    model = Component
-    context_object_name = "all_components"
+class ModelListView(ListView):
+    model = None
+    template_name = "dk_info/model_list.html"
 
 
-class ComponentDetailView(DetailView):
-    model = Component
-    context_object_name = "all_components"
+class ModelDetailView(DetailView):
+    model = None
+    template_name = "dk_info/model_detail.html"
 
-    def get_queryset(self):
-        self.component = get_object_or_404(self.model, pk=self.kwargs['pk'])
-        return Component.objects.filter(pk=self.component.pk)
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['fields'] = self.model._meta.fields
+        return context
+
+
+for name in [obj.__name__ for name, obj in dk_info.models.__dict__.items()
+             if inspect.isclass(obj) and issubclass(obj, models.Model)]:
+    generated_class = type(name + 'DetailView', (ModelDetailView, ), {
+        "model": getattr(dk_info.models, name)
+    })
+    globals()[generated_class.__name__] = generated_class
+    generated_class = type(name + 'ListView', (ModelListView, ), {
+        "model": getattr(dk_info.models, name)
+    })
+    globals()[generated_class.__name__] = generated_class

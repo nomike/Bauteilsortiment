@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 import datetime
 import os
-import sys
 import digikey
 from digikey.v3.productinformation import KeywordSearchRequest
 import datetime
@@ -52,6 +51,9 @@ class StorageUnitCompartment(models.Model):
 
 
 class Merchant(models.Model):
+    meta_list_fields = ["name", "url"]
+    meta_list_detail_link_fields = ["name"]
+
     name = models.CharField(max_length=255, null=True)
     url = models.CharField(max_length=255, null=True)
 
@@ -60,6 +62,9 @@ class Merchant(models.Model):
 
 
 class ComponentType(models.Model):
+    meta_list_fields = ["name", "parent"]
+    meta_list_detail_link_fields = ["name"]
+
     name = models.CharField(max_length=64)
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
@@ -82,7 +87,7 @@ class Component(models.Model):
     product_description = models.CharField(max_length=254, null=True)
     order_unit_price = models.FloatField(null=True)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
-    type = models.ForeignKey(
+    component_type = models.ForeignKey(
         ComponentType, on_delete=models.CASCADE, null=True, blank=True)
     cache_expiry = models.DateTimeField(default=timezone.now)
 
