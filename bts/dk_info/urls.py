@@ -1,20 +1,24 @@
 from django.urls import path
+import inspect
+from dk_info.templatetags.view_extras import snake_case
+from django.db import models
+import dk_info.models
+
 
 from . import views
 
-urlpatterns = [
-    path('generic/Component', views.ComponentListView.as_view(),
-         name="component_list"),
-    path('generic/Merchant', views.MerchantListView.as_view(),
-         name="merchant_list"),
-    path('generic/Component/<int:pk>', views.ComponentDetailView.as_view(),
-         name="component_detail"),
-    path('generic/Merchant/<int:pk>', views.MerchantDetailView.as_view(),
-         name="merchant_detail"),
-    path('generic/ComponentType', views.ComponentTypeListView.as_view(),
-         name="component_type_list"),
-    path('generic/ComponentType/<int:pk>', views.ComponentTypeDetailView.as_view(),
-         name="component_type_detail"),
+urlpatterns = []
+for name in [obj.__name__ for name, obj in dk_info.models.__dict__.items()
+             if inspect.isclass(obj) and issubclass(obj, models.Model)]:
+    urlpatterns.append(path(f'generic/{name}', getattr(views,  f'{name}ListView').as_view(),
+                            name=f"{snake_case(name)}_list"))
+    urlpatterns.append(path(f'generic/{name}/', getattr(views,  f'{name}ListView').as_view(),
+                            name=f"{snake_case(name)}_list"))
+    urlpatterns.append(path(f'generic/{name}/<int:pk>', getattr(views,  f'{name}DetailView').as_view(),
+                            name=f"{snake_case(name)}_detail"))
+
+
+urlpatterns.extend([
     #     path('component/<int:component_id>/update_cache',
     #          views.component_update_cache, name='component_update_cache'),
-]
+])
