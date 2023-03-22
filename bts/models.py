@@ -1,10 +1,8 @@
-from django.db import models
-from django.utils import timezone
-import datetime
-import os
 # import digikey
 # from digikey.v3.productinformation import KeywordSearchRequest
-import datetime
+from django.db import models
+from django.utils import timezone
+
 # Create your models here.
 
 # os.environ['DIGIKEY_CLIENT_ID'] = 'i1DbG9gggftX71MLTUngzAayWRMUzMGO'

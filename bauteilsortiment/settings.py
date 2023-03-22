@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dk_info.apps.DkInfoConfig',
+    'bts.apps.BtsConfig',
     'django_extensions'
 ]
 
