@@ -1,15 +1,9 @@
-<html>
+{% extends "dk_info/base.html" %}
 {% load static %}
 {% load view_extras %}
-
-<head>
-    <title>{% get_verbose_name object %}: {{ object }}</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
-</head>
-
-
-<body>
-    <h1>Detail page for {% get_verbose_name object %}: {{ object }}</h1>
+{% block title %}Detail page for {% get_verbose_name object %}: {{ object }}{% endblock %}
+{% block page_title %}Detail page for {% get_verbose_name object %}: {{ object }}{% endblock %}
+{% block body %}
     <p id="breadcrumbs"><a href="{% url object|get_type|add:"_list"|snake_case %}">{% get_verbose_name object %}s</a> / {{ object }}</p>
     <p>
         <table id="object" class="maintable">
@@ -41,6 +35,18 @@
             {% endfor %}
         </table>
     </p>
-</body>
-
-</html>
+    {% for sublist in object.meta_sublist %}
+    <h2>{{ sublist }}s</h2>
+    <script>
+        fetch("{% url sublist|snake_case|add:"_filtered_list" object|get_type object.pk %}" /*, options */)
+        .then((response) => response.text())
+        .then((html) => {
+            document.getElementById("{{ sublist }}").innerHTML = html;
+        })
+        .catch((error) => {
+            console.warn(error);
+        });
+    </script>
+    <div id="{{ sublist }}"></div>
+    {% endfor %}
+{% endblock %}

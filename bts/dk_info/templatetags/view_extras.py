@@ -58,6 +58,16 @@ def get_model_fields(model: models.Model):
     return model._meta.fields
 
 
+@register.filter
+def get_list_fields(model: models.Model):
+    return model.meta_list_fields
+
+
+@register.filter
+def get_meta_list_detail_link_fields(model: models.Model):
+    return model.meta_list_detail_link_fields
+
+
 @register.simple_tag
 def get_verbose_name(model: models.Model):
     return model._meta.verbose_name.capitalize()

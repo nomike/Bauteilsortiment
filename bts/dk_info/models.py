@@ -78,6 +78,7 @@ class ComponentType(models.Model):
 class Component(models.Model):
     meta_list_fields = ["part_number", "component_type", "merchant"]
     meta_list_detail_link_fields = ["part_number"]
+    meta_sublist = ["SubComponent"]
 
     part_number = models.CharField(
         max_length=64, verbose_name="Part number")
@@ -114,10 +115,16 @@ class Component(models.Model):
 
 
 class SubComponent(models.Model):
+    meta_list_fields = ["id", "name"]
+    meta_list_detail_link_fields = ["id", "name"]
+
     name = models.CharField(max_length=64)
     storage_unit_compartment = models.ManyToManyField(StorageUnitCompartment)
     component = models.ForeignKey(
         Component, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Category(models.Model):

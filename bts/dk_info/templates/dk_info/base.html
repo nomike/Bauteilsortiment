@@ -1,17 +1,27 @@
+<html>
 {% load static %}
 {% load view_extras %}
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+
+<body>
+    <h1>{% block page_title %}{% endblock %}</h1>
+{% block body %}
     <p>
         <table id="components" class="maintable">
             <tr>
-                {% for field in list_fields %}
+                {% for field in object_list.0.meta_list_fields %}
                 <th>{{ field }}</th>
                 {% endfor %}
             </tr>
             {% for object in object_list %}
             <tr>
-                {% for field in list_fields %}
+                {% for field in object_list.0.meta_list_fields %}
                 <td>
-                    {% if field in list_detail_link_fields %}
+                    {% if field in object.meta_list_detail_link_fields %}
                     <a href="{% url object_list.0|get_type|add:"_detail"|snake_case object.id %}">
                     {% endif %}
                     {{ object|hash:field }}
@@ -22,3 +32,7 @@
             {% endfor %}
         </table>
     </p>
+{% endblock %}
+</body>
+
+</html>
