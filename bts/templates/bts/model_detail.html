@@ -35,8 +35,32 @@
             {% endfor %}
         </table>
     </p>
+    <script>
+          function openSublist(evt, sublistName) {
+            var i, x, tablinks;
+            x = document.getElementsByClassName("sublist");
+            for (i = 0; i < x.length; i++) {
+              x[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < x.length; i++) {
+              tablinks[i].className = tablinks[i].className.replace(" green", "");
+            }
+            document.getElementById(sublistName).style.display = "block";
+            evt.currentTarget.className += " green";
+          }
+          
+          window.addEventListener('load', function () {
+            document.getElementsByClassName("tablink")[0].click();
+          })
+          
+    </script>
+    <div class="bar black">
+        {% for sublist in object.meta_sublist %}
+        <button class="bar-item button tablink" onclick="openSublist(event, '{{ sublist }}')">{{ sublist }}</button>
+        {% endfor %}
+    </div>     
     {% for sublist in object.meta_sublist %}
-    <h2>{{ sublist }}s</h2>
     <script>
         fetch("{% url sublist|snake_case|add:"_filtered_list" object|get_type object.pk %}" /*, options */)
         .then((response) => response.text())
@@ -47,6 +71,6 @@
             console.warn(error);
         });
     </script>
-    <div id="{{ sublist }}"></div>
+    <div id="{{ sublist }}" class="sublist"></div>
     {% endfor %}
 {% endblock %}

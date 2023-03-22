@@ -1,3 +1,7 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .maintable {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -24,4 +28,56 @@
     text-align: left;
     background-color: #04AA6D;
     color: white;
+}
+
+.bar {
+    width: 100%;
+    overflow: hidden;
+}
+
+.bar .bar-item {
+    padding: 8px 16px;
+    float: left;
+    width: auto;
+    border: none;
+    display: block;
+    outline: 0;
+}
+
+.grey {
+    color: #fff !important;
+    background-color: #ddd !important
+}
+
+.button {
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.bar .button {
+    white-space: normal
+}
+
+.green {
+    color: white !important;
+    background-color: #04AA6D !important
+}
+
+.container {
+    padding: 0.01em 16px
+}
+
+.sublist {
+    border: 3 px solid orange;
+    background-color: blue;
 }
