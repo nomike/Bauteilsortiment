@@ -53,6 +53,7 @@ class StorageUnitCompartment(models.Model):
 class Merchant(models.Model):
     meta_list_fields = ["name", "url"]
     meta_list_detail_link_fields = ["name"]
+    meta_sublist = ["Component", "Purchase"]
 
     name = models.CharField(max_length=255, null=True)
     url = models.CharField(max_length=255, null=True)
