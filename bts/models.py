@@ -111,7 +111,7 @@ class SubComponent(models.Model):
         ComponentType, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.component.product_description}/{self.name}'
 
 
 class Category(models.Model):
@@ -131,7 +131,7 @@ class Inventory(models.Model):
     count = models.IntegerField()
 
     def __str__(self):
-        return f'{self.component.part_number} ({self.count})'
+        return f'{self.sub_component.component.product_description}/{self.sub_component.name} ({self.count})'
 
 
 class Purchase(models.Model):
