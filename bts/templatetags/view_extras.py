@@ -17,13 +17,6 @@ def hash(object, attr):
 
 
 @register.simple_tag
-def get_id(field: models.ForeignKey):
-    if not isinstance(field, models.ForeignKey):
-        return ""
-    return field
-
-
-@register.simple_tag
 def cat(str1, str2):
     return str1 + str2
 
@@ -54,32 +47,5 @@ def is_foreign_key_field(field: models.Field):
 
 
 @register.simple_tag
-def get_model_fields(model: models.Model):
-    return model._meta.fields
-
-
-@register.filter
-def get_list_fields(model: models.Model):
-    return model.meta_list_fields
-
-
-@register.filter
-def get_meta_list_detail_link_fields(model: models.Model):
-    return model.meta_list_detail_link_fields
-
-
-@register.simple_tag
 def get_verbose_name(model: models.Model):
     return model._meta.verbose_name.capitalize()
-
-
-@register.filter
-# Gets the name of the passed in field on the passed in object
-def verbose_field_name(object, field):
-    # Check if the verbose name is using the default value, in which case it will be all lowercase
-    if object._meta.get_field(field).verbose_name.islower:
-        # Change
-        return object._meta.get_field(field).verbose_name.capitalize()
-    else:
-        # The verbose name has been set in the model, so just display it normally
-        return object._meta.get_field(field).verbose_name
