@@ -55,9 +55,9 @@
           })
           
     </script>
-    <div class="bar black">
+    <div class="bar grey">
         {% for sublist in sublists %}
-        <button class="bar-item button tablink" onclick="openSublist(event, '{{ sublist }}')">{{ sublist|snake_case|snake_to_space }}s</button>
+        <button class="bar-item button tablink grey" onclick="openSublist(event, '{{ sublist }}')">{{ sublist|snake_case|snake_to_space }}s</button>
         {% endfor %}
     </div>     
     {% for sublist in sublists %}
@@ -71,6 +71,6 @@
             console.warn(error);
         });
     </script>
-    <div id="{{ sublist }}" class="sublist"></div>
+    <div id="{{ sublist }}" class="sublist green"></div>
     {% endfor %}
 {% endblock %}

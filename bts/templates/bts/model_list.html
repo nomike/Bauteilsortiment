@@ -1,24 +1,22 @@
 {% load static %}
 {% load view_extras %}
-    <p>
-        <table id="components" class="maintable">
-            <tr>
-                {% for field in list_fields %}
-                <th>{{ field|snake_to_space }}</th>
-                {% endfor %}
-            </tr>
-            {% for object in object_list %}
-            <tr>
-                {% for field in list_fields %}
-                <td>
-                    {% if field in list_detail_link_fields %}
-                    <a href="{% url object_list.0|get_type|add:"_detail"|snake_case object.id %}">
-                    {% endif %}
-                    {{ object|hash:field }}
-                    </a>
-                </td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </table>
-    </p>
+<table id="components" class="maintable">
+    <tr>
+        {% for field in list_fields %}
+        <th>{{ field|snake_to_space }}</th>
+        {% endfor %}
+    </tr>
+    {% for object in object_list %}
+    <tr>
+        {% for field in list_fields %}
+        <td>
+            {% if field in list_detail_link_fields %}
+            <a href="{% url object_list.0|get_type|add:"_detail"|snake_case object.id %}">
+            {% endif %}
+            {{ object|hash:field }}
+            </a>
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>

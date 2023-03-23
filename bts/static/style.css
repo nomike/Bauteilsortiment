@@ -36,7 +36,7 @@ body {
 }
 
 .bar .bar-item {
-    padding: 8px 16px;
+    padding: 12px 8px;
     float: left;
     width: auto;
     border: none;
@@ -45,8 +45,8 @@ body {
 }
 
 .grey {
-    color: #fff !important;
-    background-color: #ddd !important
+    color: black !important;
+    background-color: #ccc !important
 }
 
 .button {
@@ -62,6 +62,7 @@ body {
     cursor: pointer;
     white-space: nowrap;
     font-weight: bold;
+    font-size: 16px;
 }
 
 .bar .button {
@@ -75,9 +76,4 @@ body {
 
 .container {
     padding: 0.01em 16px
-}
-
-.sublist {
-    border: 3 px solid orange;
-    background-color: blue;
 }
