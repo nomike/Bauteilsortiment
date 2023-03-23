@@ -34,7 +34,7 @@ view_config = {
     Merchant: {
         "list_fields": ["name", "url"],
         "list_detail_link_fields": ["name"],
-        "sublitsts": ["Component", "Purchase"]
+        "sublists": ["Component", "Purchase"]
     },
     ComponentType: {
         "list_fields": ["name", "parent"],
@@ -43,7 +43,7 @@ view_config = {
     Component: {
         "list_fields": ["part_number", "component_type", "merchant"],
         "list_detail_link_fields": ["part_number"],
-        "sunlists": ["SubComponent"]
+        "sublists": ["SubComponent"]
     },
     SubComponent: {
         "list_fields": ["name"],

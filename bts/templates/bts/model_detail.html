@@ -56,11 +56,11 @@
           
     </script>
     <div class="bar black">
-        {% for sublist in object.meta_sublist %}
-        <button class="bar-item button tablink" onclick="openSublist(event, '{{ sublist }}')">{{ sublist }}</button>
+        {% for sublist in sublists %}
+        <button class="bar-item button tablink" onclick="openSublist(event, '{{ sublist }}')">{{ sublist|snake_case|snake_to_space }}s</button>
         {% endfor %}
     </div>     
-    {% for sublist in object.meta_sublist %}
+    {% for sublist in sublists %}
     <script>
         fetch("{% url sublist|snake_case|add:"_filtered_list" object|get_type object.pk %}" /*, options */)
         .then((response) => response.text())
