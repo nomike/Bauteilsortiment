@@ -1,0 +1,24 @@
+{% extends "bts/base.html" %}
+{% load static %}
+{% load view_extras %}
+{% block title %}Home{% endblock %}
+{% block page_title %}Home{% endblock %}
+{% block body %}
+<p id="breadcrumbs">Home</p>
+<p>
+    <table id="components" class="maintable">
+        <tr>
+            <th>Type</th>
+        </tr>
+        {% for type in types %}
+        <tr>
+            <td>
+                <a href="{% url type|get_type|add:"_list"|snake_case %}">
+                {{ type|get_type|snake_case|snake_to_space }}s
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</p>
+{% endblock %}

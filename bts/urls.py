@@ -26,6 +26,6 @@ for name in [obj.__name__ for name, obj in bts.models.__dict__.items()
 
 
 urlpatterns.extend([
-    #     path('component/<int:component_id>/update_cache',
-    #          views.component_update_cache, name='component_update_cache'),
+    path('',
+         views.home_view, name='home'),
 ])

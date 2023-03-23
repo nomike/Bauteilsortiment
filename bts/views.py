@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.views.generic import DetailView, ListView
 from django.views import View
 from bts.models import AssortmentBox, StorageUnitType, StorageUnit, StorageUnitCompartment, Merchant, ComponentType, Component, SubComponent, Category, Inventory, Purchase, PurchaseLine
+from django.shortcuts import render
 
 # Vie config
 view_config = {
@@ -67,6 +68,13 @@ view_config = {
 }
 
 # Create your views here.
+
+
+def home_view(request):
+    context = {
+        "types": view_config.keys()
+    }
+    return render(request, 'bts/home.html', context)
 
 
 # def component_update_cache(request, component_id):

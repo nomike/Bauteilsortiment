@@ -4,7 +4,7 @@
         <table id="components" class="maintable">
             <tr>
                 {% for field in list_fields %}
-                <th>{{ field }}</th>
+                <th>{{ field|snake_to_space }}</th>
                 {% endfor %}
             </tr>
             {% for object in object_list %}

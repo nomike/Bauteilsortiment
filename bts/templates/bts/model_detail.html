@@ -4,7 +4,7 @@
 {% block title %}Detail page for {% get_verbose_name object %}: {{ object }}{% endblock %}
 {% block page_title %}Detail page for {% get_verbose_name object %}: {{ object }}{% endblock %}
 {% block body %}
-    <p id="breadcrumbs"><a href="{% url object|get_type|add:"_list"|snake_case %}">{% get_verbose_name object %}s</a> / {{ object }}</p>
+    <p id="breadcrumbs"><a href="{% url "home" %}">Home</a> / <a href="{% url object|get_type|add:"_list"|snake_case %}">{% get_verbose_name object %}s</a> / {{ object }}</p>
     <p>
         <table id="object" class="maintable">
             <tr>

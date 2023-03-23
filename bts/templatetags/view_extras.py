@@ -27,8 +27,13 @@ def get_detail_name(field: models.ForeignKey, suffix):
 
 
 @register.filter
-def snake_case(string):
+def snake_case(string: str):
     return str(re.sub(r'(?<!^)(?=[A-Z])', '_', string).lower())
+
+
+@register.filter
+def snake_to_space(string: str):
+    return string.replace('_', ' ').capitalize()
 
 
 @register.filter
