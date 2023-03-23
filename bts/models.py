@@ -102,7 +102,8 @@ class Component(models.Model):
 
 class SubComponent(models.Model):
     name = models.CharField(max_length=64)
-    storage_unit_compartment = models.ManyToManyField(StorageUnitCompartment)
+    storage_unit_compartment = models.ManyToManyField(
+        StorageUnitCompartment, blank=True)
     component = models.ForeignKey(
         Component, on_delete=models.CASCADE)
 
