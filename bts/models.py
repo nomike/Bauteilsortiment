@@ -23,7 +23,7 @@ class StorageUnitType(models.Model):
     width = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
     depth = models.IntegerField(null=True)
-    label_template = models.CharField(max_length=255, null=True)
+    label_template = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -68,16 +68,11 @@ class ComponentType(models.Model):
 class Component(models.Model):
     part_number = models.CharField(
         max_length=64, verbose_name="Part number")
-    resell_price = models.DecimalField(
-        null=True, max_digits=20, decimal_places=5)
     usual_order_quantity = models.IntegerField(default=1)
-    primary_datasheet = models.URLField(max_length=254, null=True)
-    detailed_description = models.CharField(max_length=254, null=True)
-    product_description = models.CharField(max_length=254, null=True)
-    order_unit_price = models.FloatField(null=True)
+    primary_datasheet = models.URLField(max_length=254, null=True, blank=True)
+    detailed_description = models.CharField(max_length=254, null=True, blank=True)
+    product_description = models.CharField(max_length=254, null=True, blank=True)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
-    component_type = models.ForeignKey(
-        ComponentType, on_delete=models.CASCADE, null=True, blank=True)
     cache_expiry = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -102,13 +97,24 @@ class Component(models.Model):
 
 class SubComponent(models.Model):
     name = models.CharField(max_length=64)
-    storage_unit_compartment = models.ManyToManyField(
-        StorageUnitCompartment, blank=True)
+    resell_price = models.DecimalField(
+        null=True, max_digits=20, decimal_places=5)
+    storage_unit_compartments = models.ManyToManyField(
+        StorageUnitCompartment, through='SubComponentStorage', blank=True)
     component = models.ForeignKey(
         Component, on_delete=models.CASCADE)
+    order_unit_price = models.FloatField(null=True, blank=True)
+    component_type = models.ForeignKey(
+        ComponentType, on_delete=models.CASCADE, null=True, blank=True)
+    
 
     def __str__(self):
         return self.name
+
+    
+class SubComponentStorage(models.Model):
+    sub_component = models.ForeignKey(SubComponent, on_delete=models.CASCADE)
+    storage_unit_compartment = models.ForeignKey(StorageUnitCompartment, on_delete=models.CASCADE)
 
 
 class Category(models.Model):

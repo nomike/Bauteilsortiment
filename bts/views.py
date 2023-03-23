@@ -12,20 +12,23 @@ from django.views.generic import DetailView, ListView
 from django.views import View
 from bts.models import AssortmentBox, StorageUnitType, StorageUnit, StorageUnitCompartment, Merchant, ComponentType, Component, SubComponent, Category, Inventory, Purchase, PurchaseLine
 from django.shortcuts import render
+from bts.templatetags import view_extras
 
 # Vie config
 view_config = {
     AssortmentBox: {
         "list_fields": ["name"],
-        "list_detail_link_fields": ["name"]
+        "list_detail_link_fields": ["name"],
+        "sublists": ["StorageUnit"]
     },
     StorageUnitType: {
         "list_fields": ["name"],
         "list_detail_link_fields": ["name"]
     },
     StorageUnit: {
-        "list_fields": ["name"],
-        "list_detail_link_fields": ["name"]
+        "list_fields": ["number", "assortment_box"],
+        "list_detail_link_fields": ["number"],
+        "sublists": ["StorageUnitCompartment"]
     },
     StorageUnitCompartment: {
         "list_fields": ["name"],
@@ -41,9 +44,9 @@ view_config = {
         "list_detail_link_fields": ["name"]
     },
     Component: {
-        "list_fields": ["part_number", "component_type", "merchant"],
+        "list_fields": ["part_number",  "merchant"],
         "list_detail_link_fields": ["part_number"],
-        "sublists": ["SubComponent"]
+        "sublists": ["SubComponent", "PurchaseLine"]
     },
     SubComponent: {
         "list_fields": ["name"],
@@ -114,7 +117,7 @@ class ModelFilteredListView(ConfiguredListView):
         self.filter_object = get_object_or_404(
             getattr(bts.models, self.kwargs['model']), pk=self.kwargs['id']
         )
-        return self.model.objects.filter(**{self.kwargs['model'].lower(): self.filter_object})
+        return self.model.objects.filter(**{view_extras.snake_case(self.kwargs['model']): self.filter_object})
 
 
 class ModelDetailView(ConfiguredDetailView):
