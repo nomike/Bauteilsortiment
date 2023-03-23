@@ -4,5 +4,5 @@
 {% block title %}List of all {{ object_list.0 | get_type }}s{% endblock %}
 {% block page_title %}List of all {{ object_list.0 | get_type }}s{% endblock %}
 {% block body %}
-{% include "./model_list.html" with list_fields=object_list.0.meta_list_fields list_detail_link_fields=object_list.0.meta_list_detail_link_fields %}
+{% include "./model_list.html" %}
 {% endblock %}

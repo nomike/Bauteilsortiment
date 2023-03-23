@@ -12,8 +12,6 @@ from django.utils import timezone
 
 
 class AssortmentBox(models.Model):
-    meta_list_fields = ["name", "url"]
-    meta_list_detail_link_fields = ["name"]
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -51,10 +49,6 @@ class StorageUnitCompartment(models.Model):
 
 
 class Merchant(models.Model):
-    meta_list_fields = ["name", "url"]
-    meta_list_detail_link_fields = ["name"]
-    meta_sublist = ["Component", "Purchase"]
-
     name = models.CharField(max_length=255, null=True)
     url = models.CharField(max_length=255, null=True)
 
@@ -63,9 +57,6 @@ class Merchant(models.Model):
 
 
 class ComponentType(models.Model):
-    meta_list_fields = ["name", "parent"]
-    meta_list_detail_link_fields = ["name"]
-
     name = models.CharField(max_length=64)
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
@@ -75,10 +66,6 @@ class ComponentType(models.Model):
 
 
 class Component(models.Model):
-    meta_list_fields = ["part_number", "component_type", "merchant"]
-    meta_list_detail_link_fields = ["part_number"]
-    meta_sublist = ["SubComponent"]
-
     part_number = models.CharField(
         max_length=64, verbose_name="Part number")
     resell_price = models.DecimalField(
@@ -114,9 +101,6 @@ class Component(models.Model):
 
 
 class SubComponent(models.Model):
-    meta_list_fields = ["id", "name"]
-    meta_list_detail_link_fields = ["id", "name"]
-
     name = models.CharField(max_length=64)
     storage_unit_compartment = models.ManyToManyField(StorageUnitCompartment)
     component = models.ForeignKey(
@@ -145,9 +129,6 @@ class Inventory(models.Model):
 
 
 class Purchase(models.Model):
-    meta_list_fields = ["id", "merchant", "order_number", "timestamp"]
-    meta_list_detail_link_fields = ["id"]
-
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     order_number = models.CharField(max_length=64)
     timestamp = models.DateTimeField(default=timezone.now)
