@@ -1,9 +1,10 @@
-from django.urls import path
 import inspect
-from bts.templatetags.view_extras import snake_case
-from django.db import models
-import bts.models
 
+from django.db import models
+from django.urls import path
+
+import bts.models
+from bts.templatetags.view_extras import snake_case
 
 from . import views
 
@@ -28,4 +29,7 @@ for name in [obj.__name__ for name, obj in bts.models.__dict__.items()
 urlpatterns.extend([
     path('',
          views.home_view, name='home'),
+    path('json/<str:model>', views.model_json_view, name="json_list"),
+    path('json/<str:model>/<str:filter_model>/<int:id>',
+         views.model_json_filtered_view, name="json_list_filtered"),
 ])
