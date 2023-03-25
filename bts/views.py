@@ -1,17 +1,21 @@
 
 import inspect
-
+import json
 from typing import Any, Dict
-import bts.models
+
 from django.db import models
 from django.db.models import QuerySet
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.views.generic import DetailView, ListView
 from django.views import View
-from bts.models import AssortmentBox, StorageUnitType, StorageUnit, StorageUnitCompartment, Merchant, ComponentType, Component, SubComponent, Category, Inventory, Purchase, PurchaseLine
-from django.shortcuts import render
+from django.views.generic import DetailView, ListView
+
+import bts.models
+from bts.models import (AssortmentBox, Category, Component, ComponentType,
+                        Inventory, Merchant, Purchase, PurchaseLine,
+                        StorageUnit, StorageUnitCompartment, StorageUnitType,
+                        SubComponent)
 from bts.templatetags import view_extras
 
 # Vie config
@@ -102,6 +106,16 @@ class ConfiguredDetailView(DetailView):
         for key, value in view_config[self.model].items():
             context_data[key] = value
         return context_data
+
+
+def model_json_view(View, model: str):
+    return JsonResponse(list(getattr(bts.models, model).objects.values()), safe=False)
+
+
+def model_json_filtered_view(View, model: str, filter_model: str, id: int):
+    data = getattr(bts.models, model).objects.filter(
+        **{view_extras.snake_case(filter_model): id})
+    return JsonResponse(list(data.values()), safe=False)
 
 
 class ModelListView(ConfiguredListView):
