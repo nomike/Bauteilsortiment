@@ -77,41 +77,6 @@
             });            
         }
 
-/*
-        function fill_select(select_id) {
-            select = $(fields[select_id]['id']);
-            model = fields[select_id]['model'];
-            display_field = fields[select_id]['display_field'];
-            filter_model = select_id > 0 ? fields[select_id-1]['model'] : null;
-            id = select_id > 0 ? $(fields[select_id]['id']).val() : null;
-            rid = Math.floor(Math.random() * (1000))
-
-            console.warn(`fill_select(select_id=${select_id}); // select=${select}, model=${model}, display_field=${display_field}, filter_mode=${filter_model}, id=${id}) // rid=${rid}`);
-            if (filter_model && ! id) {
-                console.warn("Upstream ID is null, not filling. // rid=${rid}");
-                return;
-            }
-            if (filter_model != null){
-                url = '/bts/json/' + model + '/' + filter_model + '/' + id;
-            } else {
-                url = '/bts/json/' + model;
-            }
-            console.warn(`url=${url} // rid=${rid}`);
-            $.getJSON(url, function(data){
-                $.each(data, function() {
-                    console.warn(`Add option ${this.id}('${this[display_field]}')`);
-                    select.append($("<option />").val(this.id).text(this[display_field]));
-                });
-                if(select.val()) {
-                    console.warn(`Select ${select_id} has changed.`);
-                    handle_change(select_id);
-                }
-                log_list_value(0, "In getJSON callback");
-            });
-            console.warn(`val() = ${select.val()} // rid=${rid}`);
-        }
-*/
-
         function handle_change(select_id) {
             console.warn(`Handling change event for select_id=${select_id} (value=${$(fields[select_id]['id']).val()})`);
             
@@ -135,7 +100,6 @@
 
         console.warn("Filling first select...");
         fill_select(0);
-        //$(fields[0]['id']).change();
     });
 
     function log_list_value(id, text="foo") {
@@ -161,7 +125,6 @@
             <option value="{{ storage_unit.pk }}">{{ storage_unit.number }}</option>
             {% endfor %}
         </select>
-        <button type="button" onclick="$(fields[0]['id']).change();">Click me!</button>
 </formfields>
 </form>
 
