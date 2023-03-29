@@ -118,6 +118,10 @@ def model_json_filtered_view(View, model: str, filter_model: str, id: int):
     return JsonResponse(list(data.values()), safe=False)
 
 
+def select_test(request):
+    return render(request, template_name='bts/select_test.html')
+
+
 class ModelListView(ConfiguredListView):
     model = None
     template_name = "bts/model_list_page.html"

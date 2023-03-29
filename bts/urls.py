@@ -29,6 +29,7 @@ for name in [obj.__name__ for name, obj in bts.models.__dict__.items()
 urlpatterns.extend([
     path('',
          views.home_view, name='home'),
+    path('select_test', views.select_test, name='select_test'),
     path('json/<str:model>', views.model_json_view, name="json_list"),
     path('json/<str:model>/<str:filter_model>/<int:id>',
          views.model_json_filtered_view, name="json_list_filtered"),

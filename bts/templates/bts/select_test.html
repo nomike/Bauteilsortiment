@@ -1,0 +1,172 @@
+{% extends "bts/base.html" %}
+{% load static %}
+{% load view_extras %}
+{% block title %}Select test{% endblock %}
+{% block page_title %}Select test{% endblock %}
+{% block body %}
+<script>
+    // In your Javascript (external .js resource or <script> tag)
+
+        let fields = [
+                {
+                    'id': '.select-assortment-box',
+                    'model': 'AssortmentBox',
+                    'display_field': 'name',
+                },
+                {
+                    'id': '.select-storage-unit',
+                    'model': 'StorageUnit',
+                    'display_field': 'number'
+                },
+                {
+                    'id': '.select-storage-unit-compartment',
+                    'model': 'StorageUnitCompartment',
+                    'display_field': 'name'
+                }
+        ]
+
+
+/*
+    let fields = [
+    {
+        'id': '.select-assortment-box',
+        'model': 'Merchant',
+        'display_field': 'name',
+    },
+    {
+        'id': '.select-storage-unit',
+        'model': 'Component',
+        'display_field': 'part_number'
+    }
+    ]
+
+*/
+
+    $(document).ready(function() {
+
+
+/*
+        for (i=0; i <fields.length; i++) {
+            $(fields[i]['id']).select2();
+        }
+*/
+
+        function clear_select(select_id) {
+            console.warn(`clear_select(${select_id})`);
+            $(fields[select_id]['id']).empty();
+        }
+
+        function fill_select(select_id){
+            select = $(fields[select_id]['id']);
+            model = fields[select_id]['model'];
+            display_field = fields[select_id]['display_field'];
+            filter_model = select_id > 0 ? fields[select_id-1]['model'] : null;
+            id = select_id > 0 ? $(fields[select_id-1]['id']).val() : null;
+
+            console.warn(`fill_select(select_id=${select_id}); // select=${select}, model=${model}, display_field=${display_field}, filter_model=${filter_model}, id=${id})`);
+            if (filter_model != null){
+                url = '/bts/json/' + model + '/' + filter_model + '/' + id;
+            } else {
+                url = '/bts/json/' + model;
+            }
+            $.getJSON(url, function(data){
+                $.each(data, function() {
+                    console.warn(`Add option ${this.id}('${this[display_field]}')`);
+                    select.append($("<option />").val(this.id).text(this[display_field]));
+                });
+            }).done(function(json){
+                console.warn("Done getting JSON");
+                log_list_value(select_id, `done`);
+                handle_change(select_id);
+            });            
+        }
+
+/*
+        function fill_select(select_id) {
+            select = $(fields[select_id]['id']);
+            model = fields[select_id]['model'];
+            display_field = fields[select_id]['display_field'];
+            filter_model = select_id > 0 ? fields[select_id-1]['model'] : null;
+            id = select_id > 0 ? $(fields[select_id]['id']).val() : null;
+            rid = Math.floor(Math.random() * (1000))
+
+            console.warn(`fill_select(select_id=${select_id}); // select=${select}, model=${model}, display_field=${display_field}, filter_mode=${filter_model}, id=${id}) // rid=${rid}`);
+            if (filter_model && ! id) {
+                console.warn("Upstream ID is null, not filling. // rid=${rid}");
+                return;
+            }
+            if (filter_model != null){
+                url = '/bts/json/' + model + '/' + filter_model + '/' + id;
+            } else {
+                url = '/bts/json/' + model;
+            }
+            console.warn(`url=${url} // rid=${rid}`);
+            $.getJSON(url, function(data){
+                $.each(data, function() {
+                    console.warn(`Add option ${this.id}('${this[display_field]}')`);
+                    select.append($("<option />").val(this.id).text(this[display_field]));
+                });
+                if(select.val()) {
+                    console.warn(`Select ${select_id} has changed.`);
+                    handle_change(select_id);
+                }
+                log_list_value(0, "In getJSON callback");
+            });
+            console.warn(`val() = ${select.val()} // rid=${rid}`);
+        }
+*/
+
+        function handle_change(select_id) {
+            console.warn(`Handling change event for select_id=${select_id} (value=${$(fields[select_id]['id']).val()})`);
+            
+            select_number = select_id + 1;
+            for (i=select_number; i < fields.length; i++) {
+                console.warn(`Emptying select ${fields[i]['id']}`);
+                clear_select(i);
+            }
+            if (select_number < fields.length) {
+                console.warn(`Fill select ${select_number}`);
+                fill_select(select_number);
+            }
+        }
+
+        for (i = 0; i < fields.length - 1; i++) {
+            const j = i;
+            $(fields[j]['id']).change(function() {
+                handle_change(j);
+            });
+        }
+
+        console.warn("Filling first select...");
+        fill_select(0);
+        //$(fields[0]['id']).change();
+    });
+
+    function log_list_value(id, text="foo") {
+        console.warn(`${text}: Value of list ${id} is ${$(fields[0]['id']).val()}`);
+    }
+</script>
+<form on_submit="return false;">
+    <formfields>
+        <select class="select-assortment-box" name="state" style="width: 400px;" data-id="0">
+            {% for assortment_box in assortment_boxes %}
+            <option value="{{ assortment_box.pk }}">{{ assortment_box.name }}</option>
+            {% endfor %}
+        </select>
+        <select class="select-storage-unit" name="state" style="width: 400px;">
+            {% for storage_unit in storage_units %}
+            <option value="-1">dummy</option>
+            <option value="{{ storage_unit.pk }}">{{ storage_unit.number }}</option>
+            {% endfor %}
+        </select>
+        <select class="select-storage-unit-compartment" name="state" style="width: 400px;">
+            {% for storage_unit in storage_units %}
+            <option value="-1">dummy</option>
+            <option value="{{ storage_unit.pk }}">{{ storage_unit.number }}</option>
+            {% endfor %}
+        </select>
+        <button type="button" onclick="$(fields[0]['id']).change();">Click me!</button>
+</formfields>
+</form>
+
+{% endblock %}
