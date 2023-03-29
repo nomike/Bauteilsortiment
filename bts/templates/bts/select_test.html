@@ -109,21 +109,10 @@
 <form on_submit="return false;">
     <formfields>
         <select class="select-assortment-box" name="state" style="width: 400px;" data-id="0">
-            {% for assortment_box in assortment_boxes %}
-            <option value="{{ assortment_box.pk }}">{{ assortment_box.name }}</option>
-            {% endfor %}
         </select>
         <select class="select-storage-unit" name="state" style="width: 400px;">
-            {% for storage_unit in storage_units %}
-            <option value="-1">dummy</option>
-            <option value="{{ storage_unit.pk }}">{{ storage_unit.number }}</option>
-            {% endfor %}
         </select>
         <select class="select-storage-unit-compartment" name="state" style="width: 400px;">
-            {% for storage_unit in storage_units %}
-            <option value="-1">dummy</option>
-            <option value="{{ storage_unit.pk }}">{{ storage_unit.number }}</option>
-            {% endfor %}
         </select>
 </formfields>
 </form>
