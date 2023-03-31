@@ -59,21 +59,21 @@
     });
 
     function clear_select(select_id) {
-        console.warn(`clear_select(${select_id})`);
+        console.debug(`clear_select(${select_id})`);
         $(fields[select_id]['id']).empty();
     }
 
 
     function handle_change(select_id) {
-        console.warn(`Handling change event for select_id=${select_id} (value=${$(fields[select_id]['id']).val()})`);
+        console.debug(`Handling change event for select_id=${select_id} (value=${$(fields[select_id]['id']).val()})`);
         
         select_number = select_id + 1;
         for (i=select_number; i < fields.length; i++) {
-            console.warn(`Emptying select ${fields[i]['id']}`);
+            console.debug(`Emptying select ${fields[i]['id']}`);
             clear_select(i);
         }
         if (select_number < fields.length) {
-            console.warn(`Fill select ${select_number}`);
+            console.debug(`Fill select ${select_number}`);
             fill_select(select_number);
         }
     }
@@ -86,13 +86,13 @@
         filter_model = select_id > 0 ? fields[select_id - 1]['model'] : null;
         id = select_id > 0 ? $(fields[select_id-1]['id']).val() : null;
 
-        console.warn(`fill_select(select_id=${select_id}); // select=${select}, model=${model}, display_field=${display_field}, filter_model=${filter_model}, id=${id})`);
+        console.debug(`fill_select(select_id=${select_id}); // select=${select}, model=${model}, display_field=${display_field}, filter_model=${filter_model}, id=${id})`);
         if (filter_model != null){
             url = '/bts/json/' + model + '/' + filter_model + '/' + id;
         } else {
             url = '/bts/json/' + model;
         }
-        console.warn(`URL=${url}`);
+        console.debug(`URL=${url}`);
         
         $.ajax({
             url: url,
@@ -101,10 +101,10 @@
             success: function(data) {
                 let count = 0;
                 $.each(data, function() {
-                    console.warn(`###COUNT=${count++}`);
-                    console.warn(`Appending option ${this[display_field]} to select {select_id}`);
+                    console.debug(`###COUNT=${count++}`);
+                    console.debug(`Appending option ${this[display_field]} to select {select_id}`);
                     select.append($("<option />").val(this.id).text(this[display_field]));
-                    console.warn("Done getting JSON");
+                    console.debug("Done getting JSON");
                     log_list_value(select_id, `done`);
                 });
             }
@@ -114,7 +114,7 @@
 
 
     function log_list_value(id, text="foo") {
-        console.warn(`${text}: Value of list ${id} is ${$(fields[0]['id']).val()}`);
+        console.debug(`${text}: Value of list ${id} is ${$(fields[0]['id']).val()}`);
     }
 
     function set_field(field_id, value) {
@@ -138,28 +138,8 @@
             $(fields[k]['id']).val(selected_objects[k]).change();
         }
 
-/*
-                for(i = 0; i < field_id; i++) {
-                    console.warn(`####setting select ${i} to value ${selected_objects[i]}`);
-                    fill_select(i);
-                    
-                }
-*/
-        console.warn(`## selected_objects=${selected_objects}`);
+        console.debug(`## selected_objects=${selected_objects}`);
     } 
-
-//        selected_suc = value;
-//        selected_su = null;
-//        selected_ab = null;
-//
-//        suc = get_suc();
-//        su = get_su();
-//        ab = get_all_ab();
-//        
-//        fill_select(ab, filter_id=null, selected_id=selected_ab);
-//        fill_select(su, filter_id=selected_ab, selected_id=selected_su);
-//        fill_select(suc, filter_id=selected_su, selected_id=selected_suc);
-    
 </script>
 <form on_submit="return false;">
     <formfields>
