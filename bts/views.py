@@ -108,7 +108,7 @@ class ConfiguredDetailView(DetailView):
         return context_data
 
 
-def model_json_view(View, model: str):
+def model_json_view(request, model: str):
     return JsonResponse(list(getattr(bts.models, model).objects.values()), safe=False)
 
 
@@ -116,6 +116,10 @@ def model_json_filtered_view(View, model: str, filter_model: str, id: int):
     data = getattr(bts.models, model).objects.filter(
         **{view_extras.snake_case(filter_model): id})
     return JsonResponse(list(data.values()), safe=False)
+
+
+def model_json_field_view(request, model: str, id: int, field: str):
+    return JsonResponse(getattr(get_object_or_404(getattr(bts.models, model), pk=id), field), safe=False)
 
 
 def select_test(request):
