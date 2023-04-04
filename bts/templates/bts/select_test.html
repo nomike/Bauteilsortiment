@@ -4,12 +4,30 @@
 {% block title %}Select test{% endblock %}
 {% block page_title %}Select test{% endblock %}
 {% block body %}
-<script src="{% static 'multilevel_select.js' %}"/>
-
+<script>
+const fields = [
+    {
+        'id': 'select-assortment-box',
+        'model': 'AssortmentBox',
+        'display_field': 'name',
+    },
+    {
+        'id': 'select-storage-unit',
+        'model': 'StorageUnit',
+        'display_field': 'number',
+        'parent_field': 'assortment_box_id'
+    },
+    {
+        'id': 'select-storage-unit-compartment',
+        'model': 'StorageUnitCompartment',
+        'display_field': 'name',
+        'parent_field': 'storage_unit_id'
+    }
+]
 </script>
+<script src="{% static 'multilevel_select.js' %}"></script>
 <form id="select_test" on_submit="return false;">
-    <formfields>
-    </formfields>
+    <formfields/>
     <button type="button" onclick="set_field(2, 12);">Click me!</button>
 </form>
 

@@ -1,24 +1,3 @@
-const fields = [
-    {
-        'id': 'select-assortment-box',
-        'model': 'AssortmentBox',
-        'display_field': 'name',
-    },
-    {
-        'id': 'select-storage-unit',
-        'model': 'StorageUnit',
-        'display_field': 'number',
-        'parent_field': 'assortment_box_id'
-    },
-    {
-        'id': 'select-storage-unit-compartment',
-        'model': 'StorageUnitCompartment',
-        'display_field': 'name',
-        'parent_field': 'storage_unit_id'
-    }
-]
-
-
 $(document).ready(function () {
     for (let i = 0; i < fields.length; i++) {
         $("#select_test > formfields").append($("<select>", { style: "width: 300px;", class: fields[i]['id'] }));
