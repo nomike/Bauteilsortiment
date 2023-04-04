@@ -32,14 +32,7 @@
             $(fields[i]['id']).select2();
         }
 
-
-        for (let i=0; i < fields.length - 1; i++) {
-            const j = i;
-            $(fields[j]['id']).change(function() {
-                handle_change(j);
-            });
-        }
-
+        // Fill the first select, but don't select anything.
         fill_select(0);
     });
 
