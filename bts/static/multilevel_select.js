@@ -79,20 +79,10 @@ function fill_select(select_id) {
             let count = 0;
             $.each(data, function () {
                 select.append($("<option />").val(this.id).text(this[display_field]));
-                log_list_value(select_id, `done`);
             });
         }
     });
     handle_change(select_id);
-}
-
-/**
- * 
- * @param {Number} select_id The index of the select
- * @param {String} text      Text to be prepended to the log message (default="foo")
- */
-function log_list_value(select_id, text = "foo") {
-    console.debug(`${text}: Value of list ${select_id} is ${$(fields[0]['id']).val()}`);
 }
 
 /**
