@@ -26,29 +26,14 @@
         ]
 
 
-/*
-    let fields = [
-    {
-        'id': '.select-assortment-box',
-        'model': 'Merchant',
-        'display_field': 'name',
-    },
-    {
-        'id': '.select-storage-unit',
-        'model': 'Component',
-        'display_field': 'part_number'
-    }
-    ]
-
-*/
-
     $(document).ready(function() {
-        for (i=0; i <fields.length; i++) {
+        // Initialize select2
+        for (let i=0; i <fields.length; i++) {
             $(fields[i]['id']).select2();
         }
 
 
-        for (i = 0; i < fields.length - 1; i++) {
+        for (let i=0; i < fields.length - 1; i++) {
             const j = i;
             $(fields[j]['id']).change(function() {
                 handle_change(j);
@@ -67,8 +52,8 @@
     function handle_change(select_id) {
         console.debug(`Handling change event for select_id=${select_id} (value=${$(fields[select_id]['id']).val()})`);
         
-        select_number = select_id + 1;
-        for (i=select_number; i < fields.length; i++) {
+        const select_number = select_id + 1;
+        for (let i=select_number; i < fields.length; i++) {
             console.debug(`Emptying select ${fields[i]['id']}`);
             clear_select(i);
         }
@@ -80,13 +65,14 @@
 
     function fill_select(select_id){
         clear_select(select_id);
-        select = $(fields[select_id]['id']);
-        model = fields[select_id]['model'];
-        display_field = fields[select_id]['display_field'];
-        filter_model = select_id > 0 ? fields[select_id - 1]['model'] : null;
-        id = select_id > 0 ? $(fields[select_id-1]['id']).val() : null;
+        const select = $(fields[select_id]['id']);
+        const model = fields[select_id]['model'];
+        const display_field = fields[select_id]['display_field'];
+        const filter_model = select_id > 0 ? fields[select_id - 1]['model'] : null;
+        const id = select_id > 0 ? $(fields[select_id-1]['id']).val() : null;
 
         console.debug(`fill_select(select_id=${select_id}); // select=${select}, model=${model}, display_field=${display_field}, filter_model=${filter_model}, id=${id})`);
+        let url;
         if (filter_model != null){
             url = '/bts/json/' + model + '/' + filter_model + '/' + id;
         } else {
@@ -121,7 +107,7 @@
         let selected_objects = [];
         selected_objects[field_id] = value;
         
-        for(i=field_id; i > 0; i--) {
+        for(let i=field_id; i > 0; i--) {
             $.ajax({
                 url: `/bts/json/${fields[i]['model']}/${selected_objects[i]}/field/${fields[i]['parent_field']}`,
                 dataType: 'json',
@@ -132,10 +118,10 @@
             });
         }
         
-        for(k=0; k < field_id; k++) {
-            console.error(`>>>k=${k}`);
-            fill_select(k);
-            $(fields[k]['id']).val(selected_objects[k]).change();
+        for(let i=0; i < field_id; i++) {
+            console.error(`>>>i=${i}`);
+            fill_select(i);
+            $(fields[i]['id']).val(selected_objects[i]).change();
         }
 
         console.debug(`## selected_objects=${selected_objects}`);
