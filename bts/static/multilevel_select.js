@@ -21,7 +21,7 @@ const fields = [
 
 $(document).ready(function () {
     for (let i = 0; i < fields.length; i++) {
-        $("#select_test > formfields").append($("<select>", { style: "width: 400px;", class: fields[i]['id'] }));
+        $("#select_test > formfields").append($("<select>", { style: "width: 300px;", class: fields[i]['id'] }));
     }
 
     // Initialize select2
