@@ -7,16 +7,16 @@
 <script src="{% static 'multilevel_select.js' %}"/>
 
 </script>
-<form on_submit="return false;">
+<form id="select_test" on_submit="return false;">
     <formfields>
-        <select class="select-assortment-box" name="state" style="width: 400px;" data-id="0">
+<!--        <select class="select-assortment-box" name="state" style="width: 400px;" data-id="0">
         </select>
         <select class="select-storage-unit" name="state" style="width: 400px;">
         </select>
         <select class="select-storage-unit-compartment" name="state" style="width: 400px;">
-        </select>
-        <button type="button" onclick="set_field(2, 12);">Click me!</button>
-</formfields>
+        </select> -->
+    </formfields>
+    <button type="button" onclick="set_field(2, 12);">Click me!</button>
 </form>
 
 {% endblock %}
