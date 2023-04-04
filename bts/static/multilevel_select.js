@@ -29,12 +29,20 @@ $(document).ready(function () {
     fill_select(0);
 });
 
+/**
+ * Clears all values from a select formfield.
+ * @param {Number} select_id The index of the select
+ */
 function clear_select(select_id) {
     console.debug(`clear_select(${select_id})`);
     $(fields[select_id]['id']).empty();
 }
 
-
+/**
+ * Callback for handling a value change of a select.
+ * It clears all selects to the right and fills them with new values.
+ * @param {Number} select_id The index of the select
+ */
 function handle_change(select_id) {
     console.debug(`Handling change event for select_id=${select_id} (value=${$(fields[select_id]['id']).val()})`);
 
@@ -49,6 +57,10 @@ function handle_change(select_id) {
     }
 }
 
+/**
+ * Fill a select with values. If it is not the left most select, it will use the current value from the previous select as a filter.
+ * @param {Number} select_id The index of the select
+ */
 function fill_select(select_id) {
     clear_select(select_id);
     const select = $(fields[select_id]['id']);
@@ -84,16 +96,25 @@ function fill_select(select_id) {
     handle_change(select_id);
 }
 
-
-function log_list_value(id, text = "foo") {
-    console.debug(`${text}: Value of list ${id} is ${$(fields[0]['id']).val()}`);
+/**
+ * 
+ * @param {Number} select_id The index of the select
+ * @param {String} text      Text to be prepended to the log message (default="foo")
+ */
+function log_list_value(select_id, text = "foo") {
+    console.debug(`${text}: Value of list ${select_id} is ${$(fields[0]['id']).val()}`);
 }
 
-function set_field(field_id, value) {
+/**
+ * Set the value of a select. This will set the values of the selects to the left to the appropriate values as well.
+ * @param {Number} select_id The index of the select
+ * @param {Number} value    The value you want to set the select to
+ */
+function set_field(select_id, value) {
     let selected_objects = [];
-    selected_objects[field_id] = value;
+    selected_objects[select_id] = value;
 
-    for (let i = field_id; i > 0; i--) {
+    for (let i = select_id; i > 0; i--) {
         $.ajax({
             url: `/bts/json/${fields[i]['model']}/${selected_objects[i]}/field/${fields[i]['parent_field']}`,
             dataType: 'json',
@@ -104,7 +125,7 @@ function set_field(field_id, value) {
         });
     }
 
-    for (let i = 0; i < field_id; i++) {
+    for (let i = 0; i < select_id; i++) {
         console.error(`>>>i=${i}`);
         fill_select(i);
         $(fields[i]['id']).val(selected_objects[i]).change();
