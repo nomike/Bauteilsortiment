@@ -1,17 +1,17 @@
 const fields = [
     {
-        'id': '.select-assortment-box',
+        'id': 'select-assortment-box',
         'model': 'AssortmentBox',
         'display_field': 'name',
     },
     {
-        'id': '.select-storage-unit',
+        'id': 'select-storage-unit',
         'model': 'StorageUnit',
         'display_field': 'number',
         'parent_field': 'assortment_box_id'
     },
     {
-        'id': '.select-storage-unit-compartment',
+        'id': 'select-storage-unit-compartment',
         'model': 'StorageUnitCompartment',
         'display_field': 'name',
         'parent_field': 'storage_unit_id'
@@ -20,9 +20,13 @@ const fields = [
 
 
 $(document).ready(function () {
+    for (let i = 0; i < fields.length; i++) {
+        $("#select_test > formfields").append($("<select>", { style: "width: 400px;", class: fields[i]['id'] }));
+    }
+
     // Initialize select2
     for (let i = 0; i < fields.length; i++) {
-        $(fields[i]['id']).select2();
+        $('.' + fields[i]['id']).select2();
     }
 
     // Fill the first select, but don't select anything.
@@ -34,7 +38,7 @@ $(document).ready(function () {
  * @param {Number} select_id The index of the select
  */
 function clear_select(select_id) {
-    $(fields[select_id]['id']).empty();
+    $('.' + fields[select_id]['id']).empty();
 }
 
 /**
@@ -58,11 +62,11 @@ function handle_change(select_id) {
  */
 function fill_select(select_id) {
     clear_select(select_id);
-    const select = $(fields[select_id]['id']);
+    const select = $('.' + fields[select_id]['id']);
     const model = fields[select_id]['model'];
     const display_field = fields[select_id]['display_field'];
     const filter_model = select_id > 0 ? fields[select_id - 1]['model'] : null;
-    const id = select_id > 0 ? $(fields[select_id - 1]['id']).val() : null;
+    const id = select_id > 0 ? $('.' + fields[select_id - 1]['id']).val() : null;
 
     let url;
     if (filter_model != null) {
@@ -106,8 +110,7 @@ function set_field(select_id, value) {
     }
 
     for (let i = 0; i < select_id; i++) {
-        console.error(`>>>i=${i}`);
         fill_select(i);
-        $(fields[i]['id']).val(selected_objects[i]).change();
+        $('.' + fields[i]['id']).val(selected_objects[i]).change();
     }
-} 
+}
