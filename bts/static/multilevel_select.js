@@ -1,7 +1,7 @@
 django.jQuery(document).ready(function () {
     // Create the selects
     for (let i = 0; i < fields.length; i++) {
-        django.jQuery(widget_name).append(django.jQuery("<select>", { style: "width: 300px;", class: fields[i]['id'], id: i == fields.length - 1 ? widget_name : null }));
+        django.jQuery("#" + widget_name).append(django.jQuery("<select>", { style: "width: 300px;", class: fields[i]['id'], name: i == fields.length - 1 ? widget_name : null }));
     }
 
     // Initialize select2
