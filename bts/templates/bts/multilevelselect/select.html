@@ -1,26 +1,9 @@
 {% load static %}
+
 <script>
 const widget_name="{{ widget.name }}"
 const widget_value="{{ widget.value.0 }}"
-const fields = [
-    {
-        'id': 'select-assortment-box',
-        'model': 'AssortmentBox',
-        'display_field': 'name',
-    },
-    {
-        'id': 'select-storage-unit',
-        'model': 'StorageUnit',
-        'display_field': 'number',
-        'parent_field': 'assortment_box_id'
-    },
-    {
-        'id': 'select-storage-unit-compartment',
-        'model': 'StorageUnitCompartment',
-        'display_field': 'name',
-        'parent_field': 'storage_unit_id'
-    }
-]
+const fields = {{ fields|safe}}
 </script>
 <script src="{% static 'multilevel_select.js' %}"></script>
 <div id="{{ widget.name }}">
