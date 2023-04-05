@@ -36,7 +36,8 @@ view_config = {
     },
     StorageUnitCompartment: {
         "list_fields": ["name"],
-        "list_detail_link_fields": ["name"]
+        "list_detail_link_fields": ["name"],
+        "sublists": ["Inventory"]
     },
     Merchant: {
         "list_fields": ["name", "url"],
@@ -45,7 +46,8 @@ view_config = {
     },
     ComponentType: {
         "list_fields": ["name", "parent"],
-        "list_detail_link_fields": ["name"]
+        "list_detail_link_fields": ["name"],
+        "sublists": ["SubComponent"]
     },
     Component: {
         "list_fields": ["part_number",  "merchant"],
@@ -61,8 +63,8 @@ view_config = {
         "list_detail_link_fields": ["name"]
     },
     Inventory: {
-        "list_fields": ["name"],
-        "list_detail_link_fields": ["name"]
+        "list_fields": ["id", "sub_component", "storage_unit_compartment", "timestamp", "count"],
+        "list_detail_link_fields": ["id"]
     },
     Purchase: {
         "list_fields": ["order_number", "merchant", "timestamp"],
