@@ -99,7 +99,7 @@ function set_field(select_id, value) {
         });
     }
 
-    for (let i = 0; i < select_id; i++) {
+    for (let i = 0; i <= select_id; i++) {
         fill_select(i);
         django.jQuery('.' + fields[i]['id']).val(selected_objects[i]).change();
     }
