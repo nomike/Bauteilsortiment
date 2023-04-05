@@ -23,10 +23,12 @@ class MultiLevelSelect(Select):
 
 class SubComponentAdmin(admin.ModelAdmin):
     search_fields = ["name", "component_type"]
+    autocomplete_fields = ["component", "component_type"]
     save_as = True
 
 
 class InventoryAdminForm(forms.ModelForm):
+    autocomplete_fields = ["sub_component"]
 
     class Meta:
         fields = ["sub_component",
