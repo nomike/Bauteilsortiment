@@ -1,15 +1,26 @@
-$(document).ready(function () {
+django.jQuery(document).ready(function () {
+    // Create the selects
     for (let i = 0; i < fields.length; i++) {
-        $("#select_test > formfields").append($("<select>", { style: "width: 300px;", class: fields[i]['id'] }));
+        django.jQuery(widget_name).append(django.jQuery("<select>", { style: "width: 300px;", class: fields[i]['id'], id: i == fields.length - 1 ? widget_name : null }));
     }
 
     // Initialize select2
     for (let i = 0; i < fields.length; i++) {
-        $('.' + fields[i]['id']).select2();
+        // django.jQuery('.' + fields[i]['id']).select2();
     }
 
     // Fill the first select, but don't select anything.
     fill_select(0);
+    // Set the field value
+    set_field(fields.length - 1, widget_value);
+
+    for (let i = 0; i < fields.length; i++) {
+        django.jQuery('.' + fields[i]['id']).change(
+            function (event) {
+                handle_change(i);
+            }
+        );
+    }
 });
 
 /**
@@ -17,7 +28,7 @@ $(document).ready(function () {
  * @param {Number} select_id The index of the select
  */
 function clear_select(select_id) {
-    $('.' + fields[select_id]['id']).empty();
+    django.jQuery('.' + fields[select_id]['id']).empty();
 }
 
 /**
@@ -41,11 +52,11 @@ function handle_change(select_id) {
  */
 function fill_select(select_id) {
     clear_select(select_id);
-    const select = $('.' + fields[select_id]['id']);
+    const select = django.jQuery('.' + fields[select_id]['id']);
     const model = fields[select_id]['model'];
     const display_field = fields[select_id]['display_field'];
     const filter_model = select_id > 0 ? fields[select_id - 1]['model'] : null;
-    const id = select_id > 0 ? $('.' + fields[select_id - 1]['id']).val() : null;
+    const id = select_id > 0 ? django.jQuery('.' + fields[select_id - 1]['id']).val() : null;
 
     let url;
     if (filter_model != null) {
@@ -54,14 +65,14 @@ function fill_select(select_id) {
         url = '/bts/json/' + model;
     }
 
-    $.ajax({
+    django.jQuery.ajax({
         url: url,
         dataType: 'json',
         async: false,
         success: function (data) {
             let count = 0;
-            $.each(data, function () {
-                select.append($("<option />").val(this.id).text(this[display_field]));
+            django.jQuery.each(data, function () {
+                select.append(django.jQuery("<option />").val(this.id).text(this[display_field]));
             });
         }
     });
@@ -78,7 +89,7 @@ function set_field(select_id, value) {
     selected_objects[select_id] = value;
 
     for (let i = select_id; i > 0; i--) {
-        $.ajax({
+        django.jQuery.ajax({
             url: `/bts/json/${fields[i]['model']}/${selected_objects[i]}/field/${fields[i]['parent_field']}`,
             dataType: 'json',
             async: false,
@@ -90,6 +101,6 @@ function set_field(select_id, value) {
 
     for (let i = 0; i < select_id; i++) {
         fill_select(i);
-        $('.' + fields[i]['id']).val(selected_objects[i]).change();
+        django.jQuery('.' + fields[i]['id']).val(selected_objects[i]).change();
     }
 }

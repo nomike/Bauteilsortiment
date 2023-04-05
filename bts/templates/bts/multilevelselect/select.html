@@ -1,7 +1,35 @@
-<select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
+{% load static %}
+<script>
+const widget_name="#{{ widget.name }}"
+const widget_value="{{ widget.value.0 }}"
+const fields = [
+    {
+        'id': 'select-assortment-box',
+        'model': 'AssortmentBox',
+        'display_field': 'name',
+    },
+    {
+        'id': 'select-storage-unit',
+        'model': 'StorageUnit',
+        'display_field': 'number',
+        'parent_field': 'assortment_box_id'
+    },
+    {
+        'id': 'select-storage-unit-compartment',
+        'model': 'StorageUnitCompartment',
+        'display_field': 'name',
+        'parent_field': 'storage_unit_id'
+    }
+]
+</script>
+<script src="{% static 'multilevel_select.js' %}"></script>
+<div id="{{ widget.name }}">
+</div>
+<!--
+    <select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
     <optgroup label="{{ group_name }}">{% endif %}{% for option in group_choices %}
     {% include option.template_name with widget=option %}{% endfor %}{% if group_name %}
     </optgroup>{% endif %}{% endfor %}
 </select>
-<p>########</p>
-  
+-->
+    
