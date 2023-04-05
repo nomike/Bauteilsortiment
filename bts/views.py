@@ -66,7 +66,8 @@ view_config = {
     },
     Purchase: {
         "list_fields": ["order_number", "merchant", "timestamp"],
-        "list_detail_link_fields": ["order_number"]
+        "list_detail_link_fields": ["order_number"],
+        "sublists": ["PurchaseLine"]
     },
     PurchaseLine: {
         "list_fields": ["name"],
