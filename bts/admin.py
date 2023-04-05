@@ -23,6 +23,7 @@ class MultiLevelSelect(Select):
 
 class SubComponentAdmin(admin.ModelAdmin):
     search_fields = ["name", "component_type"]
+    save_as = True
 
 
 class InventoryAdminForm(forms.ModelForm):
