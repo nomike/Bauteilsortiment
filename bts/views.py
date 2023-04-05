@@ -70,8 +70,8 @@ view_config = {
         "sublists": ["PurchaseLine"]
     },
     PurchaseLine: {
-        "list_fields": ["name"],
-        "list_detail_link_fields": ["name"]
+        "list_fields": ["id", "component", "quantity", "unit_price", "purchase"],
+        "list_detail_link_fields": ["id"]
     },
 }
 
