@@ -38,7 +38,7 @@
         for (let i=0; i <fields.length; i++) {
             $(fields[i]['id']).change(
                 function (event){
-                    console.warn(i);
+                    handle_change(i);
                 }
             );
         }
