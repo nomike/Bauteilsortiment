@@ -35,4 +35,6 @@ urlpatterns.extend([
          views.model_json_field_view, name="json_field_view"),
     path('json/<str:model>/<str:filter_model>/<int:id>',
          views.model_json_filtered_view, name="json_list_filtered"),
+    path('qr/<str:model>/<int:id>.svg',
+         views.qr_code_svg, name="qr_svg")
 ])
