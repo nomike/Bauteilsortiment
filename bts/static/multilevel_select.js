@@ -1,4 +1,21 @@
-django.jQuery(document).ready(function () {
+/*
+Bauteilsortiment - An Electronic Component Archival System
+Copyright (C) 2023  nomike
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+*/
+django.jQuery(document).ready(function() {
     // Create the selects
     for (let i = 0; i < fields.length; i++) {
         django.jQuery("#" + widget_name).append(django.jQuery("<select>", { style: "width: 300px;", class: fields[i]['id'], name: i == fields.length - 1 ? widget_name : null }));
@@ -16,7 +33,7 @@ django.jQuery(document).ready(function () {
 
     for (let i = 0; i < fields.length; i++) {
         django.jQuery('.' + fields[i]['id']).change(
-            function (event) {
+            function(event) {
                 handle_change(i);
             }
         );
@@ -69,9 +86,9 @@ function fill_select(select_id) {
         url: url,
         dataType: 'json',
         async: false,
-        success: function (data) {
+        success: function(data) {
             let count = 0;
-            django.jQuery.each(data, function () {
+            django.jQuery.each(data, function() {
                 select.append(django.jQuery("<option />").val(this.id).text(this[display_field]));
             });
         }
@@ -93,7 +110,7 @@ function set_field(select_id, value) {
             url: `/bts/json/${fields[i]['model']}/${selected_objects[i]}/field/${fields[i]['parent_field']}`,
             dataType: 'json',
             async: false,
-            success: function (data) {
+            success: function(data) {
                 selected_objects[i - 1] = data;
             }
         });
