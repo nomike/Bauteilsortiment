@@ -27,6 +27,14 @@ class SubComponentAdmin(admin.ModelAdmin):
     save_as = True
 
 
+class ComponentAdmin(admin.ModelAdmin):
+    search_fields = ['order_number']
+
+
+class ComponentTypeAdmin(admin.ModelAdmin):
+    search_fields = ["name"]
+
+
 class InventoryAdminForm(forms.ModelForm):
     autocomplete_fields = ["sub_component"]
 
@@ -65,8 +73,8 @@ class InventoryAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(AssortmentBox)
 admin.site.register(Category)
-admin.site.register(ComponentType)
-admin.site.register(Component)
+admin.site.register(ComponentType, ComponentTypeAdmin)
+admin.site.register(Component, ComponentAdmin)
 admin.site.register(Inventory, InventoryAdmin)
 admin.site.register(Merchant)
 admin.site.register(Purchase)
