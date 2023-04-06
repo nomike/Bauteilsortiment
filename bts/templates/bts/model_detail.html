@@ -1,3 +1,4 @@
+{% extends "bts/base.html" %}
 {% comment %}
 Bauteilsortiment - An Electronic Component Archival System
 Copyright (C) 2023  nomike
@@ -15,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {% endcomment %}
-{% extends "bts/base.html" %}
 {% load static %}
 {% load view_extras %}
 {% block title %}Detail page for {% get_verbose_name object %}: {{ object }}{% endblock %}
