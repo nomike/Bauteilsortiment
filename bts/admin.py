@@ -28,7 +28,7 @@ class SubComponentAdmin(admin.ModelAdmin):
 
 
 class ComponentAdmin(admin.ModelAdmin):
-    search_fields = ['order_number']
+    search_fields = ['part_number', 'product_description']
 
 
 class ComponentTypeAdmin(admin.ModelAdmin):
