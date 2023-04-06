@@ -78,7 +78,7 @@ class Component(models.Model):
     cache_expiry = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.part_number
+        return f'{self.part_number} - {self.product_description}'
 
     # def update_cache(self, force: bool = False):
     #     if force or self.cache_expiry < timezone.now():
