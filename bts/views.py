@@ -50,7 +50,7 @@ view_config = {
         "sublists": ["SubComponent"]
     },
     Component: {
-        "list_fields": ["part_number",  "merchant"],
+        "list_fields": ["part_number", "product_description", "merchant"],
         "list_detail_link_fields": ["part_number"],
         "sublists": ["SubComponent", "PurchaseLine"]
     },
