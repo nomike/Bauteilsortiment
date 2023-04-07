@@ -1,3 +1,19 @@
+# Bauteilsortiment - An Electronic Component Archival System
+# Copyright (C) 2023  nomike
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 from django.contrib import admin
 
 from .models import (AssortmentBox, Category, Component, ComponentType, SubComponent, Inventory,
@@ -23,10 +39,20 @@ class MultiLevelSelect(Select):
 
 class SubComponentAdmin(admin.ModelAdmin):
     search_fields = ["name", "component_type"]
+    autocomplete_fields = ["component", "component_type"]
     save_as = True
 
 
+class ComponentAdmin(admin.ModelAdmin):
+    search_fields = ['part_number', 'product_description']
+
+
+class ComponentTypeAdmin(admin.ModelAdmin):
+    search_fields = ["name"]
+
+
 class InventoryAdminForm(forms.ModelForm):
+    autocomplete_fields = ["sub_component"]
 
     class Meta:
         fields = ["sub_component",
@@ -63,8 +89,8 @@ class InventoryAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(AssortmentBox)
 admin.site.register(Category)
-admin.site.register(ComponentType)
-admin.site.register(Component)
+admin.site.register(ComponentType, ComponentTypeAdmin)
+admin.site.register(Component, ComponentAdmin)
 admin.site.register(Inventory, InventoryAdmin)
 admin.site.register(Merchant)
 admin.site.register(Purchase)
