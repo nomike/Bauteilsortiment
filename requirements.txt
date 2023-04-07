@@ -3,3 +3,4 @@ django-extensions
 pygraphviz
 django-admin
 qrcode[pil]
+drawsvg

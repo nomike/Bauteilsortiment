@@ -36,5 +36,7 @@ urlpatterns.extend([
     path('json/<str:model>/<str:filter_model>/<int:id>',
          views.model_json_filtered_view, name="json_list_filtered"),
     path('qr/<str:model>/<int:id>.svg',
-         views.qr_code_svg, name="qr_svg")
+         views.qr_code_svg, name="qr_svg"),
+    path('m/StorageUnit/id/<int:id>/label.svg',
+         views.storage_unit_label_svg, name="storage_unit_label_svg"),
 ])

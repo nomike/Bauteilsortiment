@@ -5,6 +5,7 @@ from typing import Any, Dict
 
 import qrcode
 import qrcode.image.svg
+import drawsvg
 from django.db import models
 from django.db.models import QuerySet
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -158,6 +159,43 @@ class ModelDetailView(ConfiguredDetailView):
         # Add in a QuerySet of all the books
         context['fields'] = self.model._meta.fields
         return context
+
+
+def storage_unit_label_svg(request, id):
+    su = get_object_or_404(StorageUnit, pk=id)
+    sucs = StorageUnitCompartment.objects.filter(storage_unit=su)
+    print("ffffooo")
+    print(sucs[1].name)  # .name)
+    d = drawsvg.Drawing(2000, 1000, origin='top-left')
+    r = drawsvg.Rectangle(0, 0, "50mm", "10mm", fill='#00000000',
+                          stroke="#000000", stroke_witdth="hairline")
+    img = qrcode.make(request.build_absolute_uri(reverse(f'storage_unit_detail', args=[id])),
+                      image_factory=qrcode.image.svg.SvgFragmentImage,
+                      box_size=4)
+
+    d.append(drawsvg.Image("1", "1", "10mm", "10mm",
+             data=img.to_string(encoding='unicode').encode('utf-8'), embed=False, mime_type="image/svg+xml"))
+    r.append_title("Our first rectangle")  # Add a tooltip
+    d.append(r)
+    d.append(drawsvg.Line(40,  20, 180, 20, fill='red',
+                          stroke="#000000", stroke_witdth=20))
+
+    tt = "foo"
+    bt = "bar"
+    if len(sucs) >= 1:
+        tt = Inventory.objects.filter(storage_unit_compartment=sucs[0])[
+            0].sub_component.name
+    elif len(sucs) >= 2:
+        bt = Inventory.objects.filter(storage_unit_compartment=sucs[1])[
+            0].sub_component.name
+
+    top_text = drawsvg.Text(tt, 8, x=40,
+                            y=13, font_family="arial, sans-serif")
+    bottom_text = drawsvg.Text(
+        bt, 8, x=40, y=30, font_family="arial, sans-serif")
+    d.append(top_text)
+    d.append(bottom_text)
+    return HttpResponse(d.as_svg(), content_type="image/svg+xml")
 
 
 def qr_code_svg(request, model, id):
