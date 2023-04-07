@@ -179,8 +179,6 @@ class ModelDetailView(ConfiguredDetailView):
 def storage_unit_label_svg(request, id):
     su = get_object_or_404(StorageUnit, pk=id)
     sucs = StorageUnitCompartment.objects.filter(storage_unit=su)
-    print("ffffooo")
-    print(sucs[1].name)  # .name)
     d = drawsvg.Drawing(2000, 1000, origin='top-left')
     r = drawsvg.Rectangle(0, 0, "50mm", "10mm", fill='#00000000',
                           stroke="#000000", stroke_witdth="hairline")
@@ -198,11 +196,15 @@ def storage_unit_label_svg(request, id):
     tt = "foo"
     bt = "bar"
     if len(sucs) >= 1:
-        tt = Inventory.objects.filter(storage_unit_compartment=sucs[0])[
-            0].sub_component.name
+        sub_components = Inventory.objects.filter(
+            storage_unit_compartment=sucs[0])
+        if len(sub_components) > 0:
+            tt = sub_components[0].sub_component.name
     if len(sucs) >= 2:
-        bt = Inventory.objects.filter(storage_unit_compartment=sucs[1])[
-            0].sub_component.name
+        sub_components = Inventory.objects.filter(
+            storage_unit_compartment=sucs[1])
+        if len(sub_components) > 0:
+            bt = sub_components[0].sub_component.name
 
     top_text = drawsvg.Text(tt, 8, x=40,
                             y=13, font_family="arial, sans-serif")
