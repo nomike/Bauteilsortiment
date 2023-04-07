@@ -200,7 +200,7 @@ def storage_unit_label_svg(request, id):
     if len(sucs) >= 1:
         tt = Inventory.objects.filter(storage_unit_compartment=sucs[0])[
             0].sub_component.name
-    elif len(sucs) >= 2:
+    if len(sucs) >= 2:
         bt = Inventory.objects.filter(storage_unit_compartment=sucs[1])[
             0].sub_component.name
 
