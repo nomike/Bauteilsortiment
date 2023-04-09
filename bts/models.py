@@ -97,6 +97,9 @@ class Component(models.Model):
     def __str__(self):
         return f'{self.part_number} - {self.product_description}'
 
+    class Meta:
+        unique_together = ("part_number", "merchant")
+
     # def update_cache(self, force: bool = False):
     #     if force or self.cache_expiry < timezone.now():
     #         if self.merchant == Merchant.objects.get(name="DigiKey"):
