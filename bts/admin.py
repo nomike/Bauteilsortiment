@@ -38,7 +38,7 @@ class MultiLevelSelect(Select):
 
 
 class SubComponentAdmin(admin.ModelAdmin):
-    search_fields = ["name", "component_type"]
+    search_fields = ["name", "component_type__name"]
     autocomplete_fields = ["component", "component_type"]
     save_as = True
 
