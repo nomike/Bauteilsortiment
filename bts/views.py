@@ -144,10 +144,6 @@ def model_json_field_view(request, model: str, id: int, field: str):
     return JsonResponse(getattr(get_object_or_404(getattr(bts.models, model), pk=id), field), safe=False)
 
 
-def select_test(request):
-    return render(request, template_name='bts/select_test.html')
-
-
 class ModelListView(ConfiguredListView):
     model = None
     template_name = "bts/model_list_page.html"
@@ -176,43 +172,15 @@ class ModelDetailView(ConfiguredDetailView):
         return context
 
 
-def storage_unit_label_svg(request, id):
-    su = get_object_or_404(StorageUnit, pk=id)
-    sucs = StorageUnitCompartment.objects.filter(storage_unit=su)
-    d = drawsvg.Drawing(2000, 1000, origin='top-left')
-    r = drawsvg.Rectangle(0, 0, "50mm", "10mm", fill='#00000000',
-                          stroke="#000000", stroke_witdth="hairline")
-    img = qrcode.make(request.build_absolute_uri(reverse(f'storage_unit_detail', args=[id])),
-                      image_factory=qrcode.image.svg.SvgFragmentImage,
-                      box_size=4)
+def storage_unit_label_html(request):
+    return HttpResponse(render(request, "bts/labels/hornbach/label.html"))
 
-    d.append(drawsvg.Image("1", "1", "10mm", "10mm",
-             data=img.to_string(encoding='unicode').encode('utf-8'), embed=False, mime_type="image/svg+xml"))
-    r.append_title("Our first rectangle")  # Add a tooltip
-    d.append(r)
-    d.append(drawsvg.Line(40,  20, 180, 20, fill='red',
-                          stroke="#000000", stroke_witdth=20))
 
-    tt = "foo"
-    bt = "bar"
-    if len(sucs) >= 1:
-        sub_components = Inventory.objects.filter(
-            storage_unit_compartment=sucs[0])
-        if len(sub_components) > 0:
-            tt = sub_components[0].sub_component.name
-    if len(sucs) >= 2:
-        sub_components = Inventory.objects.filter(
-            storage_unit_compartment=sucs[1])
-        if len(sub_components) > 0:
-            bt = sub_components[0].sub_component.name
-
-    top_text = drawsvg.Text(tt, 8, x=40,
-                            y=13, font_family="arial, sans-serif")
-    bottom_text = drawsvg.Text(
-        bt, 8, x=40, y=30, font_family="arial, sans-serif")
-    d.append(top_text)
-    d.append(bottom_text)
-    return HttpResponse(d.as_svg(), content_type="image/svg+xml")
+def labelpage(request, id):
+    assortment_box = get_object_or_404(AssortmentBox, pk=id)
+    context = {"assortment_box": assortment_box,
+               "storage_units": StorageUnit.objects.filter(assortment_box=assortment_box)}
+    return render(request, 'bts/labelpage.html', context)
 
 
 def qr_code_svg(request, model, id):
@@ -220,7 +188,8 @@ def qr_code_svg(request, model, id):
 
     img = qrcode.make(request.build_absolute_uri(reverse(f'merchant_detail', args=[id])),
                       image_factory=qrcode.image.svg.SvgImage,
-                      box_size=box_size or 4)
+                      box_size=box_size or 4,
+                      border=1)
 
     return HttpResponse(img.to_string(encoding='unicode'), content_type="image/svg+xml")
 

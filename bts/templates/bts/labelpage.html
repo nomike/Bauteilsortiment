@@ -1,0 +1,41 @@
+{% comment %}
+Bauteilsortiment - An Electronic Component Archival System
+Copyright (C) 2023 nomike
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see
+<http: //www.gnu.org/licenses />.
+{% endcomment %}
+{% load static %}
+{% load view_extras %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Testpage</title>
+    <link rel="stylesheet" href="{% static 'labelpage.css' %}" />
+</head>
+
+<body>
+    <div class="outergrid">
+        {% for storage_unit in storage_units %}
+        <div class="grid">
+            <div class="grid_qr"><img src="{% url "qr_svg" "StorageUnit" storage_unit.id %}" /></div>
+            <div class="grid_text_top">{{ storage_unit.storage_unit_compartments.all.1.inventories.all.0.sub_component.name }}</div>
+            <div class="grid_text_bottom">{{ storage_unit.storage_unit_compartments.all.0.inventories.all.0.sub_component.name }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

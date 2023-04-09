@@ -45,7 +45,8 @@ for name in [obj.__name__ for name, obj in bts.models.__dict__.items()
 urlpatterns.extend([
     path('',
          views.home_view, name='home'),
-    path('select_test', views.select_test, name='select_test'),
+    path('label',
+         views.storage_unit_label_html, name='label'),
     path('json/<str:model>', views.model_json_view, name="json_list"),
     path('json/<str:model>/<int:id>/field/<str:field>',
          views.model_json_field_view, name="json_field_view"),
@@ -53,6 +54,6 @@ urlpatterns.extend([
          views.model_json_filtered_view, name="json_list_filtered"),
     path('qr/<str:model>/<int:id>.svg',
          views.qr_code_svg, name="qr_svg"),
-    path('m/StorageUnit/id/<int:id>/label.svg',
-         views.storage_unit_label_svg, name="storage_unit_label_svg"),
+    path('labels/<int:id>',
+         views.labelpage, name="qr_svg"),
 ])
