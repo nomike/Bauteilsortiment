@@ -58,7 +58,8 @@ class StorageUnit(models.Model):
 
 class StorageUnitCompartment(models.Model):
     name = models.CharField(max_length=255, null=True)
-    storage_unit = models.ForeignKey(StorageUnit, on_delete=models.CASCADE)
+    storage_unit = models.ForeignKey(
+        StorageUnit, related_name="storage_unit_compartments", on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.storage_unit.assortment_box.name}/{self.storage_unit.number}/{self.name}'
@@ -142,7 +143,7 @@ class Category(models.Model):
 class Inventory(models.Model):
     sub_component = models.ForeignKey(SubComponent, on_delete=models.CASCADE)
     storage_unit_compartment = models.ForeignKey(
-        StorageUnitCompartment, on_delete=models.CASCADE)
+        StorageUnitCompartment, related_name="inventories", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now)
     count = models.IntegerField()
 
