@@ -18,9 +18,9 @@ import inspect
 import json
 from typing import Any, Dict
 
+import drawsvg
 import qrcode
 import qrcode.image.svg
-import drawsvg
 from django.db import models
 from django.db.models import QuerySet
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -35,7 +35,6 @@ from bts.models import (AssortmentBox, Category, Component, ComponentType,
                         StorageUnit, StorageUnitCompartment, StorageUnitType,
                         SubComponent)
 from bts.templatetags import view_extras
-
 
 # Vie config
 view_config = {
@@ -186,7 +185,7 @@ def labelpage(request, id):
 def qr_code_svg(request, model, id):
     box_size = request.GET.get('box_size')
 
-    img = qrcode.make(request.build_absolute_uri(reverse(f'merchant_detail', args=[id])),
+    img = qrcode.make(request.build_absolute_uri(reverse(f'{view_extras.snake_case(model)}_detail', args=[id])),
                       image_factory=qrcode.image.svg.SvgImage,
                       box_size=box_size or 4,
                       border=1)
