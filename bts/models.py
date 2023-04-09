@@ -28,14 +28,14 @@ from django.utils import timezone
 
 
 class AssortmentBox(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class StorageUnitType(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     width = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
     depth = models.IntegerField(null=True)
@@ -55,6 +55,9 @@ class StorageUnit(models.Model):
     def __str__(self):
         return f'{self.assortment_box.name}/{self.number}'
 
+    class Meta:
+        unique_together = ("number", "assortment_box")
+
 
 class StorageUnitCompartment(models.Model):
     name = models.CharField(max_length=255, null=True)
@@ -64,9 +67,12 @@ class StorageUnitCompartment(models.Model):
     def __str__(self):
         return f'{self.storage_unit.assortment_box.name}/{self.storage_unit.number}/{self.name}'
 
+    class Meta:
+        unique_together = ("name", "storage_unit")
+
 
 class Merchant(models.Model):
-    name = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=255, null=True, unique=True)
     url = models.URLField(max_length=255, null=True)
 
     def __str__(self):
@@ -74,7 +80,7 @@ class Merchant(models.Model):
 
 
 class ComponentType(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
 
@@ -133,9 +139,12 @@ class SubComponent(models.Model):
     def __str__(self):
         return f'{self.component.product_description}/{self.name}'
 
+    class Meta:
+        unique_together = ("name", "component")
+
 
 class Category(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
 
@@ -153,6 +162,9 @@ class Inventory(models.Model):
     def __str__(self):
         return f'{self.sub_component.component.product_description}/{self.sub_component.name} ({self.count})'
 
+    class Meta:
+        unique_together = ("sub_component", "storage_unit_compartment")
+
 
 class Purchase(models.Model):
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
@@ -161,6 +173,9 @@ class Purchase(models.Model):
 
     def __str__(self):
         return f'{self.merchant.name} order number {self.order_number} from {self.timestamp}'
+
+    class Meta:
+        unique_together = ("merchant", "order_number")
 
 
 class PurchaseLine(models.Model):
