@@ -99,6 +99,7 @@ class Component(models.Model):
         max_length=254, null=True, blank=True)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     cache_expiry = models.DateTimeField(default=timezone.now)
+    notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.part_number} - {self.product_description}'
