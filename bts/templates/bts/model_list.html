@@ -26,13 +26,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {% for object in object_list %}
     <tr>
         {% for field in list_fields %}
+        {% with field_id=field|add:"_id" %}
         <td>
             {% if field in list_detail_link_fields %}
             <a href="{% url object_list.0|get_type|add:"_detail"|snake_case object.id %}">
             {% endif %}
+            {% if field in list_foreign_link_fields %}
+            <a href="{% url object|hash:field|get_type|add:"_detail"|snake_case object|hash:field_id %}">
+            {% endif %}
             {{ object|hash:field }}
+            {% if field in list_foreign_link_fields %}
             </a>
+            {% endif %}
+            {% if field in list_detail_link_fields %}
+            </a>
+            {% endif %}
         </td>
+        {% endwith %}
         {% endfor %}
     </tr>
     {% endfor %}

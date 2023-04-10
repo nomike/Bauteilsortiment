@@ -82,7 +82,8 @@ view_config = {
     },
     Inventory: {
         "list_fields": ["id", "sub_component", "storage_unit_compartment", "timestamp", "count"],
-        "list_detail_link_fields": ["id"]
+        "list_detail_link_fields": ["id"],
+        "list_foreign_link_fields": ["sub_component"],
     },
     Purchase: {
         "list_fields": ["order_number", "merchant", "timestamp"],
@@ -91,7 +92,8 @@ view_config = {
     },
     PurchaseLine: {
         "list_fields": ["id", "component", "quantity", "unit_price", "purchase"],
-        "list_detail_link_fields": ["id"]
+        "list_detail_link_fields": ["id"],
+        "list_foreign_link_fields": ["component"],
     },
 }
 
