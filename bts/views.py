@@ -37,7 +37,17 @@ from bts.models import (AssortmentBox, Category, Component, ComponentType,
                         SubComponent)
 from bts.templatetags import view_extras
 
-# Vie config
+"""View config.
+
+This dictionary allows you to configure views. Keys are the model classes.
+Values are dictionaries themselves with the following keys:
+
+# list_fields               A list of fields which will be rendered as columns in list views.
+# list_detail_link_fields   Fiels in this list will be rendered as hyperlinks to the listed object.
+# list_foreign_link_fields  Fieldnames listed in here will be rendered as links pointing to the foreign object they represent.
+# sublists                  A list of model names for which sub-lists will be rendered on detail pages.
+"""
+
 view_config = {
     AssortmentBox: {
         "list_fields": ["name"],
