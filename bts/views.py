@@ -23,7 +23,8 @@ import qrcode
 import qrcode.image.svg
 from django.db import models
 from django.db.models import QuerySet
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpRequest
+from django.http import (HttpRequest, HttpResponse, HttpResponseRedirect,
+                         JsonResponse)
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import View
