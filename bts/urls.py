@@ -45,8 +45,6 @@ for name in [obj.__name__ for name, obj in bts.models.__dict__.items()
 urlpatterns.extend([
     path('',
          views.home_view, name='home'),
-    path('label',
-         views.storage_unit_label_html, name='label'),
     path('json/<str:model>', views.model_json_view, name="json_list"),
     path('json/<str:model>/<int:id>/field/<str:field>',
          views.model_json_field_view, name="json_field_view"),

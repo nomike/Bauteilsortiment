@@ -237,10 +237,6 @@ class ModelDetailView(ConfiguredDetailView):
         return context
 
 
-def storage_unit_label_html(request):
-    return HttpResponse(render(request, "bts/labels/hornbach/label.html"))
-
-
 def labelpage(request, id):
     """Render a HTML page full of printable lables.
     The lables could be put on the StorageUnits.
