@@ -37,7 +37,7 @@ from bts.models import (AssortmentBox, Category, Component, ComponentType,
                         SubComponent)
 from bts.templatetags import view_extras
 
-"""View config.
+"""Configuration for generic views.
 
 This dictionary allows you to configure views. Keys are the model classes.
 Values are dictionaries themselves with the following keys:
