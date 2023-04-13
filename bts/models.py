@@ -59,7 +59,10 @@ class StorageUnit(models.Model):
         return f'{self.assortment_box.name}/{self.number}'
 
     class Meta:
-        unique_together = ("number", "assortment_box")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["number", "assortment_box"], name="UQ_StorageUnit_number_assortment_box")
+        ]
 
 
 class StorageUnitCompartment(models.Model):
