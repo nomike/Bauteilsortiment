@@ -114,7 +114,10 @@ class Component(models.Model):
         return f'{self.part_number} - {self.product_description}'
 
     class Meta:
-        unique_together = ("part_number", "merchant")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["part_number", "merchant"], name="UQ_Component_part_number_merchant")
+        ]
 
     # def update_cache(self, force: bool = False):
     #     if force or self.cache_expiry < timezone.now():
