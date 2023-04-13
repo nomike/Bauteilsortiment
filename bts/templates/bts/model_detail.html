@@ -18,10 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {% endcomment %}
 {% load static %}
 {% load view_extras %}
-{% block title %}Detail page for {% get_verbose_name object %}: {{ object }}{% endblock %}
-{% block page_title %}Detail page for {% get_verbose_name object %}: {{ object }}{% endblock %}
+{% block title %}Detail page for {{ object|get_meta|hash:"verbose_name" }}: {{ object }}{% endblock %}
+{% block page_title %}Detail page for {{ object|get_meta|hash:"verbose_name" }}: {{ object }}{% endblock %}
 {% block body %}
-    <p id="breadcrumbs"><a href="{% url "home" %}">Home</a> / <a href="{% url object|get_type|add:"_list"|snake_case %}">{% get_verbose_name object %}s</a> / {{ object }}</p>
+    <p id="breadcrumbs"><a href="{% url "home" %}">Home</a> / <a href="{% url object|get_meta|hash:"object_name"|add:"_list" %}">{{ object|get_meta|hash:"verbose_name" }}s</a> / {{ object }}</p>
     <p>
         <table id="object" class="maintable">
             <tr>
@@ -30,22 +30,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </tr>
             {% for field in fields %}
             <tr>
-                <td>{{ field.verbose_name }}</td>
+                <td>{{ field.name }}</td>
                 <td>
                     {% is_url_field field as is_url_field %}
                     {% is_foreign_key_field field as is_foreign_key_field %}
                     {% if is_url_field %}
-                    <a href="{{ object|hash:field.name }}">{{ object|hash:field.name }}</a>
+                        <a href="{{ object|hash:field.name }}">{{ object|hash:field.name }}</a>
                     {% elif is_foreign_key_field %}
                         {% cat field.name "_id" as id_column %}
                         {% if object|hash:id_column is not None %}
-                            {% get_detail_name field "" as detail_name %}
-                            <a href="{% url detail_name|snake_case|add:"_detail" object|hash:id_column %}">{{ object|hash:field.name }}</a>
+                            <a href="{% url field|hash:"related_model"|get_meta|hash:"object_name"|add:"_detail" object|hash:id_column %}">{{ object|hash:field.name }}</a> 
                         {% else %}
-                                {{ object|hash:id_column }}
+                                {{ object }}
                         {% endif %}
                     {% else %}
-                        {{ object|hash:field.name }}
+                        {{ object|hash:field.name}}
                     {% endif %}                    
                 </td>
             </tr>
@@ -79,7 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </div>     
     {% for sublist in sublists %}
     <script>
-        fetch("{% url sublist|snake_case|add:"_filtered_list" object|get_type object.pk %}" /*, options */)
+        fetch("{% url sublist|add:"_filtered_list" object|get_meta|hash:"object_name" object.pk %}" /*, options */)
         .then((response) => response.text())
         .then((html) => {
             document.getElementById("{{ sublist }}").innerHTML = html;
