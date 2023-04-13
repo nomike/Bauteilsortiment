@@ -30,6 +30,9 @@ from django.utils import timezone
 class AssortmentBox(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
+    class Meta:
+        verbose_name_plural = "assortment boxes"
+
     def __str__(self):
         return self.name
 
@@ -152,6 +155,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "categories"
+
 
 class Inventory(models.Model):
     sub_component = models.ForeignKey(SubComponent, on_delete=models.CASCADE)
@@ -165,6 +171,7 @@ class Inventory(models.Model):
 
     class Meta:
         unique_together = ("sub_component", "storage_unit_compartment")
+        verbose_name_plural = "invetories"
 
 
 class Purchase(models.Model):
