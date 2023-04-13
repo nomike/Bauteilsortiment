@@ -153,7 +153,10 @@ class SubComponent(models.Model):
         return f'{self.component.product_description}/{self.name}'
 
     class Meta:
-        unique_together = ("name", "component")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name", "component"], name="UQ_SubComponent_name_component")
+        ]
 
 
 class Category(models.Model):
