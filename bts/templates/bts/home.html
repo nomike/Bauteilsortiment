@@ -30,8 +30,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         {% for type in types %}
         <tr>
             <td>
-                <a href="{% url type|get_type|add:"_list"|snake_case %}">
-                {{ type|get_type|snake_case|snake_to_space }}s
+                <a href="{% url type|get_meta|hash:"object_name" %}">
+                {{ type|get_meta|hash:"verbose_name_plural"|hash:"title" }}
                 </a>
             </td>
         </tr>

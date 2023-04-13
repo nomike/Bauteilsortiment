@@ -23,6 +23,12 @@ register = Library()
 
 
 @register.filter
+def dict(object):
+    # return "foo"
+    return object.__dict__
+
+
+@register.filter
 def hash(object, attr):
     pseudo_context = {'object': object}
     try:
@@ -55,6 +61,11 @@ def snake_to_space(string: str):
 @register.filter
 def get_type(object):
     return object.__class__.__name__
+
+
+@register.filter
+def get_meta(object):
+    return object._meta
 
 
 @register.simple_tag

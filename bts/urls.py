@@ -25,21 +25,20 @@ from bts.templatetags.view_extras import snake_case
 from . import views
 
 urlpatterns = []
-for name in [obj.__name__ for name, obj in bts.models.__dict__.items()
-             if inspect.isclass(obj) and issubclass(obj, models.Model)]:
+for object in [object for name, object in bts.models.__dict__.items() if inspect.isclass(object) and issubclass(object, models.Model)]:
     # generic list
-    urlpatterns.append(path(f'm/{name}', getattr(views,  f'{name}ListView').as_view(),
-                            name=f"{snake_case(name)}_list"))
-    urlpatterns.append(path(f'm/{name}/', getattr(views,  f'{name}ListView').as_view(),
-                            name=f"{snake_case(name)}_list"))
+    urlpatterns.append(path(f'm/{object._meta.object_name}', getattr(views,  f'{object._meta.object_name}ListView').as_view(),
+                            name=f"{object._meta.object_name}"))
+    urlpatterns.append(path(f'm/{object._meta.object_name}/', getattr(views,  f'{object._meta.object_name}ListView').as_view(),
+                            name=f"{object._meta.object_name}_list"))
 
     # filtered list
-    urlpatterns.append(path(f'm/{name}/filtered/<str:model>/<int:id>', getattr(views,  f'{name}FilteredListView').as_view(),
-                            name=f"{snake_case(name)}_filtered_list"))
+    urlpatterns.append(path(f'm/{object._meta.object_name}/filtered/<str:model>/<int:id>', getattr(views,  f'{object._meta.object_name}FilteredListView').as_view(),
+                            name=f"{object._meta.object_name}_filtered_list"))
 
     # generic detail page
-    urlpatterns.append(path(f'm/{name}/id/<int:pk>', getattr(views,  f'{name}DetailView').as_view(),
-                            name=f"{snake_case(name)}_detail"))
+    urlpatterns.append(path(f'm/{object._meta.object_name}/id/<int:pk>', getattr(views,  f'{object._meta.object_name}DetailView').as_view(),
+                            name=f"{object._meta.object_name}_detail"))
 
 
 urlpatterns.extend([
