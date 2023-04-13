@@ -199,7 +199,10 @@ class Purchase(models.Model):
         return f'{self.merchant.name} order number {self.order_number} from {self.timestamp}'
 
     class Meta:
-        unique_together = ("merchant", "order_number")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["merchant", "order_number"], name="UQ_Purchase_merchant_oder_number")
+        ]
 
 
 class PurchaseLine(models.Model):
