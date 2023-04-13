@@ -59,7 +59,10 @@ class StorageUnit(models.Model):
         return f'{self.assortment_box.name}/{self.number}'
 
     class Meta:
-        unique_together = ("number", "assortment_box")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["number", "assortment_box"], name="UQ_StorageUnit_number_assortment_box")
+        ]
 
 
 class StorageUnitCompartment(models.Model):
@@ -71,7 +74,10 @@ class StorageUnitCompartment(models.Model):
         return f'{self.storage_unit.assortment_box.name}/{self.storage_unit.number}/{self.name}'
 
     class Meta:
-        unique_together = ("name", "storage_unit")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name", "storage_unit"], name="UQ_StorageUnitCompartment_name_storage_unit")
+        ]
 
 
 class Merchant(models.Model):
@@ -108,7 +114,10 @@ class Component(models.Model):
         return f'{self.part_number} - {self.product_description}'
 
     class Meta:
-        unique_together = ("part_number", "merchant")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["part_number", "merchant"], name="UQ_Component_part_number_merchant")
+        ]
 
     # def update_cache(self, force: bool = False):
     #     if force or self.cache_expiry < timezone.now():
@@ -144,7 +153,10 @@ class SubComponent(models.Model):
         return f'{self.component.product_description}/{self.name}'
 
     class Meta:
-        unique_together = ("name", "component")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name", "component"], name="UQ_SubComponent_name_component")
+        ]
 
 
 class Category(models.Model):
@@ -170,7 +182,11 @@ class Inventory(models.Model):
         return f'{self.sub_component.component.product_description}/{self.sub_component.name} ({self.count})'
 
     class Meta:
-        unique_together = ("sub_component", "storage_unit_compartment")
+        constraints = [
+            models.UniqueConstraint(fields=["sub_component", "storage_unit_compartment"],
+                                    name="UQ_Inventory_sub_component_storage_unit_compartment")
+        ]
+
         verbose_name_plural = "invetories"
 
 
@@ -183,7 +199,10 @@ class Purchase(models.Model):
         return f'{self.merchant.name} order number {self.order_number} from {self.timestamp}'
 
     class Meta:
-        unique_together = ("merchant", "order_number")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["merchant", "order_number"], name="UQ_Purchase_merchant_oder_number")
+        ]
 
 
 class PurchaseLine(models.Model):
