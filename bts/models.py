@@ -69,6 +69,7 @@ class StorageUnitCompartment(models.Model):
     name = models.CharField(max_length=255, null=True)
     storage_unit = models.ForeignKey(
         StorageUnit, related_name="storage_unit_compartments", on_delete=models.CASCADE)
+    z_index = models.IntegerField(null=True)
 
     def __str__(self):
         return f'{self.storage_unit.assortment_box.name}/{self.storage_unit.number}/{self.name}'
@@ -76,7 +77,9 @@ class StorageUnitCompartment(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["name", "storage_unit"], name="UQ_StorageUnitCompartment_name_storage_unit")
+                fields=["name", "storage_unit"], name="UQ_StorageUnitCompartment_name_storage_unit"),
+            models.UniqueConstraint(
+                fields=["z_index", "storage_unit"], name="UQ_StorageUnitCompartment_z_index_storage_unit")
         ]
 
 
