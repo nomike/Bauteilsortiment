@@ -182,7 +182,11 @@ class Inventory(models.Model):
         return f'{self.sub_component.component.product_description}/{self.sub_component.name} ({self.count})'
 
     class Meta:
-        unique_together = ("sub_component", "storage_unit_compartment")
+        constraints = [
+            models.UniqueConstraint(fields=["sub_component", "storage_unit_compartment"],
+                                    name="UQ_Inventory_sub_component_storage_unit_compartment")
+        ]
+
         verbose_name_plural = "invetories"
 
 
