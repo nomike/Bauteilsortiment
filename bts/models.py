@@ -74,7 +74,10 @@ class StorageUnitCompartment(models.Model):
         return f'{self.storage_unit.assortment_box.name}/{self.storage_unit.number}/{self.name}'
 
     class Meta:
-        unique_together = ("name", "storage_unit")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name", "storage_unit"], name="UQ_StorageUnitCompartment_name_storage_unit")
+        ]
 
 
 class Merchant(models.Model):
