@@ -31,8 +31,10 @@ along with this program. If not, see
         {% for storage_unit in storage_units %}
         <div class="grid">
             <div class="grid_qr"><img src="{% url "qr_svg" "StorageUnit" storage_unit.id %}" /></div>
-            <div class="grid_text_top">{{ storage_unit.storage_unit_compartments.all.1.inventories.all.0.sub_component.name }}</div>
-            <div class="grid_text_bottom">{{ storage_unit.storage_unit_compartments.all.0.inventories.all.0.sub_component.name }}</div>
+            {% with storage_unit_compartments=storage_unit.storage_unit_compartments.all|dictsortreversed:"z_index" %}
+            <div class="grid_text_top">{{ storage_unit_compartments.1.inventories.all.0.sub_component.name }}</div>
+            <div class="grid_text_bottom">{{ storage_unit_compartments.0.inventories.all.0.sub_component.name }}</div>
+            {% endwith %}
         </div>
         {% endfor %}
     </div>
