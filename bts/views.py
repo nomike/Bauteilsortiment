@@ -281,7 +281,7 @@ def qr_code_svg(request, model, id):
     """
     box_size = request.GET.get('box_size')
 
-    img = qrcode.make(request.build_absolute_uri(reverse(f'{view_extras.snake_case(model)}_detail', args=[id])),
+    img = qrcode.make(request.build_absolute_uri(reverse(f'{model}_detail', args=[id])),
                       image_factory=qrcode.image.svg.SvgImage,
                       box_size=box_size or 4,
                       border=1)
