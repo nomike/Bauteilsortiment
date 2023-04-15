@@ -273,7 +273,7 @@ def labelpage(request, id):
         "assortment_box": assortment_box,
         "storage_units": StorageUnit.objects.filter(assortment_box=assortment_box),
     }
-    return render(request, "bts/labelpage.html", context)
+    return render(request, "bts/labels/hornbach/labelpage.html", context)
 
 
 def qr_code_svg(request, model, id):
