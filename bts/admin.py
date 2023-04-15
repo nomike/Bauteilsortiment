@@ -16,16 +16,26 @@
 
 from django.contrib import admin
 
-from .models import (AssortmentBox, Category, Component, ComponentType, SubComponent, Inventory,
-                     Merchant, Purchase, PurchaseLine, StorageUnit,
-                     StorageUnitCompartment, StorageUnitType)
+from .models import (
+    AssortmentBox,
+    Category,
+    Component,
+    ComponentType,
+    SubComponent,
+    Inventory,
+    Merchant,
+    Purchase,
+    PurchaseLine,
+    StorageUnit,
+    StorageUnitCompartment,
+    StorageUnitType,
+)
 
 from django.forms.widgets import Select
 from django import forms
 
 
 class MultiLevelSelect(Select):
-
     def __init__(self, fields):
         self.fields = fields
         super().__init__()
@@ -33,7 +43,7 @@ class MultiLevelSelect(Select):
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
-        context['fields'] = self.fields
+        context["fields"] = self.fields
         return context
 
 
@@ -44,7 +54,7 @@ class SubComponentAdmin(admin.ModelAdmin):
 
 
 class ComponentAdmin(admin.ModelAdmin):
-    search_fields = ['part_number', 'product_description']
+    search_fields = ["part_number", "product_description"]
 
 
 class ComponentTypeAdmin(admin.ModelAdmin):
@@ -55,11 +65,11 @@ class InventoryAdminForm(forms.ModelForm):
     autocomplete_fields = ["sub_component"]
 
     class Meta:
-        fields = ["sub_component",
-                  "storage_unit_compartment", "timestamp", "count"]
+        fields = ["sub_component", "storage_unit_compartment", "timestamp", "count"]
         model = Inventory
         widgets = {
-            'storage_unit_compartment': MultiLevelSelect(fields="""[
+            "storage_unit_compartment": MultiLevelSelect(
+                fields="""[
     {
         'id': 'select-assortment-box',
         'model': 'AssortmentBox',
@@ -77,7 +87,8 @@ class InventoryAdminForm(forms.ModelForm):
         'display_field': 'name',
         'parent_field': 'storage_unit_id'
     }
-]""")
+]"""
+            )
         }
 
 

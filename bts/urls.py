@@ -25,32 +25,61 @@ from bts.templatetags.view_extras import snake_case
 from . import views
 
 urlpatterns = []
-for object in [object for name, object in bts.models.__dict__.items() if inspect.isclass(object) and issubclass(object, models.Model)]:
+for object in [
+    object
+    for name, object in bts.models.__dict__.items()
+    if inspect.isclass(object) and issubclass(object, models.Model)
+]:
     # generic list
-    urlpatterns.append(path(f'm/{object._meta.object_name}', getattr(views,  f'{object._meta.object_name}ListView').as_view(),
-                            name=f"{object._meta.object_name}"))
-    urlpatterns.append(path(f'm/{object._meta.object_name}/', getattr(views,  f'{object._meta.object_name}ListView').as_view(),
-                            name=f"{object._meta.object_name}_list"))
+    urlpatterns.append(
+        path(
+            f"m/{object._meta.object_name}",
+            getattr(views, f"{object._meta.object_name}ListView").as_view(),
+            name=f"{object._meta.object_name}",
+        )
+    )
+    urlpatterns.append(
+        path(
+            f"m/{object._meta.object_name}/",
+            getattr(views, f"{object._meta.object_name}ListView").as_view(),
+            name=f"{object._meta.object_name}_list",
+        )
+    )
 
     # filtered list
-    urlpatterns.append(path(f'm/{object._meta.object_name}/filtered/<str:model>/<int:id>', getattr(views,  f'{object._meta.object_name}FilteredListView').as_view(),
-                            name=f"{object._meta.object_name}_filtered_list"))
+    urlpatterns.append(
+        path(
+            f"m/{object._meta.object_name}/filtered/<str:model>/<int:id>",
+            getattr(views, f"{object._meta.object_name}FilteredListView").as_view(),
+            name=f"{object._meta.object_name}_filtered_list",
+        )
+    )
 
     # generic detail page
-    urlpatterns.append(path(f'm/{object._meta.object_name}/id/<int:pk>', getattr(views,  f'{object._meta.object_name}DetailView').as_view(),
-                            name=f"{object._meta.object_name}_detail"))
+    urlpatterns.append(
+        path(
+            f"m/{object._meta.object_name}/id/<int:pk>",
+            getattr(views, f"{object._meta.object_name}DetailView").as_view(),
+            name=f"{object._meta.object_name}_detail",
+        )
+    )
 
 
-urlpatterns.extend([
-    path('',
-         views.home_view, name='home'),
-    path('json/<str:model>', views.model_json_view, name="json_list"),
-    path('json/<str:model>/<int:id>/field/<str:field>',
-         views.model_json_field_view, name="json_field_view"),
-    path('json/<str:model>/<str:filter_model>/<int:id>',
-         views.model_json_filtered_view, name="json_list_filtered"),
-    path('qr/<str:model>/<int:id>.svg',
-         views.qr_code_svg, name="qr_svg"),
-    path('labels/<int:id>',
-         views.labelpage, name="qr_svg"),
-])
+urlpatterns.extend(
+    [
+        path("", views.home_view, name="home"),
+        path("json/<str:model>", views.model_json_view, name="json_list"),
+        path(
+            "json/<str:model>/<int:id>/field/<str:field>",
+            views.model_json_field_view,
+            name="json_field_view",
+        ),
+        path(
+            "json/<str:model>/<str:filter_model>/<int:id>",
+            views.model_json_filtered_view,
+            name="json_list_filtered",
+        ),
+        path("qr/<str:model>/<int:id>.svg", views.qr_code_svg, name="qr_svg"),
+        path("labels/<int:id>", views.labelpage, name="qr_svg"),
+    ]
+)
