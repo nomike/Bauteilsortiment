@@ -138,3 +138,4 @@ GitHub.sublime-settings
 .history
 bts/cache/token_storage.json
 bauteilsortiment/settings.py
+.vscode/settings.json
