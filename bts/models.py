@@ -29,6 +29,7 @@ from django.utils import timezone
 
 class AssortmentBox(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    label_type = models.CharField(max_length=255)
 
     class Meta:
         verbose_name_plural = "assortment boxes"
