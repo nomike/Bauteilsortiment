@@ -49,7 +49,7 @@ for object in [
     # filtered list
     urlpatterns.append(
         path(
-            f"m/{object._meta.object_name}/filtered/<str:model>/<int:id>",
+            f"m/{object._meta.object_name}/filtered/<str:field>/<str:value>",
             getattr(views, f"{object._meta.object_name}FilteredListView").as_view(),
             name=f"{object._meta.object_name}_filtered_list",
         )
