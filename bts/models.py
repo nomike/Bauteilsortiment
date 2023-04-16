@@ -94,6 +94,7 @@ class StorageUnitCompartment(models.Model):
 class Merchant(models.Model):
     name = models.CharField(max_length=255, null=True, unique=True)
     url = models.URLField(max_length=255, null=True, blank=True)
+    description = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
