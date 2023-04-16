@@ -267,6 +267,30 @@ def labelpage(request, id):
     return render(request, f"bts/labels/{assortment_box.label_type}/labelpage.html", context)
 
 
+def qr_redirect(request, id):
+    """Redirects to the detail page of the object with the given id.
+    Used to make the URL as short as possible, in order to make the qrcodes smaller.
+    This sacrifices support for multiple models though and makes the qrcodes less flexible.
+
+    Args:
+        request (HttpRequest): Django Request Object
+        id (int): The object's ID
+
+    Returns:
+        HttpResponse: A response object containing the SVG image.
+    """
+    box_size = request.GET.get("box_size")
+
+    img = qrcode.make(
+        f"http://b.nomi.ke/bts/qrr/{id}",
+        image_factory=qrcode.image.svg.SvgImage,
+        box_size=box_size or 4,
+        border=1,
+    )
+
+    return HttpResponse(img.to_string(encoding="unicode"), content_type="image/svg+xml")
+
+
 def qr_code_svg(request, model, id):
     """Renders a SVG image containing a qr code with a link to a specific object.
 
@@ -284,7 +308,7 @@ def qr_code_svg(request, model, id):
     box_size = request.GET.get("box_size")
 
     img = qrcode.make(
-        request.build_absolute_uri(reverse(f"{model}_detail", args=[id])),
+        f'http://b.nomi.ke{reverse(f"{model}_detail", args=[id])}',
         image_factory=qrcode.image.svg.SvgImage,
         box_size=box_size or 4,
         border=1,
