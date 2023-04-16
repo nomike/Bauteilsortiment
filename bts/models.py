@@ -53,9 +53,7 @@ class StorageUnit(models.Model):
     name = models.CharField(max_length=255)
     number = models.IntegerField()
     assortment_box = models.ForeignKey(AssortmentBox, on_delete=models.CASCADE)
-    storage_unit_type = models.ForeignKey(
-        StorageUnitType, on_delete=models.CASCADE, null=True
-    )
+    storage_unit_type = models.ForeignKey(StorageUnitType, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.assortment_box.name}/{self.number}"
@@ -188,6 +186,10 @@ class Inventory(models.Model):
     )
     timestamp = models.DateTimeField(default=timezone.now)
     count = models.IntegerField()
+    exact_match = models.BooleanField(
+        default=True,
+        help_text="Is this the actual SubComponent, or is it just one with similar enogh specs?",
+    )
 
     def __str__(self):
         return f"{self.sub_component.component.product_description}/{self.sub_component.name} ({self.count})"
