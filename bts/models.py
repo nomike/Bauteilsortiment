@@ -69,6 +69,7 @@ class StorageUnit(models.Model):
 
 class StorageUnitCompartment(models.Model):
     name = models.CharField(max_length=255, null=True)
+    description = models.CharField(max_length=255, null=True)
     storage_unit = models.ForeignKey(
         StorageUnit, related_name="storage_unit_compartments", on_delete=models.CASCADE
     )
