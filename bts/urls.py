@@ -49,7 +49,7 @@ for object in [
     # filtered list
     urlpatterns.append(
         path(
-            f"m/{object._meta.object_name}/filtered/<str:model>/<int:id>",
+            f"m/{object._meta.object_name}/filtered/<str:field>/<str:value>",
             getattr(views, f"{object._meta.object_name}FilteredListView").as_view(),
             name=f"{object._meta.object_name}_filtered_list",
         )
@@ -75,7 +75,7 @@ urlpatterns.extend(
             name="json_field_view",
         ),
         path(
-            "json/<str:model>/<str:filter_model>/<int:id>",
+            "json/<str:model>/<str:field>/<str:value>",
             views.model_json_filtered_view,
             name="json_list_filtered",
         ),

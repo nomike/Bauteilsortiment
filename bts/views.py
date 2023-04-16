@@ -61,51 +61,46 @@ view_config = {
     AssortmentBox: {
         "list_fields": ["name"],
         "list_detail_link_fields": ["name"],
-        "sublists": ["StorageUnit"],
+        "sublists": ["storageunit_set"],
     },
     StorageUnitType: {"list_fields": ["name"], "list_detail_link_fields": ["name"]},
     StorageUnit: {
         "list_fields": ["number", "assortment_box"],
         "list_detail_link_fields": ["number"],
-        "sublists": ["StorageUnitCompartment"],
+        "sublists": ["storage_unit_compartments"],
     },
     StorageUnitCompartment: {
         "list_fields": ["name"],
         "list_detail_link_fields": ["name"],
-        "sublists": ["Inventory"],
+        "sublists": ["inventories"],
     },
     Merchant: {
         "list_fields": ["name", "url"],
         "list_detail_link_fields": ["name"],
-        "sublists": ["Component", "Purchase"],
+        "sublists": ["component_set", "purchase_set"],
     },
     ComponentType: {
         "list_fields": ["name", "parent"],
         "list_detail_link_fields": ["name"],
-        "sublists": ["SubComponent"],
+        "sublists": ["componenttype_set", "subcomponent_set"],
+        # "sublists": ["componenttype_set"],
     },
     Component: {
         "list_fields": ["part_number", "product_description", "merchant"],
         "list_detail_link_fields": ["part_number"],
-        "sublists": ["SubComponent", "PurchaseLine"],
+        "sublists": ["subcomponent_set", "purchaseline_set"],
     },
     SubComponent: {"list_fields": ["name"], "list_detail_link_fields": ["name"]},
     Category: {"list_fields": ["name"], "list_detail_link_fields": ["name"]},
     Inventory: {
-        "list_fields": [
-            "id",
-            "sub_component",
-            "storage_unit_compartment",
-            "timestamp",
-            "count",
-        ],
+        "list_fields": ["id", "sub_component", "storage_unit_compartment", "timestamp", "count"],
         "list_detail_link_fields": ["id"],
         "list_foreign_link_fields": ["sub_component"],
     },
     Purchase: {
         "list_fields": ["order_number", "merchant", "timestamp"],
         "list_detail_link_fields": ["order_number"],
-        "sublists": ["PurchaseLine"],
+        "sublists": ["purchaseline_set"],
     },
     PurchaseLine: {
         "list_fields": ["id", "component", "quantity", "unit_price", "purchase"],
@@ -185,7 +180,7 @@ def model_json_view(request, model: str):
     return JsonResponse(list(getattr(bts.models, model).objects.values()), safe=False)
 
 
-def model_json_filtered_view(request, model: str, filter_model: str, id: int):
+def model_json_filtered_view(request, model: str, field: str, value: str):
     """Renders a JSON document with all items of the specified model filtered by a foreign key.
 
     Args:
@@ -197,9 +192,7 @@ def model_json_filtered_view(request, model: str, filter_model: str, id: int):
     Returns:
         JsonResponse: The JSON document as a JsonResponse HttpResponse object.
     """
-    data = getattr(bts.models, model).objects.filter(
-        **{view_extras.snake_case(filter_model): id}
-    )
+    data = getattr(bts.models, model).objects.filter(**{field: str})
     return JsonResponse(list(data.values()), safe=False)
 
 
@@ -235,12 +228,10 @@ class ModelFilteredListView(ConfiguredListView):
     template_name = "bts/model_list_snippet.html"
 
     def get_queryset(self) -> QuerySet[Any]:
-        self.filter_object = get_object_or_404(
-            getattr(bts.models, self.kwargs["model"]), pk=self.kwargs["id"]
-        )
-        return self.model.objects.filter(
-            **{view_extras.snake_case(self.kwargs["model"]): self.filter_object}
-        )
+        # self.filter_object = get_object_or_404(
+        #     getattr(bts.models, self.kwargs["model"]), pk=self.kwargs["id"]
+        # )
+        return self.model.objects.filter(**{self.kwargs["field"]: self.kwargs["value"]})
 
 
 class ModelDetailView(ConfiguredDetailView):
@@ -273,9 +264,7 @@ def labelpage(request, id):
         "assortment_box": assortment_box,
         "storage_units": StorageUnit.objects.filter(assortment_box=assortment_box),
     }
-    return render(
-        request, f"bts/labels/{assortment_box.label_type}/labelpage.html", context
-    )
+    return render(request, f"bts/labels/{assortment_box.label_type}/labelpage.html", context)
 
 
 def qr_code_svg(request, model, id):
