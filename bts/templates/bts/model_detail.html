@@ -73,12 +73,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </script>
     <div class="bar grey">
         {% for sublist in sublists %}
-        <button class="bar-item button tablink grey" onclick="openSublist(event, '{{ sublist }}')">{{ sublist|snake_case|snake_to_space }}s</button>
+        <button class="bar-item button tablink grey" onclick="openSublist(event, '{{ sublist }}')">{{ sublist|snake_to_space }}s</button>
         {% endfor %}
     </div>     
     {% for sublist in sublists %}
     <script>
-        fetch("{% url sublist|add:"_filtered_list" object|get_meta|hash:"object_name" object.pk %}" /*, options */)
+        fetch("{% url object|hash:sublist|hash:"model"|get_type|add:"_filtered_list" object|hash:sublist|hash:"field"|hash:"name" object.pk %}")
         .then((response) => response.text())
         .then((html) => {
             document.getElementById("{{ sublist }}").innerHTML = html;
