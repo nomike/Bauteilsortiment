@@ -189,7 +189,7 @@ class Inventory(models.Model):
     count = models.IntegerField()
     exact_match = models.BooleanField(
         default=True,
-        help_text="Is this the actual SubComponent, or is it just one with similar enogh specs?",
+        help_text="Is this the actual SubComponent, or is it just one with similar enough specs?",
     )
 
     def __str__(self):

@@ -30,7 +30,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </tr>
             {% for field in fields %}
             <tr>
-                <td>{{ field.name }}</td>
+                <td><div class="hover-text">{{ field.name }}
+                    {% if field.help_text %}
+                        <span class="tooltip-text">{{ field.help_text }}</span>
+                    {% endif %}
+                </div></td>
                 <td>
                     {% is_url_field field as is_url_field %}
                     {% is_foreign_key_field field as is_foreign_key_field %}

@@ -95,3 +95,37 @@ body {
 .container {
     padding: 0.01em 16px
 }
+
+.tooltip-text {
+    visibility: hidden;
+    position: absolute;
+    z-index: 2;
+    width: 100px;
+    color: white;
+    font-size: 12px;
+    background-color: #04AA6D;
+    border-radius: 10px;
+    padding: 10px 15px 10px 15px;
+    top: -8px;
+    left: 120%;
+}
+
+.tooltip-text::before {
+    content: "";
+    position: absolute;
+    transform: rotate(45deg);
+    background-color: #04AA6D;
+    padding: 5px;
+    z-index: 1;
+    top: 15%;
+    left: -2%;
+}
+
+.hover-text:hover .tooltip-text {
+    visibility: visible;
+}
+
+.hover-text {
+    position: relative;
+    display: inline-block;
+}
