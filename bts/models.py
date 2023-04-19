@@ -31,11 +31,12 @@ class AssortmentBox(models.Model):
     name = models.CharField(max_length=255, unique=True)
     label_type = models.CharField(max_length=255)
 
-    class Meta:
-        verbose_name_plural = "assortment boxes"
-
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "assortment boxes"
+        ordering = ["name"]
 
 
 class StorageUnitType(models.Model):
@@ -48,6 +49,8 @@ class StorageUnitType(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ["name"]
 
 class StorageUnit(models.Model):
     name = models.CharField(max_length=255)
@@ -65,6 +68,7 @@ class StorageUnit(models.Model):
                 name="UQ_StorageUnit_number_assortment_box",
             )
         ]
+        ordering = ["assortment_box", "number"]
 
 
 class StorageUnitCompartment(models.Model):
@@ -89,6 +93,7 @@ class StorageUnitCompartment(models.Model):
                 name="UQ_StorageUnitCompartment_z_index_storage_unit",
             ),
         ]
+        ordering = ["storage_unit", "z_index"]
 
 
 class Merchant(models.Model):
@@ -98,6 +103,9 @@ class Merchant(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ["name"]
 
 
 class ComponentType(models.Model):
@@ -106,6 +114,9 @@ class ComponentType(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ["name"]
 
 
 class Component(models.Model):
@@ -128,6 +139,7 @@ class Component(models.Model):
                 name="UQ_Component_part_number_merchant",
             )
         ]
+        ordering = ["product_description", "merchant"]
 
     # def update_cache(self, force: bool = False):
     #     if force or self.cache_expiry < timezone.now():
@@ -168,6 +180,7 @@ class SubComponent(models.Model):
                 fields=["name", "component"], name="UQ_SubComponent_name_component"
             )
         ]
+        ordering = ["component", "name"]
 
 
 class Category(models.Model):
@@ -203,7 +216,7 @@ class Inventory(models.Model):
                 name="UQ_Inventory_sub_component_storage_unit_compartment",
             )
         ]
-
+        ordering = ["storage_unit_compartment", "sub_component"]
         verbose_name_plural = "invetories"
 
 
@@ -222,6 +235,7 @@ class Purchase(models.Model):
                 name="UQ_Purchase_merchant_oder_number",
             )
         ]
+        ordering = ["merchant", "timestamp"]
 
 
 class PurchaseLine(models.Model):
@@ -232,3 +246,6 @@ class PurchaseLine(models.Model):
 
     def __str__(self):
         return f"{self.purchase.merchant.name} order number {self.purchase.order_number}: {self.component.part_number}"
+
+    class Meta:
+        ordering = ["purchase", "component"]
