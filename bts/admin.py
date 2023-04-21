@@ -59,6 +59,7 @@ class ComponentAdmin(admin.ModelAdmin):
 
 class ComponentTypeAdmin(admin.ModelAdmin):
     search_fields = ["name"]
+    autocomplete_fields = ["parent"]
 
 
 class InventoryAdminForm(forms.ModelForm):
