@@ -21,6 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {% block title %}List of all {{ object_list.0|get_type|snake_to_space }}s{% endblock %}
 {% block page_title %}List of all {{ object_list.0|get_type|snake_to_space }}s{% endblock %}
 {% block body %}
-<p id="breadcrumbs"><a href="{% url "home" %}">Home</a> / {{ object_list.0|get_type|snake_to_space }}s</p>
+<p id="breadcrumbs"><a href="{% url "home" %}">Home</a> / {{ object_list.0|get_meta|hash:"verbose_name_plural"|hash:"title" }}</p>
 {% include "./model_list.html" %}
 {% endblock %}
