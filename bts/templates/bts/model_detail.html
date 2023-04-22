@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {% block title %}Detail page for {{ object|get_meta|hash:"verbose_name" }}: {{ object }}{% endblock %}
 {% block page_title %}Detail page for {{ object|get_meta|hash:"verbose_name" }}: {{ object }}{% endblock %}
 {% block body %}
-    <p id="breadcrumbs"><a href="{% url "home" %}">Home</a> / <a href="{% url object|get_meta|hash:"object_name"|add:"_list" %}">{{ object|get_meta|hash:"verbose_name" }}s</a> / {{ object }}</p>
+    <p id="breadcrumbs"><a href="{% url "home" %}">Home</a> / <a href="{% url object|get_meta|hash:"object_name"|add:"_list" %}">{{ object|get_meta|hash:"verbose_name_plural"|hash:"title"  }}</a> / {{ object }}</p>
     <p>
         <table id="object" class="maintable">
             <tr>
