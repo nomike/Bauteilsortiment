@@ -93,4 +93,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </script>
     <div id="{{ sublist }}" class="sublist"></div>
     {% endfor %}
+    <p>
+        <a href="{% url "admin:"|add:app_label|add:"_"|add:model_name|add:"_change" object.id %}">Edit</a> | <a href="{% url "admin:"|add:app_label|add:"_"|add:model_name|add:"_delete" object.id %}">Delete</a>
+    </p>
 {% endblock %}
