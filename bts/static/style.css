@@ -32,6 +32,10 @@ body {
     padding: 8px;
 }
 
+.sublist .maintable th {
+    border-top: none;
+}
+
 .maintable tr:nth-child(even) {
     background-color: #f2f2f2;
 }
@@ -51,6 +55,7 @@ body {
 .bar {
     width: 100%;
     overflow: hidden;
+    border-left: 1px solid #ddd;
 }
 
 .bar .bar-item {
@@ -62,7 +67,12 @@ body {
     outline: 0;
 }
 
-.grey {
+.inactive {
+    color: black !important;
+    background-color: #ddd !important
+}
+
+button.inactive:hover {
     color: black !important;
     background-color: #ccc !important
 }
@@ -87,9 +97,13 @@ body {
     white-space: normal
 }
 
-.green {
+.active {
     color: white !important;
     background-color: #04AA6D !important
+}
+
+.active:hover {
+    color: #ccc !important;
 }
 
 .container {

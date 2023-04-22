@@ -64,10 +64,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             }
             tablinks = document.getElementsByClassName("tablink");
             for (i = 0; i < x.length; i++) {
-              tablinks[i].className = tablinks[i].className.replace(" green", "");
+              tablinks[i].className = tablinks[i].className.replace(" active", " inactive");
             }
             document.getElementById(sublistName).style.display = "block";
-            evt.currentTarget.className += " green";
+            evt.currentTarget.className = evt.currentTarget.className.replace(" inactive", " active");
           }
           
           window.addEventListener('load', function () {
@@ -75,9 +75,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           })
           
     </script>
-    <div class="bar grey">
+    <div class="bar inactive">
         {% for sublist in sublists %}
-        <button class="bar-item button tablink grey" onclick="openSublist(event, '{{ sublist }}')">{{ sublist|snake_to_space }}s</button>
+        <button class="bar-item button tablink inactive" onclick="openSublist(event, '{{ sublist }}')">{{ sublist|snake_to_space }}s</button>
         {% endfor %}
     </div>     
     {% for sublist in sublists %}
