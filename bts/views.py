@@ -146,6 +146,8 @@ class ConfiguredListView(ListView):
         context_data = super().get_context_data(**kwargs)
         for key, value in view_config[self.model].items():
             context_data[key] = value
+        context_data["app_label"] = self.model._meta.app_label
+        context_data["model_name"] = self.model._meta.model_name
         return context_data
 
 
@@ -164,6 +166,8 @@ class ConfiguredDetailView(DetailView):
         context_data = super().get_context_data(**kwargs)
         for key, value in view_config[self.model].items():
             context_data[key] = value
+        context_data["app_label"] = self.model._meta.app_label
+        context_data["model_name"] = self.model._meta.model_name
         return context_data
 
 

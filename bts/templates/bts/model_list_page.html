@@ -23,4 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {% block body %}
 <p id="breadcrumbs"><a href="{% url "home" %}">Home</a> / {{ object_list.0|get_meta|hash:"verbose_name_plural"|hash:"title" }}</p>
 {% include "./model_list.html" %}
+<p>
+    <a href="{% url "admin:"|add:app_label|add:"_"|add:model_name|add:"_add" %}">Add</a>
+</p>
 {% endblock %}
