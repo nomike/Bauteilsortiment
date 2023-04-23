@@ -59,7 +59,7 @@ def cat(str1, str2):
 def get_detail_name(field: models.ForeignKey, suffix):
     """
     Returns the name of the detail view of a foreign key field.
-    """"
+    """
 
     return str(re.sub(r"(?<!^)(?=[A-Z])", "_", field.related_model.__name__).lower()) + suffix
 
@@ -123,5 +123,5 @@ def get_verbose_name(model: models.Model):
     """
     Returns the verbose name of a model.
     """
-    
+
     return model._meta.verbose_name.capitalize()
