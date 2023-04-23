@@ -28,6 +28,10 @@ from django.utils import timezone
 
 
 class AssortmentBox(models.Model):
+    """
+    A box cotaining components. Assortment boxes are divided into storage units which are divided into compartments.
+    """
+
     name = models.CharField(max_length=255, unique=True)
     label_type = models.CharField(max_length=255)
 
@@ -40,6 +44,10 @@ class AssortmentBox(models.Model):
 
 
 class StorageUnitType(models.Model):
+    """
+    A type of storage unit.
+    """
+
     name = models.CharField(max_length=255, unique=True)
     width = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
@@ -52,7 +60,12 @@ class StorageUnitType(models.Model):
     class Meta:
         ordering = ["name"]
 
+
 class StorageUnit(models.Model):
+    """
+    A storage unit is a box containing compartments. In most cases these are transparent plastic drawers.
+    """
+
     name = models.CharField(max_length=255)
     number = models.IntegerField()
     assortment_box = models.ForeignKey(AssortmentBox, on_delete=models.CASCADE)
@@ -72,6 +85,10 @@ class StorageUnit(models.Model):
 
 
 class StorageUnitCompartment(models.Model):
+    """
+    Storage units could be subdivided into compartments.
+    """
+
     name = models.CharField(max_length=255, null=True)
     labeltext = models.CharField(max_length=255, null=True, blank=True)
     storage_unit = models.ForeignKey(
@@ -97,20 +114,28 @@ class StorageUnitCompartment(models.Model):
 
 
 class Merchant(models.Model):
+    """
+    A merchant is a company that sells electronic components.
+    """
+
     name = models.CharField(max_length=255, null=True, unique=True)
     url = models.URLField(max_length=255, null=True, blank=True)
     description = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         ordering = ["name"]
 
 
 class ComponentType(models.Model):
+    """
+    A component type is a category of components. They can have parents and thus form a tree. Usually components are located at the leafs of the tree.
+    """
+
     name = models.CharField(max_length=64, unique=True)
-    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    sparent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -120,6 +145,10 @@ class ComponentType(models.Model):
 
 
 class Component(models.Model):
+    """
+    A component is a single orderable item. It can sonsist of multiple subcomponents. E.g. a resistor-kit would be a component, the individual resistors would be subcomponents.
+    """
+
     part_number = models.CharField(max_length=64, verbose_name="Part number")
     usual_order_quantity = models.IntegerField(default=1)
     primary_datasheet = models.URLField(max_length=254, null=True, blank=True)
@@ -159,6 +188,10 @@ class Component(models.Model):
 
 
 class SubComponent(models.Model):
+    """
+    A subcomponent is a component that is part of another component. E.g. a resistor is a subcomponent of a resistor-kit.
+    """
+
     name = models.CharField(max_length=64)
     resell_price = models.DecimalField(null=True, max_digits=20, decimal_places=5)
     storage_unit_compartments = models.ManyToManyField(
@@ -195,6 +228,10 @@ class Category(models.Model):
 
 
 class Inventory(models.Model):
+    """
+    An inventory is a single type of subcomponents in a single storage unit compartment.
+    """
+
     sub_component = models.ForeignKey(SubComponent, on_delete=models.CASCADE)
     storage_unit_compartment = models.ForeignKey(
         StorageUnitCompartment, related_name="inventories", on_delete=models.CASCADE
@@ -221,6 +258,10 @@ class Inventory(models.Model):
 
 
 class Purchase(models.Model):
+    """
+    A purchase is a single order from a merchant.
+    """
+
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
     order_number = models.CharField(max_length=64)
     timestamp = models.DateTimeField(default=timezone.now)
@@ -239,6 +280,10 @@ class Purchase(models.Model):
 
 
 class PurchaseLine(models.Model):
+    """
+    A purchase line is a single line in a purchase.
+    """
+
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     unit_price = models.FloatField()
