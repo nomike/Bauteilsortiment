@@ -204,7 +204,7 @@ def model_json_filtered_view(request, model: str, field: str, value: str):
     Returns:
         JsonResponse: The JSON document as a JsonResponse HttpResponse object.
     """
-    data = getattr(bts.models, model).objects.filter(**{field: str})
+    data = getattr(bts.models, model).objects.filter(**{field: value})
     return JsonResponse(list(data.values()), safe=False)
 
 

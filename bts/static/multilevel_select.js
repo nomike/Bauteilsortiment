@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
-django.jQuery(document).ready(function() {
+django.jQuery(document).ready(function () {
     // Create the selects
     for (let i = 0; i < fields.length; i++) {
         django.jQuery("#" + widget_name).append(django.jQuery("<select>", { style: "width: 300px;", class: fields[i]['id'], name: i == fields.length - 1 ? widget_name : null }));
@@ -33,7 +33,7 @@ django.jQuery(document).ready(function() {
 
     for (let i = 0; i < fields.length; i++) {
         django.jQuery('.' + fields[i]['id']).change(
-            function(event) {
+            function (event) {
                 handle_change(i);
             }
         );
@@ -72,12 +72,12 @@ function fill_select(select_id) {
     const select = django.jQuery('.' + fields[select_id]['id']);
     const model = fields[select_id]['model'];
     const display_field = fields[select_id]['display_field'];
-    const filter_model = select_id > 0 ? fields[select_id - 1]['model'] : null;
+    const parent_field = fields[select_id]['parent_field'];
     const id = select_id > 0 ? django.jQuery('.' + fields[select_id - 1]['id']).val() : null;
 
     let url;
-    if (filter_model != null) {
-        url = '/bts/json/' + model + '/' + filter_model + '/' + id;
+    if (parent_field != null) {
+        url = '/bts/json/' + model + '/' + parent_field + '/' + id;
     } else {
         url = '/bts/json/' + model;
     }
@@ -86,9 +86,9 @@ function fill_select(select_id) {
         url: url,
         dataType: 'json',
         async: false,
-        success: function(data) {
+        success: function (data) {
             let count = 0;
-            django.jQuery.each(data, function() {
+            django.jQuery.each(data, function () {
                 select.append(django.jQuery("<option />").val(this.id).text(this[display_field]));
             });
         }
@@ -110,7 +110,7 @@ function set_field(select_id, value) {
             url: `/bts/json/${fields[i]['model']}/${selected_objects[i]}/field/${fields[i]['parent_field']}`,
             dataType: 'json',
             async: false,
-            success: function(data) {
+            success: function (data) {
                 selected_objects[i - 1] = data;
             }
         });
