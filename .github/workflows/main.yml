@@ -1,0 +1,24 @@
+name: Continuous Integration
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8.16, 3.9.16, 3.10.11, 3.11.3]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python all python version
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Setup test config
+        run: cp bauteilsortiment/settings.py.unittest bauteilsortiment/settings.py
+      - name: Run Test
+        run: python manage.py test --shuffle
