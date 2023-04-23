@@ -20,9 +20,5 @@ jobs:
         run: pip install -r requirements.txt
       - name: Setup test config
         run: cp Bauteilsortiment/settings.py.unittest Bauteilsortiment/settings.py
-        Properties:
-          AuthorizedAccountId: "String" # Required
-          AuthorizedAwsRegion: "String" # Required
-          Tags: Tags
       - name: Run Test
         run: python manage.py test
