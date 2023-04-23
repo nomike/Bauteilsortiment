@@ -21,4 +21,4 @@ jobs:
       - name: Setup test config
         run: cp bauteilsortiment/settings.py.unittest bauteilsortiment/settings.py
       - name: Run Test
-        run: python manage.py test
+        run: python manage.py test --shuffle
