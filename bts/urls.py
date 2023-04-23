@@ -25,6 +25,8 @@ from bts.templatetags.view_extras import snake_case
 from . import views
 
 urlpatterns = []
+
+# generate urls for all models
 for object in [
     object
     for name, object in bts.models.__dict__.items()
@@ -64,7 +66,7 @@ for object in [
         )
     )
 
-
+# add specific views
 urlpatterns.extend(
     [
         path("", views.home_view, name="home"),
