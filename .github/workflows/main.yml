@@ -19,6 +19,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Setup test config
-        run: cp Bauteilsortiment/settings.py.unittest Bauteilsortiment/settings.py
+        run: cp bauteilsortiment/settings.py.unittest bauteilsortiment/settings.py
       - name: Run Test
         run: python manage.py test
