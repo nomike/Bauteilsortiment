@@ -46,7 +46,8 @@ from bts.models import (
 )
 from bts.templatetags import view_extras
 
-"""Configuration for generic views.
+"""
+Configuration for generic views.
 
 This dictionary allows you to configure views. Keys are the model classes.
 Values are dictionaries themselves with the following keys:
@@ -111,7 +112,8 @@ view_config = {
 
 
 def home_view(request):
-    """Home view which lists all model cstegories.
+    """
+    Home view which lists all model categories.
 
     Args:
         request (HttpRequest): Django Request Object
@@ -132,12 +134,14 @@ def home_view(request):
 
 
 class ConfiguredListView(ListView):
-    """Abstract class for a configurable list view.
+    """
+    Abstract class for a configurable list view.
     Shows a list of objects for a certain Model.
     """
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        """Overloads super().get_context_data() to inject the view_config into the
+        """
+        Overloads super().get_context_data() to inject the view_config into the
         template's context.
 
         Returns:
@@ -152,12 +156,14 @@ class ConfiguredListView(ListView):
 
 
 class ConfiguredDetailView(DetailView):
-    """Abstract class for a onfigurable detail view.
+    """
+    Abstract class for a onfigurable detail view.
     Renders a tabular detail page for one object, listing parameters and sub-lists (for foreign objects).
     """
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        """Overloads super().get_context_data() to inject the view_config into the
+        """
+        Overloads super().get_context_data() to inject the view_config into the
         template's context.
 
         Returns:
@@ -172,7 +178,8 @@ class ConfiguredDetailView(DetailView):
 
 
 def model_json_view(request, model: str):
-    """Renders a JSON document with all items of the specified model.
+    """
+    Renders a JSON document with all items of the specified model.
 
     Args:
         request (HttpRequest): Django Request Object
@@ -185,7 +192,8 @@ def model_json_view(request, model: str):
 
 
 def model_json_filtered_view(request, model: str, field: str, value: str):
-    """Renders a JSON document with all items of the specified model filtered by a foreign key.
+    """
+    Renders a JSON document with all items of the specified model filtered by a foreign key.
 
     Args:
         request (HttpRequest): Django Request Object
@@ -201,7 +209,8 @@ def model_json_filtered_view(request, model: str, field: str, value: str):
 
 
 def model_json_field_view(request, model: str, id: int, field: str):
-    """Renders a JSON document containing a single parameter of an ojbect.
+    """
+    Renders a JSON document containing a single parameter of an ojbect.
 
     Args:
 
@@ -219,27 +228,30 @@ def model_json_field_view(request, model: str, id: int, field: str):
 
 
 class ModelListView(ConfiguredListView):
-    """A generic list view."""
+    """
+    A generic list view.
+    """
 
     model = None
     template_name = "bts/model_list_page.html"
 
 
 class ModelFilteredListView(ConfiguredListView):
-    """A generic filtered list view."""
+    """
+    A generic filtered list view.
+    """
 
     model = None
     template_name = "bts/model_list_snippet.html"
 
     def get_queryset(self) -> QuerySet[Any]:
-        # self.filter_object = get_object_or_404(
-        #     getattr(bts.models, self.kwargs["model"]), pk=self.kwargs["id"]
-        # )
         return self.model.objects.filter(**{self.kwargs["field"]: self.kwargs["value"]})
 
 
 class ModelDetailView(ConfiguredDetailView):
-    """A generic detail view."""
+    """
+    A generic detail view.
+    """
 
     model = None
     template_name = "bts/model_detail.html"
@@ -253,7 +265,8 @@ class ModelDetailView(ConfiguredDetailView):
 
 
 def labelpage(request, id):
-    """Render a HTML page full of printable lables.
+    """
+    Render a HTML page full of printable lables.
     The lables could be put on the StorageUnits.
 
     Args:
@@ -272,9 +285,12 @@ def labelpage(request, id):
 
 
 def qr_redirect(request, id):
-    """Redirects to the detail page of the object with the given id.
-    Used to make the URL as short as possible, in order to make the qrcodes smaller.
-    This sacrifices support for multiple models though and makes the qrcodes less flexible.
+    """
+    Generates a QR code which redirects to the detail page of the object with the given id.
+    Used to make the URL as short as possible, in order to make the qrcodes less dense and thus more readable.
+    This sacrifices support for multiple models though and thus makes the qrcodes less flexible.
+
+    For a more generic version see qr_code_svg.
 
     Args:
         request (HttpRequest): Django Request Object
@@ -296,7 +312,9 @@ def qr_redirect(request, id):
 
 
 def qr_code_svg(request, model, id):
-    """Renders a SVG image containing a qr code with a link to a specific object.
+    """
+    Renders a SVG image containing a qr code with a link to a specific object.
+    For a more specialized version wich produces less dense qrcodes see qr_redirect.
 
     Args:
         request (HttpRequest): Django Request Object
@@ -321,7 +339,8 @@ def qr_code_svg(request, model, id):
     return HttpResponse(img.to_string(encoding="unicode"), content_type="image/svg+xml")
 
 
-""" Loop through all model types and create generic list and detail views for them.
+"""
+Loop through all model types and create generic list and detail views for them.
 """
 for name in [
     obj.__name__
