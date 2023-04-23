@@ -339,9 +339,7 @@ def qr_code_svg(request, model, id):
     return HttpResponse(img.to_string(encoding="unicode"), content_type="image/svg+xml")
 
 
-"""
-Loop through all model types and create generic list and detail views for them.
-"""
+# Generate generic views for all the models
 for name in [
     obj.__name__
     for name, obj in bts.models.__dict__.items()
