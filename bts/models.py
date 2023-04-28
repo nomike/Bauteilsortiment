@@ -27,12 +27,40 @@ from django.utils import timezone
 # os.environ['DIGIKEY_STORAGE_PATH'] = './cache'
 
 
+class Location(models.Model):
+    """
+    A location is a place (i.e. a room) where AssortmentBoxes are placed.
+    """
+
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+
+
 class AssortmentBox(models.Model):
     """
     A box cotaining components. Assortment boxes are divided into storage units which are divided into compartments.
     """
 
     name = models.CharField(max_length=255, unique=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
+    coordinates = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="Spreadsheet style coordinates (e.g. A1, B5, ...)",
+    )
+    color = models.CharField(max_length=255, null=True, blank=True)
+    layout = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="Layout of the storage units in the assortment box in columns and rows (e.g. 5x12, 5x12+2x3+1, ...)",
+    )
     label_type = models.CharField(max_length=255)
 
     def __str__(self):

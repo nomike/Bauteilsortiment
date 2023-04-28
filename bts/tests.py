@@ -14,11 +14,39 @@ class MerchantTestCase(TestCase):
 
 class AssortmentBoxTestCase(TestCase):
     def setUp(self):
-        AssortmentBox.objects.create(name="Test Assortment Box")
+        self.location = Location.objects.create(name="Test Location")
+        AssortmentBox.objects.create(
+            name="Test Assortment Box",
+            location=self.location,
+            coordinates="A5",
+            color="Red",
+            layout="1x1",
+            label_type="generic",
+        )
 
     def test_assortment_box_name(self):
         assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
         self.assertEqual(assortment_box.name, "Test Assortment Box")
+
+    def test_assortment_box_location(self):
+        assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
+        self.assertEqual(assortment_box.location, self.location)
+
+    def test_assortment_box_coordinates(self):
+        assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
+        self.assertEqual(assortment_box.coordinates, "A5")
+
+    def test_assortment_box_color(self):
+        assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
+        self.assertEqual(assortment_box.color, "Red")
+
+    def test_assortment_box_layout(self):
+        assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
+        self.assertEqual(assortment_box.layout, "1x1")
+
+    def test_assortment_box_label_type(self):
+        assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
+        self.assertEqual(assortment_box.label_type, "generic")
 
 
 class StorageUnitTestCase(TestCase):
@@ -258,3 +286,12 @@ class PurchaseLineTestCase(TestCase):
     def test_purchase_line_purchase(self):
         purchase_line = PurchaseLine.objects.get(component=self.component)
         self.assertEqual(purchase_line.purchase, self.purchase)
+
+
+class LocationTestCase(TestCase):
+    def setUp(self):
+        self.location = Location.objects.create(name="Test Location")
+
+    def test_location_name(self):
+        location = Location.objects.get(name="Test Location")
+        self.assertEqual(location.name, "Test Location")
