@@ -23,6 +23,7 @@ from .models import (
     ComponentType,
     SubComponent,
     Inventory,
+    Location,
     Merchant,
     Purchase,
     PurchaseLine,
