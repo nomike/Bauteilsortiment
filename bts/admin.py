@@ -148,6 +148,7 @@ class InventoryAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(AssortmentBox)
 admin.site.register(Category)
+admin.site.register(Location)
 admin.site.register(Merchant)
 admin.site.register(Purchase)
 admin.site.register(PurchaseLine)
