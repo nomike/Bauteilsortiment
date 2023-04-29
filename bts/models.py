@@ -233,7 +233,7 @@ class SubComponent(models.Model):
     )
 
     def __str__(self):
-        return f"{self.component.product_description}/{self.name}"
+        return f"{self.component.__str__()}/{self.name}"
 
     class Meta:
         constraints = [
