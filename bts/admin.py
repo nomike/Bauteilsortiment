@@ -101,6 +101,7 @@ class SubComponentAdmin(admin.ModelAdmin):
 @admin.register(Component)
 class ComponentAdmin(admin.ModelAdmin):
     search_fields = ["part_number", "product_description"]
+    save_as = True
 
 
 @admin.register(ComponentType)
@@ -144,6 +145,7 @@ class InventoryAdminForm(forms.ModelForm):
 class InventoryAdmin(admin.ModelAdmin):
     autocomplete_fields = ["sub_component"]
     form = InventoryAdminForm
+    save_as = True
 
 
 # Register your models here.
