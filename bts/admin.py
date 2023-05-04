@@ -97,7 +97,7 @@ class SubComponentAdmin(admin.ModelAdmin):
         "name",
         "component_type__name",
         "component__part_number",
-        "component__description",
+        "component__product_description",
     ]
     autocomplete_fields = ["component", "component_type"]
     save_as = True
