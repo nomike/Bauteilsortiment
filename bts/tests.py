@@ -1,5 +1,10 @@
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.contrib.auth.models import User, Permission
+from django.core.management import call_command
+from django.contrib.auth import get_user_model
+from django.urls import reverse
 
+from django.contrib import admin
 from bts.models import *
 
 
@@ -138,11 +143,27 @@ class SubComponentTestCase(TestCase):
             product_description="Test Product Description",
             merchant=self.merchant,
         )
-        SubComponent.objects.create(
+        self.sub_component = SubComponent.objects.create(
             component=self.component,
             component_type=self.component_type,
             name="Test SubComponent",
         )
+        self.model_admin = admin.site._registry[SubComponent]
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
 
     def test_sub_component_name(self):
         sub_component = SubComponent.objects.get(name="Test SubComponent")
@@ -159,6 +180,14 @@ class SubComponentTestCase(TestCase):
     def test_sub_component_component_merchant(self):
         sub_component = SubComponent.objects.get(name="Test SubComponent")
         self.assertEqual(sub_component.component.merchant, self.merchant)
+
+    def test_sub_component_admin_search_field(self):
+        self.client.force_login(user=self.user)
+        response = self.client.get(
+            reverse("admin:bts_subcomponent_changelist"), {"q": "Test Part Number"}, follow=True
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.sub_component.name)
 
 
 class InventoryTestCase(TestCase):
