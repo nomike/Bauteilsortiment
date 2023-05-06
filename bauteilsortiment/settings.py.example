@@ -137,3 +137,9 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_PRELOAD = True
+
+# See https://github.com/peeter123/digikey-api#register for insructions on how to get CLIENT_ID and CLIENT_SECRET
+DIGIKEY_CLIENT_ID = "client_id"
+DIGIKEY_CLIENT_SECRET = "client_secret"
+DIGIKEY_CLIENT_SANDBOX = "False"
+DIGIKEY_STORAGE_PATH = "./.cache"
