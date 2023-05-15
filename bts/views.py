@@ -92,7 +92,11 @@ view_config = {
         "list_detail_link_fields": ["part_number"],
         "sublists": ["subcomponent_set", "purchaseline_set"],
     },
-    SubComponent: {"list_fields": ["name"], "list_detail_link_fields": ["name"]},
+    SubComponent: {
+        "list_fields": ["name"],
+        "list_detail_link_fields": ["name"],
+        "sublists": ["inventory_set"],
+    },
     Category: {"list_fields": ["name"], "list_detail_link_fields": ["name"]},
     Inventory: {
         "list_fields": ["id", "sub_component", "storage_unit_compartment", "timestamp", "count"],
