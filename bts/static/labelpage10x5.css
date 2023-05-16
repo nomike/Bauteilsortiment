@@ -29,7 +29,8 @@ div.grid_qr {
     /* grid-row-end: span bottom; */
 
     box-sizing: border-box;
-    display: inline;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     justify-content: center;
     align-items: center;
