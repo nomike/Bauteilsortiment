@@ -30,6 +30,7 @@ div.grid_qr {
 
     box-sizing: border-box;
     display: inline;
+    overflow: hidden;
     justify-content: center;
     align-items: center;
     font-size: 15px;
