@@ -30,7 +30,7 @@ along with this program. If not, see
     <div class="outergrid">
         {% for storage_unit in storage_units %}
         <div class="grid">
-            <div class="grid_qr">ml_C1<br/><img src="{% url "qr_redirect" storage_unit.id %}" /><br/>5</div>
+            <div class="grid_qr">{{ assortment_box }}<br/><img src="{% url "qr_redirect" storage_unit.id %}" /><br/>{{ storage_unit.number }}</div>
             {% with storage_unit_compartments=storage_unit.storage_unit_compartments.all|dictsortreversed:"z_index" %}
                 {% if storage_unit_compartments.0.labeltext %}
                     <div class="grid_text_whole">{{ storage_unit_compartments.0.labeltext }}</div>
