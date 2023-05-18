@@ -10,13 +10,15 @@ from django.conf import settings
 
 class Command(BaseCommand):
     def get_part(self, part_number, usual_order_quantity):
+        price_quantity = None
         part = digikey.product_details(part_number)
         prices = {i.break_quantity: i.unit_price for i in part.standard_pricing}
         for break_quantity in sorted(prices.keys()):
             price_quantity = break_quantity
             if break_quantity >= usual_order_quantity:
                 break
-        part.order_unit_price = prices[price_quantity]
+
+        part.order_unit_price = prices[price_quantity] if price_quantity else -1
         return part
 
     def resell_price(self, order_unit_price) -> float:
