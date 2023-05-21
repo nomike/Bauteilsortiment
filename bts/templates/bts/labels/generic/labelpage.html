@@ -1,0 +1,68 @@
+{% comment %}
+Bauteilsortiment - An Electronic Component Archival System
+Copyright (C) 2023 nomike
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see
+<http: //www.gnu.org/licenses />.
+{% endcomment %}
+{% load static %}
+{% load view_extras %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Labels for {{ assortment_box }}</title>
+    <style>
+        :root {
+            --label-height: {{ label_height|default:10 }}mm;
+            --label-width: {{ label_width|default:48}}mm;
+            --label-rows: 2;
+            --lines-per-row: {{ lines_per_row|default:1 }};
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'newlabelpage.css' %}" />
+
+</head>
+
+<body>
+    <div class="outergrid">
+        {% for storage_unit in storage_units %}
+        <div class="grid">
+            <div class="grid_qr">{{ assortment_box }}<img src="{% url "qr_redirect" storage_unit.id %}?box_size=1000" />{{ storage_unit.number }}</div>
+            {% with storage_unit_compartments=storage_unit.storage_unit_compartments.all|dictsortreversed:"z_index" %}
+                {% if storage_unit_compartments|length > 1 %}
+                    {% if storage_unit_compartments.1.labeltext %}
+                        <div class="grid_text">{{ storage_unit_compartments.1.labeltext }}</div>
+                    {% else %}
+                        <div class="grid_text">{{ storage_unit_compartments.1.inventories.all.0.sub_component.name }}</div>
+                    {% endif %}
+                    {% if storage_unit_compartments.0.labeltext %}
+                        <div class="grid_text">{{ storage_unit_compartments.0.labeltext }}</div>
+                    {% else %}
+                        <div class="grid_text">{{ storage_unit_compartments.0.inventories.all.0.sub_component.name }}</div>
+                    {% endif %}
+                {% else %}
+                    {% if storage_unit_compartments.1.labeltext %}
+                        <div class="grid_text_whole">{{ storage_unit_compartments.1.labeltext }}</div>
+                    {% else %}
+                        <div class="grid_text_whole">{{ storage_unit_compartments.1.inventories.all.0.sub_component.name }}</div>
+                    {% endif %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

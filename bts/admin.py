@@ -23,6 +23,7 @@ from .models import (
     ComponentType,
     SubComponent,
     Inventory,
+    LabelType,
     Location,
     Merchant,
     Purchase,
@@ -156,6 +157,7 @@ class InventoryAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(AssortmentBox)
 admin.site.register(Category)
+admin.site.register(LabelType)
 admin.site.register(Location)
 admin.site.register(Merchant)
 admin.site.register(Purchase)
