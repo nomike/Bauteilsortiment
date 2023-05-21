@@ -1,164 +1,104 @@
 body {
-    font: 10px "Arial Narrow";
+    font-family: 'Arial Narrow', Tahoma, Arial, sans-serif;
     padding: 2mm;
 }
 
-table,
-tr,
-td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    box-sizing: border-box;
-}
-
-td.qr {
-    width: 10mm;
-    max-width: 10mm;
-    padding: 0 0 0 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-align: center;
-    background-color: blue;
-    vertical-align: middle;
-    border-right: none;
-}
-
-td.text {
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 40mm;
-    min-width: 40mm;
-    max-height: 5mm;
-    border-left: none;
-}
-
-td {
-    vertical-align: middle;
-}
-
 img {
-    width: 80%;
+    max-width: 90%;
+    max-height: 90%;
     aspect-ratio: 1 / 1;
-    /* padding: 0; */
-
-    margin: auto;
-    border: none;
-    margin-top: 100;
-}
-
-
-div.label {
-    border: 1px solid black;
-    background-color: red;
-    padding-left: none;
-}
-
-div.qr {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 10mm;
-    height: 10mm;
-    float: left;
-    box-sizing: border-box;
-    background-color: yellow;
-    padding: none;
-    margin: none;
-}
-
-dev.text {
-    border: none;
-    float: left;
-    height: 10mm;
-    box-sizing: border-box;
-    white-space: nowrap;
-}
-
-div.text_top {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border: none;
-    padding-left: 1mm;
-    box-sizing: border-box;
-    height: 5mm;
-    width: 40mm;
-    white-space: nowrap;
-    vertical-align: middle;
-    overflow: hidden;
-    padding-right: 1mm;
-    border-bottom: 0.5px solid black;
-    background-color: orange;
-}
-
-div.text_bottom {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border: none;
-    padding-left: 1mm;
-    box-sizing: border-box;
-    height: 5mm;
-    width: 40mm;
-    white-space: nowrap;
-    vertical-align: middle;
-    overflow: hidden;
-    padding-right: 1mm;
-    border-top: 0.5px solid black;
-    background-color: aqua;
-}
-
-div.label img {
-    /* border: none; */
-    /* margin: none; */
-    background-color: green;
-    margin: none;
-    /* box-sizing: border-box; */
-
+    /* background-color: red; */
 }
 
 div.grid {
+    /* background-color: blue; */
     float: left;
-    display: inline;
     display: grid;
-    grid-template-columns: [qr] 10mm [text] 40mm;
-    grid-template-rows: [top] 5mm [bottom] 5mm;
+    grid-template-columns: calc(var(--label-width) * 0.25) calc(var(--label-width) * 0.75);
+    grid-template-rows: repeat(var(--label-rows), calc(var(--label-height) / var(--label-rows)));
     border: 1px solid black;
-    box-sizing: border-box;
-
 }
 
 div.grid_qr {
-    grid-row: 1 / span 2;
-    /* grid-row-end: span bottom; */
-
-    box-sizing: border-box;
+    grid-row: 1 / calc(var(--label-rows) + 1);
+    font-size: calc(var(--label-height) * 0.05);
     display: flex;
+    flex-direction: column;
+    overflow: hidden;
     justify-content: center;
     align-items: center;
+    word-wrap: normal;
+    /* background-color: yellow; */
 }
 
-div.grid_text_top {
-    grid-column-start: text;
-    white-space: nowrap;
+div.grid>div {
+    white-space: break-spaces;
     overflow: hidden;
-    grid-row-start: top;
+    overflow-y: hidden;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+div.grid_text_whole {
+    grid-row: 1 / span var(--label-rows);
+    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9); /* multiply by 0.9 to keep some slack */
+      /*font-size: calc(var(--label-height) / var(--lines-per-row) / 4 * 0.9);*/
+
+    grid-column-start: 2;
+    white-space: break-spaces;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    max-height: 100%;
+    /* background-color: orangered; */
+}
+
+div.grid>div.grid_text:nth-of-type(2) {
+    overflow: hidden;
+    grid-column-start: 2;
+    grid-row: 1;
+    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    /* background-color: green; */
     border-bottom: 1px solid black;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
 }
 
-div.grid_text_bottom {
-    grid-column-start: text;
-    white-space: nowrap;
-    overflow: hidden;
-    grid-row-start: bottom;
-    border-top: 1px solid black;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
+div.grid>div.grid_text:nth-of-type(3) {
+    grid-column-start: 2;
+    grid-row: 2;
+    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    /* background-color: magenta; */
 }
+
+div.grid>div.grid_text:nth-of-type(4) {
+    grid-column-start: 2;
+    grid-row: 2;
+    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    /* background-color: magenta; */
+}
+
+div.grid>div.grid_text:nth-of-type(5) {
+    grid-column-start: 2;
+    grid-row: 2;
+    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    /* background-color: magenta; */
+}
+
+div.grid>div.grid_text:nth-of-type(6) {
+    grid-column-start: 2;
+    grid-row: 2;
+    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    /* background-color: magenta; */
+}
+
+div.grid>div.grid_text:nth-of-type(7) {
+    grid-column-start: 2;
+    grid-row: 2;
+    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    /* background-color: magenta; */
+}
+
 
 div.grid:after {
     content: '';
@@ -166,6 +106,45 @@ div.grid:after {
     clear: both;
 }
 
-div.outergrid {
-    background-color: brown;
+/******************/
+
+/*
+.grid_text_whole::after {
+    height: 16px;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    z-index: 1;
+    background: linear-gradient(transparent, orangered 75%);
+    /* outline: 1px solid white; * /
+}
+*/
+
+.grid_text_whole {
+    position: relative;
+}
+
+
+div.grid> div.grid_text_whole {
+    align-items: flex-start;
+}
+
+div.grid> div.grid_text_whole:hover {
+    position: absolute;
+    max-height: none;
+}
+
+.grid_text_whole:hover::after{
+  display:none;
+} 
+
+.grid {
+    position: relative;
+}
+
+.grid {
+    height: var(--label-height);
 }
