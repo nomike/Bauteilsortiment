@@ -37,6 +37,7 @@ from bts.models import (
     Component,
     ComponentType,
     Inventory,
+    LabelType,
     Merchant,
     Purchase,
     PurchaseLine,
@@ -113,6 +114,10 @@ view_config = {
         "list_detail_link_fields": ["id"],
         "list_foreign_link_fields": ["component"],
     },
+    LabelType: {
+        "list_fields": ["name", "width", "height", "rows_per_label", "lines_per_row"],
+        "list_detail_link_fields": ["name"],
+    }
 }
 
 
