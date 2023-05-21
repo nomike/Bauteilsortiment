@@ -37,6 +37,7 @@ from bts.models import (
     Component,
     ComponentType,
     Inventory,
+    LabelType,
     Merchant,
     Purchase,
     PurchaseLine,
@@ -113,6 +114,10 @@ view_config = {
         "list_detail_link_fields": ["id"],
         "list_foreign_link_fields": ["component"],
     },
+    LabelType: {
+        "list_fields": ["name", "width", "height", "rows_per_label", "lines_per_row"],
+        "list_detail_link_fields": ["name"],
+    }
 }
 
 
@@ -288,8 +293,11 @@ def labelpage(request, id):
     context = {
         "assortment_box": assortment_box,
         "storage_units": StorageUnit.objects.filter(assortment_box=assortment_box),
+        "label_width": request.GET.get("label_width"),
+        "label_height": request.GET.get("label_height"),
+        "lines_per_row": request.GET.get("lines_per_row"),
     }
-    return render(request, f"bts/labels/{assortment_box.label_type}/labelpage.html", context)
+    return render(request, f"bts/labels/generic/labelpage.html", context)
 
 
 def qr_redirect(request, id):

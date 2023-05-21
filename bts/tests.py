@@ -26,7 +26,6 @@ class AssortmentBoxTestCase(TestCase):
             coordinates="A5",
             color="Red",
             layout="1x1",
-            label_type="generic",
         )
 
     def test_assortment_box_name(self):
@@ -48,11 +47,6 @@ class AssortmentBoxTestCase(TestCase):
     def test_assortment_box_layout(self):
         assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
         self.assertEqual(assortment_box.layout, "1x1")
-
-    def test_assortment_box_label_type(self):
-        assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
-        self.assertEqual(assortment_box.label_type, "generic")
-
 
 class StorageUnitTestCase(TestCase):
     def setUp(self):
@@ -324,3 +318,27 @@ class LocationTestCase(TestCase):
     def test_location_name(self):
         location = Location.objects.get(name="Test Location")
         self.assertEqual(location.name, "Test Location")
+
+class LabelTypeTestCase(TestCase):
+    def setUp(self):
+        self.label_type = LabelType.objects.create(name="Test Label Type", width=10, height=10, lines_per_row=1, rows_per_label=1)
+
+    def test_label_type_name(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.name, "Test Label Type")
+    
+    def test_label_type_width(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.width, 10)
+    
+    def test_label_type_height(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.height, 10)
+
+    def test_label_type_lines_per_row(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.lines_per_row, 1)
+
+    def test_label_type_rows_per_label(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.rows_per_label, 1)
