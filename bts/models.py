@@ -78,7 +78,6 @@ class AssortmentBox(models.Model):
         blank=True,
         help_text="Layout of the storage units in the assortment box in columns and rows (e.g. 5x12, 5x12+2x3+1, ...)",
     )
-    label_type = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
