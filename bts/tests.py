@@ -324,3 +324,27 @@ class LocationTestCase(TestCase):
     def test_location_name(self):
         location = Location.objects.get(name="Test Location")
         self.assertEqual(location.name, "Test Location")
+
+class LabelTypeTestCase(TestCase):
+    def setUp(self):
+        self.label_type = LabelType.objects.create(name="Test Label Type", width=10, height=10, lines_per_row=1, rows_per_label=1)
+
+    def test_label_type_name(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.name, "Test Label Type")
+    
+    def test_label_type_width(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.width, 10)
+    
+    def test_label_type_height(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.height, 10)
+
+    def test_label_type_lines_per_row(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.lines_per_row, 1)
+
+    def test_label_type_rows_per_label(self):
+        label_type = LabelType.objects.get(name="Test Label Type")
+        self.assertEqual(label_type.rows_per_label, 1)
