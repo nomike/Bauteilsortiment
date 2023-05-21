@@ -288,8 +288,11 @@ def labelpage(request, id):
     context = {
         "assortment_box": assortment_box,
         "storage_units": StorageUnit.objects.filter(assortment_box=assortment_box),
+        "label_width": request.GET.get("label_width"),
+        "label_height": request.GET.get("label_height"),
+        "lines_per_row": request.GET.get("lines_per_row"),
     }
-    return render(request, f"bts/labels/{assortment_box.label_type}/labelpage.html", context)
+    return render(request, f"bts/labels/generic/labelpage.html", context)
 
 
 def qr_redirect(request, id):
