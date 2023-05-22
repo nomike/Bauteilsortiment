@@ -53,10 +53,10 @@ along with this program. If not, see
                         <div class="grid_text">{{ storage_unit_compartments.0.inventories.all.0.sub_component.name }}</div>
                     {% endif %}
                 {% else %}
-                    {% if storage_unit_compartments.1.labeltext %}
-                        <div class="grid_text_whole">{{ storage_unit_compartments.1.labeltext }}</div>
+                    {% if storage_unit_compartments.0.labeltext %}
+                        <div class="grid_text_whole">{{ storage_unit_compartments.0.labeltext }}</div>
                     {% else %}
-                        <div class="grid_text_whole">{{ storage_unit_compartments.1.inventories.all.0.sub_component.name }}</div>
+                        <div class="grid_text_whole">{{ storage_unit_compartments.0.inventories.all.0.sub_component.name }}</div>
                     {% endif %}
                 {% endif %}
             {% endwith %}
