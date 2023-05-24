@@ -29,10 +29,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.decorators.cache import never_cache
 from django.views.generic import DetailView, ListView
-
-from rest_framework import viewsets
-from rest_framework import permissions
-from bts.serializers import MerchantSerializer, LocationSerializer, AssortmentBoxSerializer
+from rest_framework import permissions, viewsets
 
 import bts.models
 from bts.models import (
@@ -50,6 +47,11 @@ from bts.models import (
     StorageUnitCompartment,
     StorageUnitType,
     SubComponent,
+)
+from bts.serializers import (
+    AssortmentBoxSerializer,
+    LocationSerializer,
+    MerchantSerializer,
 )
 from bts.templatetags import view_extras
 
@@ -122,7 +124,7 @@ view_config = {
     LabelType: {
         "list_fields": ["name", "width", "height", "rows_per_label", "lines_per_row"],
         "list_detail_link_fields": ["name"],
-    }
+    },
 }
 
 
@@ -381,6 +383,7 @@ for name in [
     )
     globals()[generated_class.__name__] = generated_class
 
+
 # REST views
 class MerchantViewSet(viewsets.ModelViewSet):
     """
@@ -391,6 +394,7 @@ class MerchantViewSet(viewsets.ModelViewSet):
     serializer_class = MerchantSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
 class LocationViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows locations to be viewed or edited.
@@ -399,6 +403,7 @@ class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all().order_by("id")
     serializer_class = LocationSerializer
     permission_classes = [permissions.IsAuthenticated]
+
 
 class AssortmentBoxViewSet(viewsets.ModelViewSet):
     """

@@ -96,7 +96,7 @@ router.register(r"api/v1/assortmentboxes", views.AssortmentBoxViewSet)
 
 urlpatterns.extend(
     [
-        path('', include(router.urls)),
+        path("", include(router.urls)),
         path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     ]
 )
