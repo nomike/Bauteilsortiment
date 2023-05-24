@@ -90,10 +90,10 @@ urlpatterns.extend(
 
 # rest views
 router = routers.DefaultRouter()
-router.register(r"api/v1/merchant", views.MerchantViewSet)
+router.register(r"api/v1/labeltypes", views.LabelTypeViewSet)
 router.register(r"api/v1/location", views.LocationViewSet)
 router.register(r"api/v1/assortmentboxes", views.AssortmentBoxViewSet)
-router.register(r"api/v1/labeltypes", views.LabelTypeViewSet)
+router.register(r"api/v1/merchant", views.MerchantViewSet)
 
 urlpatterns.extend(
     [

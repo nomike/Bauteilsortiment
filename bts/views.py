@@ -381,13 +381,13 @@ for name in [
 
 
 # REST views
-class MerchantViewSet(viewsets.ModelViewSet):
+class LabelTypeViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows merchants to be viewed or edited.
+    API endpoint that allows label types to be viewed or edited.
     """
 
-    queryset = Merchant.objects.all().order_by("id")
-    serializer_class = MerchantSerializer
+    queryset = LabelType.objects.all().order_by("id")
+    serializer_class = LabelTypeSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
@@ -411,11 +411,11 @@ class AssortmentBoxViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class LabelTypeViewSet(viewsets.ModelViewSet):
+class MerchantViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows label types to be viewed or edited.
+    API endpoint that allows merchants to be viewed or edited.
     """
 
-    queryset = LabelType.objects.all().order_by("id")
-    serializer_class = LabelTypeSerializer
+    queryset = Merchant.objects.all().order_by("id")
+    serializer_class = MerchantSerializer
     permission_classes = [permissions.IsAuthenticated]

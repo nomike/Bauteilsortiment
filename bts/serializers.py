@@ -19,14 +19,16 @@ from rest_framework import serializers
 from bts.models import *
 
 
-class MerchantSerializer(serializers.HyperlinkedModelSerializer):
+class LabelTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Merchant
+        model = LabelType
         fields = [
             "id",
             "name",
-            "url",
-            "description",
+            "width",
+            "height",
+            "lines_per_row",
+            "rows_per_label",
         ]
 
 
@@ -52,14 +54,12 @@ class AssortmentBoxSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 
-class LabelTypeSerializer(serializers.HyperlinkedModelSerializer):
+class MerchantSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = LabelType
+        model = Merchant
         fields = [
             "id",
             "name",
-            "width",
-            "height",
-            "lines_per_row",
-            "rows_per_label",
+            "url",
+            "description",
         ]
