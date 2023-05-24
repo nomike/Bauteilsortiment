@@ -17,7 +17,8 @@
 import inspect
 
 from django.db import models
-from django.urls import path
+from django.urls import include, path
+from rest_framework import routers
 
 import bts.models
 from bts.templatetags.view_extras import snake_case
@@ -84,5 +85,18 @@ urlpatterns.extend(
         path("qr/<str:model>/<int:id>.svg", views.qr_code_svg, name="qr_svg"),
         path("qrr/<int:id>", views.qr_redirect, name="qr_redirect"),
         path("labels/<int:id>", views.labelpage, name="qr_svg"),
+    ]
+)
+
+# rest views
+router = routers.DefaultRouter()
+router.register(r"api/v1/merchant", views.MerchantViewSet)
+router.register(r"api/v1/location", views.LocationViewSet)
+router.register(r"api/v1/assortmentboxes", views.AssortmentBoxViewSet)
+
+urlpatterns.extend(
+    [
+        path('', include(router.urls)),
+        path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     ]
 )

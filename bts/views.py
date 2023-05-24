@@ -30,6 +30,10 @@ from django.views import View
 from django.views.decorators.cache import never_cache
 from django.views.generic import DetailView, ListView
 
+from rest_framework import viewsets
+from rest_framework import permissions
+from bts.serializers import MerchantSerializer, LocationSerializer, AssortmentBoxSerializer
+
 import bts.models
 from bts.models import (
     AssortmentBox,
@@ -38,6 +42,7 @@ from bts.models import (
     ComponentType,
     Inventory,
     LabelType,
+    Location,
     Merchant,
     Purchase,
     PurchaseLine,
@@ -375,3 +380,31 @@ for name in [
         {"model": getattr(bts.models, name)},
     )
     globals()[generated_class.__name__] = generated_class
+
+# REST views
+class MerchantViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows merchants to be viewed or edited.
+    """
+
+    queryset = Merchant.objects.all().order_by("id")
+    serializer_class = MerchantSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class LocationViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows locations to be viewed or edited.
+    """
+
+    queryset = Location.objects.all().order_by("id")
+    serializer_class = LocationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class AssortmentBoxViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows assortment boxes to be viewed or edited.
+    """
+
+    queryset = AssortmentBox.objects.all().order_by("id")
+    serializer_class = AssortmentBoxSerializer
+    permission_classes = [permissions.IsAuthenticated]
