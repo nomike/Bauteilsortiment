@@ -14,9 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from bts.models import Merchant, Location, AssortmentBox
+
+from bts.models import *
 
 
 class MerchantSerializer(serializers.HyperlinkedModelSerializer):
@@ -49,4 +49,17 @@ class AssortmentBoxSerializer(serializers.HyperlinkedModelSerializer):
             "coordinates",
             "color",
             "layout",
+        ]
+
+
+class LabelTypeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = LabelType
+        fields = [
+            "id",
+            "name",
+            "width",
+            "height",
+            "lines_per_row",
+            "rows_per_label",
         ]

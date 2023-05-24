@@ -48,11 +48,7 @@ from bts.models import (
     StorageUnitType,
     SubComponent,
 )
-from bts.serializers import (
-    AssortmentBoxSerializer,
-    LocationSerializer,
-    MerchantSerializer,
-)
+from bts.serializers import *
 from bts.templatetags import view_extras
 
 """
@@ -412,4 +408,14 @@ class AssortmentBoxViewSet(viewsets.ModelViewSet):
 
     queryset = AssortmentBox.objects.all().order_by("id")
     serializer_class = AssortmentBoxSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class LabelTypeViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows label types to be viewed or edited.
+    """
+
+    queryset = LabelType.objects.all().order_by("id")
+    serializer_class = LabelTypeSerializer
     permission_classes = [permissions.IsAuthenticated]
