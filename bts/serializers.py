@@ -176,3 +176,13 @@ class PurchaseLineSerializer(serializers.HyperlinkedModelSerializer):
             "unit_price",
             "purchase",
         ]
+
+
+class CategorySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Category
+        fields = [
+            "id",
+            "name",
+            "parent",
+        ]
