@@ -1,10 +1,31 @@
-from django.test import TestCase, Client
-from django.contrib.auth.models import User, Permission
-from django.core.management import call_command
-from django.contrib.auth import get_user_model
-from django.urls import reverse
+# Bauteilsortiment - An Electronic Component Archival System
+# Copyright (C) 2023  nomike
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+import json
 
 from django.contrib import admin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission, User
+from django.core.management import call_command
+from django.test import Client, TestCase
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIRequestFactory, APITestCase
+
 from bts.models import *
 
 
@@ -47,6 +68,7 @@ class AssortmentBoxTestCase(TestCase):
     def test_assortment_box_layout(self):
         assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
         self.assertEqual(assortment_box.layout, "1x1")
+
 
 class StorageUnitTestCase(TestCase):
     def setUp(self):
@@ -319,18 +341,21 @@ class LocationTestCase(TestCase):
         location = Location.objects.get(name="Test Location")
         self.assertEqual(location.name, "Test Location")
 
+
 class LabelTypeTestCase(TestCase):
     def setUp(self):
-        self.label_type = LabelType.objects.create(name="Test Label Type", width=10, height=10, lines_per_row=1, rows_per_label=1)
+        self.label_type = LabelType.objects.create(
+            name="Test Label Type", width=10, height=10, lines_per_row=1, rows_per_label=1
+        )
 
     def test_label_type_name(self):
         label_type = LabelType.objects.get(name="Test Label Type")
         self.assertEqual(label_type.name, "Test Label Type")
-    
+
     def test_label_type_width(self):
         label_type = LabelType.objects.get(name="Test Label Type")
         self.assertEqual(label_type.width, 10)
-    
+
     def test_label_type_height(self):
         label_type = LabelType.objects.get(name="Test Label Type")
         self.assertEqual(label_type.height, 10)
@@ -342,3 +367,65 @@ class LabelTypeTestCase(TestCase):
     def test_label_type_rows_per_label(self):
         label_type = LabelType.objects.get(name="Test Label Type")
         self.assertEqual(label_type.rows_per_label, 1)
+
+
+class MerchantAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("merchant-list")
+        self.data = {"name": "Test Merchant"}
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_merchant(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Merchant.objects.count(), 1)
+        self.assertEqual(Merchant.objects.get().name, "Test Merchant")
+
+    # def test_create_Merchant_with_invalid_data(self):
+    #     response = self.client.post(self.url, self.invalid_data, format="json")
+    #     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    #     self.assertEqual(Merchant.objects.count(), 0)
+
+    def test_retrieve_Merchant(self):
+        merchant = Merchant.objects.create(name="Test Merchant")
+        url = reverse("merchant-detail", args=[merchant.pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["name"], "Test Merchant")
+
+    def test_update_Merchant(self):
+        merchant = Merchant.objects.create(name="Test Merchant")
+        url = reverse("merchant-detail", args=[merchant.pk])
+        updated_data = {
+            "name": "Updated Merchant",
+            "url": merchant.url,
+            "description": merchant.description,
+        }
+        response = self.client.put(url, json.dumps(updated_data), content_type="application/json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Merchant.objects.get(pk=merchant.pk).name, "Updated Merchant")
+
+    def test_delete_Merchant(self):
+        merchant = Merchant.objects.create(name="Test Merchant")
+        url = reverse("merchant-detail", args=[merchant.pk])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Merchant.objects.count(), 0)
