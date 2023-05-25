@@ -37,8 +37,14 @@ for name in [
         name + "Serializer",
         (GenericSerializer,),
         {
-            "model": getattr(bts.models, name),
-            "fields": [field.name for field in getattr(bts.models, name)._meta.fields],
+            "Meta": type(
+                "Meta",
+                (),
+                {
+                    "model": getattr(bts.models, name),
+                    "fields": [field.name for field in getattr(bts.models, name)._meta.fields],
+                },
+            ),
         },
     )
     globals()[generated_class.__name__] = generated_class
