@@ -70,7 +70,7 @@ for object in [
 
     # restfraemwork api
     router.register(
-        r"api/v1/" + snake_case(str(object._meta.verbose_name_plural)),
+        r"api/v0/" + snake_case(str(object._meta.verbose_name_plural)),
         getattr(views, f"{object._meta.object_name}ViewSet"),
     )
 
