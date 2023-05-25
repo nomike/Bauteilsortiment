@@ -14,10 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from rest_framework import serializers
 import inspect
-from bts.models import *
+
+from rest_framework import serializers
+
 import bts.models
+from bts.models import *
 
 
 class GenericSerializer(serializers.HyperlinkedModelSerializer):
