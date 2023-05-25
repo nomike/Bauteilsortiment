@@ -54,6 +54,43 @@ class AssortmentBoxSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 
+class StorageUnitTypeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = StorageUnitType
+        fields = [
+            "id",
+            "name",
+            "width",
+            "height",
+            "depth",
+            "label_template",
+        ]
+
+
+class StorageUnitSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = StorageUnit
+        fields = [
+            "id",
+            "name",
+            "number",
+            "assortment_box",
+            "storage_unit_type",
+        ]
+
+
+class StorageUnitCompartmentSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = StorageUnitCompartment
+        fields = [
+            "id",
+            "name",
+            "labeltext",
+            "storage_unit",
+            "z_index",
+        ]
+
+
 class MerchantSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Merchant
@@ -62,4 +99,80 @@ class MerchantSerializer(serializers.HyperlinkedModelSerializer):
             "name",
             "url",
             "description",
+        ]
+
+
+class ComponentTypeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ComponentType
+        fields = [
+            "id",
+            "name",
+            "parent",
+        ]
+
+
+class ComponentSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Component
+        fields = [
+            "id",
+            "part_number",
+            "usual_order_quantity",
+            "primary_datasheet",
+            "detailed_description",
+            "product_description",
+            "merchant",
+            "cache_expiry",
+            "notes",
+        ]
+
+
+class SubComponentSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = SubComponent
+        fields = [
+            "id",
+            "name",
+            "resell_price",
+            "storage_unit_compartments",
+            "component",
+            "order_unit_price",
+            "component_type",
+        ]
+
+
+class InventorySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Inventory
+        fields = [
+            "id",
+            "sub_component",
+            "storage_unit_compartment",
+            "timestamp",
+            "count",
+            "exact_match",
+        ]
+
+
+class PurchaseSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Purchase
+        fields = [
+            "id",
+            "merchant",
+            "order_number",
+            "timestamp",
+        ]
+
+
+class PurchaseLineSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = PurchaseLine
+        fields = [
+            "id",
+            "component",
+            "quantity",
+            "unit_price",
+            "purchase",
         ]
