@@ -369,6 +369,94 @@ class LabelTypeTestCase(TestCase):
         self.assertEqual(label_type.rows_per_label, 1)
 
 
+class LabelTypeAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("labeltype-list")
+        self.data = {
+            "name": "Test Label Type",
+            "width": 10,
+            "height": 10,
+            "lines_per_row": 1,
+            "rows_per_label": 1,
+        }
+        self.invalid_data = {
+            "name": "",
+            "width": 10,
+            "height": 10,
+            "lines_per_row": 1,
+            "rows_per_label": 1,
+        }
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_label_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_label_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_label_type(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class LocationAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("location-list")
+        self.data = {"name": "Test Location"}
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_location(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_location(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_location(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
 class MerchantAPITestCase(APITestCase):
     def setUp(self):
         self.url = reverse("merchant-list")
