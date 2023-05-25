@@ -95,12 +95,6 @@ urlpatterns.extend(
     ]
 )
 
-# rest views
-router.register(r"api/v1/labeltypes", views.LabelTypeViewSet)
-router.register(r"api/v1/locations", views.LocationViewSet)
-router.register(r"api/v1/assortmentboxes", views.AssortmentBoxViewSet)
-router.register(r"api/v1/merchants", views.MerchantViewSet)
-
 urlpatterns.extend(
     [
         path("", include(router.urls)),
