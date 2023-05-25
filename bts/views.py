@@ -34,7 +34,6 @@ from rest_framework import permissions, viewsets
 import bts.models
 from bts.models import (
     AssortmentBox,
-    Category,
     Component,
     ComponentType,
     Inventory,
@@ -243,6 +242,16 @@ def model_json_field_view(request, model: str, id: int, field: str):
     )
 
 
+class GenericViewSet(viewsets.ModelViewSet):
+    """
+    A generic viewset for a model.
+    """
+
+    queryset = None
+    serializer_class = None
+    permission_classes = [permissions.IsAuthenticated]
+
+
 class ModelListView(ConfiguredListView):
     """
     A generic list view.
@@ -364,14 +373,19 @@ for name in [
     for name, obj in bts.models.__dict__.items()
     if inspect.isclass(obj) and issubclass(obj, models.Model)
 ]:
+    # generate detail view class
     generated_class = type(
         name + "DetailView", (ModelDetailView,), {"model": getattr(bts.models, name)}
     )
     globals()[generated_class.__name__] = generated_class
+
+    # generate list view class
     generated_class = type(
         name + "ListView", (ModelListView,), {"model": getattr(bts.models, name)}
     )
     globals()[generated_class.__name__] = generated_class
+
+    # generate filtered list view class
     generated_class = type(
         name + "FilteredListView",
         (ModelFilteredListView,),
@@ -379,43 +393,14 @@ for name in [
     )
     globals()[generated_class.__name__] = generated_class
 
-
-# REST views
-class LabelTypeViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows label types to be viewed or edited.
-    """
-
-    queryset = LabelType.objects.all().order_by("id")
-    serializer_class = LabelTypeSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class LocationViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows locations to be viewed or edited.
-    """
-
-    queryset = Location.objects.all().order_by("id")
-    serializer_class = LocationSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class AssortmentBoxViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows assortment boxes to be viewed or edited.
-    """
-
-    queryset = AssortmentBox.objects.all().order_by("id")
-    serializer_class = AssortmentBoxSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class MerchantViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows merchants to be viewed or edited.
-    """
-
-    queryset = Merchant.objects.all().order_by("id")
-    serializer_class = MerchantSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # generate API viewset class
+    generated_class = type(
+        name + "ViewSet",
+        (GenericViewSet,),
+        {
+            "queryset": getattr(bts.models, name).objects.all().order_by("id"),
+            "serializer_class": getattr(bts.serializers, name + "Serializer"),
+            "permission_classes": [permissions.IsAuthenticated],
+        },
+    )
+    globals()[generated_class.__name__] = generated_class
