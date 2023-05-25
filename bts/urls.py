@@ -26,6 +26,7 @@ from bts.templatetags.view_extras import snake_case
 from . import views
 
 urlpatterns = []
+router = routers.DefaultRouter()
 
 # generate urls for all models
 for object in [
@@ -67,6 +68,12 @@ for object in [
         )
     )
 
+    # restfraemwork api
+    router.register(
+        r"api/v1/" + snake_case(str(object._meta.verbose_name_plural)),
+        getattr(views, f"{object._meta.object_name}ViewSet"),
+    )
+
 # add specific views
 urlpatterns.extend(
     [
@@ -89,7 +96,6 @@ urlpatterns.extend(
 )
 
 # rest views
-router = routers.DefaultRouter()
 router.register(r"api/v1/labeltypes", views.LabelTypeViewSet)
 router.register(r"api/v1/locations", views.LocationViewSet)
 router.register(r"api/v1/assortmentboxes", views.AssortmentBoxViewSet)
