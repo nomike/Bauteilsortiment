@@ -15,174 +15,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from rest_framework import serializers
-
+import inspect
 from bts.models import *
+import bts.models
 
 
-class LabelTypeSerializer(serializers.HyperlinkedModelSerializer):
+class GenericSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = LabelType
-        fields = [
-            "id",
-            "name",
-            "width",
-            "height",
-            "lines_per_row",
-            "rows_per_label",
-        ]
+        model = None
+        fields = None
 
 
-class LocationSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Location
-        fields = [
-            "id",
-            "name",
-        ]
-
-
-class AssortmentBoxSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = AssortmentBox
-        fields = [
-            "id",
-            "name",
-            "location",
-            "coordinates",
-            "color",
-            "layout",
-        ]
-
-
-class StorageUnitTypeSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = StorageUnitType
-        fields = [
-            "id",
-            "name",
-            "width",
-            "height",
-            "depth",
-            "label_template",
-        ]
-
-
-class StorageUnitSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = StorageUnit
-        fields = [
-            "id",
-            "name",
-            "number",
-            "assortment_box",
-            "storage_unit_type",
-        ]
-
-
-class StorageUnitCompartmentSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = StorageUnitCompartment
-        fields = [
-            "id",
-            "name",
-            "labeltext",
-            "storage_unit",
-            "z_index",
-        ]
-
-
-class MerchantSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Merchant
-        fields = [
-            "id",
-            "name",
-            "url",
-            "description",
-        ]
-
-
-class ComponentTypeSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = ComponentType
-        fields = [
-            "id",
-            "name",
-            "parent",
-        ]
-
-
-class ComponentSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Component
-        fields = [
-            "id",
-            "part_number",
-            "usual_order_quantity",
-            "primary_datasheet",
-            "detailed_description",
-            "product_description",
-            "merchant",
-            "cache_expiry",
-            "notes",
-        ]
-
-
-class SubComponentSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = SubComponent
-        fields = [
-            "id",
-            "name",
-            "resell_price",
-            "storage_unit_compartments",
-            "component",
-            "order_unit_price",
-            "component_type",
-        ]
-
-
-class InventorySerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Inventory
-        fields = [
-            "id",
-            "sub_component",
-            "storage_unit_compartment",
-            "timestamp",
-            "count",
-            "exact_match",
-        ]
-
-
-class PurchaseSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Purchase
-        fields = [
-            "id",
-            "merchant",
-            "order_number",
-            "timestamp",
-        ]
-
-
-class PurchaseLineSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = PurchaseLine
-        fields = [
-            "id",
-            "component",
-            "quantity",
-            "unit_price",
-            "purchase",
-        ]
-
-
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Category
-        fields = [
-            "id",
-            "name",
-            "parent",
-        ]
+for name in [
+    obj.__name__
+    for name, obj in bts.models.__dict__.items()
+    if inspect.isclass(obj) and issubclass(obj, models.Model)
+]:
+    generated_class = type(
+        name + "Serializer",
+        (GenericSerializer,),
+        {
+            "model": getattr(bts.models, name),
+            "fields": [field.name for field in getattr(bts.models, name)._meta.fields],
+        },
+    )
+    globals()[generated_class.__name__] = generated_class
