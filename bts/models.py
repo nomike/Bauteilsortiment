@@ -97,7 +97,6 @@ class StorageUnitType(models.Model):
     width = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
     depth = models.IntegerField(null=True)
-    label_template = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
