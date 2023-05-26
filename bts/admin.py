@@ -14,27 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib import admin
-
-from .models import (
-    AssortmentBox,
-    Category,
-    Component,
-    ComponentType,
-    SubComponent,
-    Inventory,
-    LabelType,
-    Location,
-    Merchant,
-    Purchase,
-    PurchaseLine,
-    StorageUnit,
-    StorageUnitCompartment,
-    StorageUnitType,
-)
-
-from django.forms.widgets import Select
 from django import forms
+from django.contrib import admin
+from django.forms.widgets import Select
+
+from .models import (AssortmentBox, Component, ComponentType, Inventory,
+                     LabelType, Location, Merchant, Purchase, PurchaseLine,
+                     StorageUnit, StorageUnitCompartment, StorageUnitType,
+                     SubComponent)
 
 
 class MultiLevelSelect(Select):
@@ -156,7 +143,6 @@ class InventoryAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(AssortmentBox)
-admin.site.register(Category)
 admin.site.register(LabelType)
 admin.site.register(Location)
 admin.site.register(Merchant)
