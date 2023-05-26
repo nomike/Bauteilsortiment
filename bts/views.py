@@ -29,15 +29,16 @@ from django.urls import reverse
 from django.views import View
 from django.views.decorators.cache import never_cache
 from django.views.generic import DetailView, ListView
+from rest_framework import permissions, viewsets
 
 import bts.models
 from bts.models import (
     AssortmentBox,
-    Category,
     Component,
     ComponentType,
     Inventory,
     LabelType,
+    Location,
     Merchant,
     Purchase,
     PurchaseLine,
@@ -46,6 +47,7 @@ from bts.models import (
     StorageUnitType,
     SubComponent,
 )
+from bts.serializers import *
 from bts.templatetags import view_extras
 
 """
@@ -381,17 +383,34 @@ for name in [
     for name, obj in bts.models.__dict__.items()
     if inspect.isclass(obj) and issubclass(obj, models.Model)
 ]:
+    # generate detail view class
     generated_class = type(
         name + "DetailView", (ModelDetailView,), {"model": getattr(bts.models, name)}
     )
     globals()[generated_class.__name__] = generated_class
+
+    # generate list view class
     generated_class = type(
         name + "ListView", (ModelListView,), {"model": getattr(bts.models, name)}
     )
     globals()[generated_class.__name__] = generated_class
+
+    # generate filtered list view class
     generated_class = type(
         name + "FilteredListView",
         (ModelFilteredListView,),
         {"model": getattr(bts.models, name)},
+    )
+    globals()[generated_class.__name__] = generated_class
+
+    # generate API viewset class
+    generated_class = type(
+        name + "ViewSet",
+        (GenericViewSet,),
+        {
+            "queryset": getattr(bts.models, name).objects.all().order_by("id"),
+            "serializer_class": getattr(bts.serializers, name + "Serializer"),
+            "permission_classes": [permissions.IsAuthenticated],
+        },
     )
     globals()[generated_class.__name__] = generated_class

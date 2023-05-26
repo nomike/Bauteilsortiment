@@ -17,7 +17,8 @@
 import inspect
 
 from django.db import models
-from django.urls import path
+from django.urls import include, path
+from rest_framework import routers
 
 import bts.models
 from bts.templatetags.view_extras import snake_case
@@ -25,6 +26,7 @@ from bts.templatetags.view_extras import snake_case
 from . import views
 
 urlpatterns = []
+router = routers.DefaultRouter()
 
 # generate urls for all models
 for object in [
@@ -66,6 +68,12 @@ for object in [
         )
     )
 
+    # restfraemwork api
+    router.register(
+        r"api/v0/" + object._meta.verbose_name_plural.title().replace(" ", ""),
+        getattr(views, f"{object._meta.object_name}ViewSet"),
+    )
+
 # add specific views
 urlpatterns.extend(
     [
@@ -84,5 +92,12 @@ urlpatterns.extend(
         path("qr/<str:model>/<int:id>.svg", views.qr_code_svg, name="qr_svg"),
         path("qrr/<int:id>", views.qr_redirect, name="qr_redirect"),
         path("labels/<int:id>", views.labelpage, name="qr_svg"),
+    ]
+)
+
+urlpatterns.extend(
+    [
+        path("", include(router.urls)),
+        path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     ]
 )
