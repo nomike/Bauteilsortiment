@@ -117,7 +117,7 @@ view_config = {
     LabelType: {
         "list_fields": ["name", "width", "height", "rows_per_label", "lines_per_row"],
         "list_detail_link_fields": ["name"],
-    }
+    },
 }
 
 
@@ -238,6 +238,26 @@ def model_json_field_view(request, model: str, id: int, field: str):
     return JsonResponse(
         getattr(get_object_or_404(getattr(bts.models, model), pk=id), field), safe=False
     )
+
+
+class GenericViewSet(viewsets.ModelViewSet):
+    """
+    A generic viewset for a model.
+    """
+
+    queryset = None
+    serializer_class = None
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == "list":
+            permission_classes = [permissions.AllowAny]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
 
 class ModelListView(ConfiguredListView):
