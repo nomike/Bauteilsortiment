@@ -261,17 +261,6 @@ class SubComponent(models.Model):
         ordering = ["component", "name"]
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=64, unique=True)
-    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "categories"
-
-
 class Inventory(models.Model):
     """
     An inventory is a single type of subcomponents in a single storage unit compartment.
