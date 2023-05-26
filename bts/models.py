@@ -97,6 +97,7 @@ class StorageUnitType(models.Model):
     width = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
     depth = models.IntegerField(null=True)
+    label_type = models.ForeignKey(LabelType, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
