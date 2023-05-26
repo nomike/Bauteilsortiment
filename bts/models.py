@@ -39,7 +39,7 @@ class LabelType(models.Model):
     rows_per_label = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return f"/* {self.name} */--label-height: {self.height}mm; --label-width: {self.width}mm; --label-lines-per-row: {self.lines_per_row}; --label-rows-per-label: {self.rows_per_label};"
 
     class Meta:
         ordering = ["name"]
