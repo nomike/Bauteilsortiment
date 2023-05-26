@@ -26,6 +26,7 @@ from django.utils import timezone
 # os.environ['DIGIKEY_CLIENT_SANDBOX'] = 'False'
 # os.environ['DIGIKEY_STORAGE_PATH'] = './cache'
 
+
 class LabelType(models.Model):
     """
     A label type is a type of label that can be printed for an assortment box.
@@ -37,12 +38,12 @@ class LabelType(models.Model):
     lines_per_row = models.IntegerField()
     rows_per_label = models.IntegerField()
 
-
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ["name"]
+
 
 class Location(models.Model):
     """

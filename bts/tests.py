@@ -1,10 +1,31 @@
-from django.test import TestCase, Client
-from django.contrib.auth.models import User, Permission
-from django.core.management import call_command
-from django.contrib.auth import get_user_model
-from django.urls import reverse
+# Bauteilsortiment - An Electronic Component Archival System
+# Copyright (C) 2023  nomike
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+import json
 
 from django.contrib import admin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission, User
+from django.core.management import call_command
+from django.test import Client, TestCase
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIRequestFactory, APITestCase
+
 from bts.models import *
 
 
@@ -47,6 +68,7 @@ class AssortmentBoxTestCase(TestCase):
     def test_assortment_box_layout(self):
         assortment_box = AssortmentBox.objects.get(name="Test Assortment Box")
         self.assertEqual(assortment_box.layout, "1x1")
+
 
 class StorageUnitTestCase(TestCase):
     def setUp(self):
@@ -319,18 +341,21 @@ class LocationTestCase(TestCase):
         location = Location.objects.get(name="Test Location")
         self.assertEqual(location.name, "Test Location")
 
+
 class LabelTypeTestCase(TestCase):
     def setUp(self):
-        self.label_type = LabelType.objects.create(name="Test Label Type", width=10, height=10, lines_per_row=1, rows_per_label=1)
+        self.label_type = LabelType.objects.create(
+            name="Test Label Type", width=10, height=10, lines_per_row=1, rows_per_label=1
+        )
 
     def test_label_type_name(self):
         label_type = LabelType.objects.get(name="Test Label Type")
         self.assertEqual(label_type.name, "Test Label Type")
-    
+
     def test_label_type_width(self):
         label_type = LabelType.objects.get(name="Test Label Type")
         self.assertEqual(label_type.width, 10)
-    
+
     def test_label_type_height(self):
         label_type = LabelType.objects.get(name="Test Label Type")
         self.assertEqual(label_type.height, 10)
@@ -342,3 +367,521 @@ class LabelTypeTestCase(TestCase):
     def test_label_type_rows_per_label(self):
         label_type = LabelType.objects.get(name="Test Label Type")
         self.assertEqual(label_type.rows_per_label, 1)
+
+
+class LabelTypeAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("labeltype-list")
+        self.data = {
+            "name": "Test Label Type",
+            "width": 10,
+            "height": 10,
+            "lines_per_row": 1,
+            "rows_per_label": 1,
+        }
+        self.invalid_data = {
+            "name": "",
+            "width": 10,
+            "height": 10,
+            "lines_per_row": 1,
+            "rows_per_label": 1,
+        }
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_label_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_label_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_label_type(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class LocationAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("location-list")
+        self.data = {"name": "Test Location"}
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_location(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_location(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_location(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class AssortmentBoxAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("assortmentbox-list")
+        self.data = {"name": "Test Assortment Box"}
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_component_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_component_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_component_type(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class StorageUnitTypeAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("storageunittype-list")
+        self.data = {"name": "Test Storage Unit Type"}
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_storage_unit_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_storage_unit_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_storage_unit_type(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class StorageUnitAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("storageunit-list")
+        self.location = Location.objects.create(name="Test Location")
+        self.assortment_box = AssortmentBox.objects.create(name="Test Assortment Box")
+        self.data = {
+            "name": "Test Storage Unit",
+            "number": 1,
+            "assortment_box": reverse(
+                "assortmentbox-detail", kwargs={"pk": self.assortment_box.pk}
+            ),
+        }
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_storage_unit(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_storage_unit(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_storage_unit(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class StorageUnitCompartmentAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("storageunitcompartment-list")
+        self.location = Location.objects.create(name="Test Location")
+        self.assortment_box = AssortmentBox.objects.create(name="Test Assortment Box")
+
+        self.storage_unit = StorageUnit.objects.create(
+            name="Test Storage Unit", number=1, assortment_box=self.assortment_box
+        )
+        self.data = {
+            "name": "Test Storage Unit Compartment",
+            "number": 1,
+            "storage_unit": reverse("storageunit-detail", kwargs={"pk": self.storage_unit.pk}),
+        }
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_storage_unit_compartment(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_storage_unit_compartment(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_storage_unit_compartment(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class MerchantAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("merchant-list")
+        self.data = {"name": "Test Merchant"}
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_merchant(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Merchant.objects.count(), 1)
+        self.assertEqual(Merchant.objects.get().name, "Test Merchant")
+
+    # def test_create_Merchant_with_invalid_data(self):
+    #     response = self.client.post(self.url, self.invalid_data, format="json")
+    #     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    #     self.assertEqual(Merchant.objects.count(), 0)
+
+    def test_retrieve_Merchant(self):
+        merchant = Merchant.objects.create(name="Test Merchant")
+        url = reverse("merchant-detail", args=[merchant.pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["name"], "Test Merchant")
+
+    def test_update_Merchant(self):
+        merchant = Merchant.objects.create(name="Test Merchant")
+        url = reverse("merchant-detail", args=[merchant.pk])
+        updated_data = {
+            "name": "Updated Merchant",
+            "url": merchant.url,
+            "description": merchant.description,
+        }
+        response = self.client.put(url, json.dumps(updated_data), content_type="application/json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Merchant.objects.get(pk=merchant.pk).name, "Updated Merchant")
+
+    def test_delete_Merchant(self):
+        merchant = Merchant.objects.create(name="Test Merchant")
+        url = reverse("merchant-detail", args=[merchant.pk])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Merchant.objects.count(), 0)
+
+
+class ComponentTypeAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("componenttype-list")
+        self.data = {"name": "Test Component Type"}
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_component_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_component_type(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_component_type(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class ComponentAPITestCase(APITestCase):
+    def setUp(self):
+        self.merchant = Merchant.objects.create(name="Test Merchant")
+        self.url = reverse("component-list")
+        self.data = {
+            "name": "Test Component",
+            "part_number": "1234567890",
+            "usual_order_quantity": 1,
+            "merchant": reverse("merchant-detail", args=[self.merchant.id]),
+        }
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_component(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_component(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_component(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class SubComponentAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("subcomponent-list")
+        self.merchant = Merchant.objects.create(name="Test Merchant")
+        self.component_type = ComponentType.objects.create(name="Test Component Type")
+        self.component = Component.objects.create(
+            part_number="1234567890",
+            usual_order_quantity=1,
+            merchant=self.merchant,
+        )
+        self.data = {
+            "name": "Test SubComponent",
+            "component": reverse("component-detail", args=[self.component.id]),
+            "component_type": reverse("componenttype-detail", args=[self.component_type.id]),
+        }
+        self.invalid_data = {"name": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_subcomponent(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_subcomponent(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_subcomponent(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class InventoryAPITestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse("inventory-list")
+        self.location = Location.objects.create(name="Test Location")
+        self.assortment_box = AssortmentBox.objects.create(
+            name="Test Assortment Box", location=self.location
+        )
+        self.storage_unit = StorageUnit.objects.create(
+            name="Test Storage Unit", assortment_box=self.assortment_box, number=1
+        )
+        self.storage_unit_compartment = StorageUnitCompartment.objects.create(
+            storage_unit=self.storage_unit, name="Test Storage Unit Compartment"
+        )
+
+        self.merchant = Merchant.objects.create(name="Test Merchant")
+        self.component_type = ComponentType.objects.create(name="Test Component Type")
+        self.component = Component.objects.create(
+            part_number="1234567890",
+            usual_order_quantity=1,
+            merchant=self.merchant,
+        )
+        self.subcomponent = SubComponent.objects.create(
+            name="Test SubComponent",
+            component=self.component,
+            component_type=self.component_type,
+        )
+        self.data = {
+            "sub_component": reverse("subcomponent-detail", args=[self.subcomponent.id]),
+            "storage_unit_compartment": reverse(
+                "storageunitcompartment-detail", args=[self.storage_unit_compartment.id]
+            ),
+            "count": 1,
+        }
+        self.invalid_data = {"count": ""}
+
+        # Create a user to test admin functionality
+        self.username = "testuser"
+        self.password = "testpass"
+        self.user = User.objects.create_user(
+            self.username, password=self.password, is_superuser=True
+        )
+        self.user.is_staff = True
+        self.user.save()
+        self.permission = Permission.objects.get(codename="view_subcomponent")
+        self.user.user_permissions.add(self.permission)
+
+        # Create a client and force login
+        self.client = Client()
+        self.client.force_login(self.user)
+
+    def test_create_inventory(self):
+        response = self.client.post(
+            self.url, json.dumps(self.data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_inventory(self):
+        response = self.client.post(
+            self.url, json.dumps(self.invalid_data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_inventory(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
