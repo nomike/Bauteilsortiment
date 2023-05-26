@@ -36,33 +36,31 @@ along with this program. If not, see
 </head>
 
 <body>
-    <div class="outergrid">
-        {% for storage_unit in storage_units %}
-        <div class="grid">
-            <div class="grid_qr">{{ assortment_box }}<img src="{% url "qr_redirect" storage_unit.id %}?box_size=1000" />{{ storage_unit.number }}</div>
-            {% with storage_unit_compartments=storage_unit.storage_unit_compartments.all|dictsortreversed:"z_index" %}
-                {% if storage_unit_compartments|length > 1 %}
-                    {% if storage_unit_compartments.1.labeltext %}
-                        <div class="grid_text">{{ storage_unit_compartments.1.labeltext }}</div>
-                    {% else %}
-                        <div class="grid_text">{{ storage_unit_compartments.1.inventories.all.0.sub_component.name }}</div>
-                    {% endif %}
-                    {% if storage_unit_compartments.0.labeltext %}
-                        <div class="grid_text">{{ storage_unit_compartments.0.labeltext }}</div>
-                    {% else %}
-                        <div class="grid_text">{{ storage_unit_compartments.0.inventories.all.0.sub_component.name }}</div>
-                    {% endif %}
+    {% for storage_unit in storage_units %}
+    <div class="grid">
+        <div class="grid_qr">{{ assortment_box }}<img src="{% url "qr_redirect" storage_unit.id %}?box_size=1000" />{{ storage_unit.number }}</div>
+        {% with storage_unit_compartments=storage_unit.storage_unit_compartments.all|dictsortreversed:"z_index" %}
+            {% if storage_unit_compartments|length > 1 %}
+                {% if storage_unit_compartments.1.labeltext %}
+                    <div class="grid_text">{{ storage_unit_compartments.1.labeltext }}</div>
                 {% else %}
-                    {% if storage_unit_compartments.0.labeltext %}
-                        <div class="grid_text_whole">{{ storage_unit_compartments.0.labeltext }}</div>
-                    {% else %}
-                        <div class="grid_text_whole">{{ storage_unit_compartments.0.inventories.all.0.sub_component.name }}</div>
-                    {% endif %}
+                    <div class="grid_text">{{ storage_unit_compartments.1.inventories.all.0.sub_component.name }}</div>
                 {% endif %}
-            {% endwith %}
-        </div>
-        {% endfor %}
+                {% if storage_unit_compartments.0.labeltext %}
+                    <div class="grid_text">{{ storage_unit_compartments.0.labeltext }}</div>
+                {% else %}
+                    <div class="grid_text">{{ storage_unit_compartments.0.inventories.all.0.sub_component.name }}</div>
+                {% endif %}
+            {% else %}
+                {% if storage_unit_compartments.0.labeltext %}
+                    <div class="grid_text_whole">{{ storage_unit_compartments.0.labeltext }}</div>
+                {% else %}
+                    <div class="grid_text_whole">{{ storage_unit_compartments.0.inventories.all.0.sub_component.name }}</div>
+                {% endif %}
+            {% endif %}
+        {% endwith %}
     </div>
+    {% endfor %}
 </body>
 
 </html>

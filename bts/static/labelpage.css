@@ -1,6 +1,12 @@
 body {
     font-family: 'Arial Narrow', Tahoma, Arial, sans-serif;
-    padding: 2mm;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+
+@page {
+    margin-top: 10px !important;
 }
 
 img {
@@ -11,6 +17,7 @@ img {
 }
 
 div.grid {
+    break-inside: avoid;
     /* background-color: blue; */
     float: left;
     display: grid;
@@ -42,8 +49,9 @@ div.grid>div {
 
 div.grid_text_whole {
     grid-row: 1 / span var(--label-rows);
-    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9); /* multiply by 0.9 to keep some slack */
-      /*font-size: calc(var(--label-height) / var(--lines-per-row) / 4 * 0.9);*/
+    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    /* multiply by 0.9 to keep some slack */
+    /*font-size: calc(var(--label-height) / var(--lines-per-row) / 4 * 0.9);*/
 
     grid-column-start: 2;
     white-space: break-spaces;
@@ -128,18 +136,18 @@ div.grid:after {
 }
 
 
-div.grid> div.grid_text_whole {
+div.grid>div.grid_text_whole {
     align-items: flex-start;
 }
 
-div.grid> div.grid_text_whole:hover {
+div.grid>div.grid_text_whole:hover {
     position: absolute;
     max-height: none;
 }
 
-.grid_text_whole:hover::after{
-  display:none;
-} 
+.grid_text_whole:hover::after {
+    display: none;
+}
 
 .grid {
     position: relative;
