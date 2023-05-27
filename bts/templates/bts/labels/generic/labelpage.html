@@ -26,8 +26,8 @@ along with this program. If not, see
     <style>
         :root {
             --label-height: {{ label_height|default:10 }}mm;
-            --label-width: {{ label_width|default:48}}mm;
-            --label-rows: 2;
+            --label-width: {{ label_width|default:50}}mm;
+            --label-rows-per-label: 2;
             --lines-per-row: {{ lines_per_row|default:1 }};
         }
     </style>
@@ -37,7 +37,7 @@ along with this program. If not, see
 
 <body>
     {% for storage_unit in storage_units %}
-    <div class="grid">
+    <div class="grid" style="{{ storage_unit.storage_unit_type.label_type }}">
         <div class="grid_qr">{{ assortment_box }}<img src="{% url "qr_redirect" storage_unit.id %}?box_size=1000" />{{ storage_unit.number }}</div>
         {% with storage_unit_compartments=storage_unit.storage_unit_compartments.all|dictsortreversed:"z_index" %}
             {% if storage_unit_compartments|length > 1 %}

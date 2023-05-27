@@ -22,12 +22,12 @@ div.grid {
     float: left;
     display: grid;
     grid-template-columns: calc(var(--label-width) * 0.25) calc(var(--label-width) * 0.75);
-    grid-template-rows: repeat(var(--label-rows), calc(var(--label-height) / var(--label-rows)));
+    grid-template-rows: repeat(var(--label-rows-per-label), calc(var(--label-height) / var(--label-rows-per-label)));
     border: 1px solid black;
 }
 
 div.grid_qr {
-    grid-row: 1 / calc(var(--label-rows) + 1);
+    grid-row: 1 / calc(var(--label-rows-per-label) + 1);
     font-size: calc(var(--label-height) * 0.05);
     display: flex;
     flex-direction: column;
@@ -48,10 +48,10 @@ div.grid>div {
 }
 
 div.grid_text_whole {
-    grid-row: 1 / span var(--label-rows);
-    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    grid-row: 1 / span var(--label-rows-per-label);
+    font-size: calc(var(--label-height) / var(--label-lines-per-row) * 0.9);
     /* multiply by 0.9 to keep some slack */
-    /*font-size: calc(var(--label-height) / var(--lines-per-row) / 4 * 0.9);*/
+    /*font-size: calc(var(--label-height) / var(--label-lines-per-row) / 4 * 0.9);*/
 
     grid-column-start: 2;
     white-space: break-spaces;
@@ -67,7 +67,7 @@ div.grid>div.grid_text:nth-of-type(2) {
     overflow: hidden;
     grid-column-start: 2;
     grid-row: 1;
-    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    font-size: calc(var(--label-height) / var(--label-lines-per-row) / 2 * 0.9);
     /* background-color: green; */
     border-bottom: 1px solid black;
 }
@@ -75,35 +75,35 @@ div.grid>div.grid_text:nth-of-type(2) {
 div.grid>div.grid_text:nth-of-type(3) {
     grid-column-start: 2;
     grid-row: 2;
-    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    font-size: calc(var(--label-height) / var(--label-lines-per-row) / 2 * 0.9);
     /* background-color: magenta; */
 }
 
 div.grid>div.grid_text:nth-of-type(4) {
     grid-column-start: 2;
     grid-row: 2;
-    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    font-size: calc(var(--label-height) / var(--label-lines-per-row) / 2 * 0.9);
     /* background-color: magenta; */
 }
 
 div.grid>div.grid_text:nth-of-type(5) {
     grid-column-start: 2;
     grid-row: 2;
-    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    font-size: calc(var(--label-height) / var(--label-lines-per-row) / 2 * 0.9);
     /* background-color: magenta; */
 }
 
 div.grid>div.grid_text:nth-of-type(6) {
     grid-column-start: 2;
     grid-row: 2;
-    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    font-size: calc(var(--label-height) / var(--label-lines-per-row) / 2 * 0.9);
     /* background-color: magenta; */
 }
 
 div.grid>div.grid_text:nth-of-type(7) {
     grid-column-start: 2;
     grid-row: 2;
-    font-size: calc(var(--label-height) / var(--lines-per-row) / 2 * 0.9);
+    font-size: calc(var(--label-height) / var(--label-lines-per-row) / 2 * 0.9);
     /* background-color: magenta; */
 }
 
@@ -140,10 +140,10 @@ div.grid>div.grid_text_whole {
     align-items: flex-start;
 }
 
-div.grid>div.grid_text_whole:hover {
+/* div.grid>div.grid_text_whole:hover {
     position: absolute;
     max-height: none;
-}
+} */
 
 .grid_text_whole:hover::after {
     display: none;

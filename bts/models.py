@@ -39,7 +39,7 @@ class LabelType(models.Model):
     rows_per_label = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return f"/* {self.name} */--label-height: {self.height}mm; --label-width: {self.width}mm; --label-lines-per-row: {self.lines_per_row}; --label-rows-per-label: {self.rows_per_label};"
 
     class Meta:
         ordering = ["name"]
@@ -97,7 +97,7 @@ class StorageUnitType(models.Model):
     width = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
     depth = models.IntegerField(null=True)
-    label_template = models.CharField(max_length=255, null=True, blank=True)
+    label_type = models.ForeignKey(LabelType, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
