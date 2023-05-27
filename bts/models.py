@@ -14,17 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# import digikey
-# from digikey.v3.productinformation import KeywordSearchRequest
 from django.db import models
 from django.utils import timezone
 
 # Create your models here.
-
-# os.environ['DIGIKEY_CLIENT_ID'] = 'i1DbG9gggftX71MLTUngzAayWRMUzMGO'
-# os.environ['DIGIKEY_CLIENT_SECRET'] = 'piWwjB6V8TYsxlLg'
-# os.environ['DIGIKEY_CLIENT_SANDBOX'] = 'False'
-# os.environ['DIGIKEY_STORAGE_PATH'] = './cache'
 
 
 class LabelType(models.Model):
@@ -214,22 +207,6 @@ class Component(models.Model):
             )
         ]
         ordering = ["product_description", "merchant"]
-
-    # def update_cache(self, force: bool = False):
-    #     if force or self.cache_expiry < timezone.now():
-    #         if self.merchant == Merchant.objects.get(name="DigiKey"):
-    #             pd = digikey.product_details(self.part_number)
-    #             self.primary_datasheet = pd.primary_datasheet
-    #             self.detailed_description = pd.detailed_description
-    #             self.product_description = pd.product_description
-    #             for price in pd.standard_pricing:
-    #                 if price.break_quantity >= self.usual_order_quantity:
-    #                     self.order_unit_price = price.unit_price
-    #             dt = timezone.now()
-    #             dt = dt + datetime.timedelta(days=10)
-    #             self.cache_expiry = dt
-    #         else:
-    #             pass
 
 
 class SubComponent(models.Model):
