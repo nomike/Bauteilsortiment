@@ -17,8 +17,73 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {% endcomment %}
 {% load static %}
 {% load view_extras %}
-<table id="components" class="maintable">
-    <tr>
+<table id="list" class="maintable">
+</table>
+<div id="navigation"></div>
+<script>
+    var list_fields = {{ list_fields|safe }};
+    var list_detail_link_fields = {{ list_detail_link_fields|safe }};
+    var list_foreign_link_fields = {{ list_foreign_link_fields|safe|default:"[]" }};
+    function readData(url) {
+        fetch(url).then((response) => response.text())
+            .then(function (r) {
+                $('table#list').empty();
+                response = $.parseJSON(r);
+                tr = $('<tr>');
+                list_fields.forEach(
+                    function (value) {
+                        tr.append($("<th>").text(value));
+                    }
+                )
+                $("#navigation").empty();
+                if (response.previous) {
+                    $("#navigation").append($("<a>", {
+                        href: "#",
+                        text: "<",
+                        title: "Previous page",
+                        click: function () {
+                            readData(response.previous);
+                        }
+                    }));
+                }
+                if (response.next) {
+                    $("#navigation").append($("<a>", {
+                        href: "#",
+                        text: ">",
+                        title: "Next page",
+                        click: function () {
+                            readData(response.next);
+                        }
+                    }));
+                }
+                $('table#list').append(tr);
+                response.results.forEach(
+                    function (row) {
+                        tr = $("<tr>");
+                        list_fields.forEach(function (value) {
+                            if(list_detail_link_fields.includes(value)) {
+                                tr.append($("<td>").append($("<a>", {text: row[value], href: "/bts/m/{{object_list.0|get_type}}/id/" + row['id']})));
+                            } else if(list_foreign_link_fields.includes(value)) {
+                                tr.append($("<td>").append($("<a>", {text: row[value], href: "/bts/m/{{object_list.0|get_type}}/id/" + row['id']})));
+                            } else {
+                                tr.append($("<td>").text(row[value]));
+                            }
+                        });
+                        $('table#list').append(tr);
+                    }
+                )
+            })
+            .catch((error) => {
+                console.warn(error);
+            });
+    }
+
+
+    window.onload = function () {
+        readData('http://localhost:8000/bts/api/v0/{{ object_list.0|get_meta|hash:"verbose_name_plural"|hash:"title"|cut:" " }}/?limit=10');
+    } 
+</script>
+    {% comment %} <tr>
         {% for field in list_fields %}
         <th>{{ field|snake_to_space }}</th>
         {% endfor %}
@@ -46,4 +111,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         {% endfor %}
     </tr>
     {% endfor %}
-</table>
+</table> {% endcomment %}
