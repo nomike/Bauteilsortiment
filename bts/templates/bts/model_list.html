@@ -47,6 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </tr>
     {% endfor %}
 </table>
+{% if page_obj %}
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
@@ -64,3 +65,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         {% endif %}
     </span>
 </div>
+{% endif %}
