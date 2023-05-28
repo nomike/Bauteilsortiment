@@ -92,6 +92,15 @@ def get_type(object):
 
 
 @register.filter
+def get_type_plural(object):
+    """
+    Returns the type of an object as a string.
+    """
+
+    return object._meta.verbose_name_plural
+
+
+@register.filter
 def get_meta(model: models.Model):
     """
     Returns the meta class of a model.
