@@ -18,10 +18,21 @@ from django import forms
 from django.contrib import admin
 from django.forms.widgets import Select
 
-from .models import (AssortmentBox, Component, ComponentType, Inventory,
-                     LabelType, Location, Merchant, Purchase, PurchaseLine,
-                     StorageUnit, StorageUnitCompartment, StorageUnitType,
-                     SubComponent)
+from .models import (
+    AssortmentBox,
+    Component,
+    ComponentType,
+    Inventory,
+    LabelType,
+    Location,
+    Merchant,
+    Purchase,
+    PurchaseLine,
+    StorageUnit,
+    StorageUnitCompartment,
+    StorageUnitType,
+    SubComponent,
+)
 
 
 class MultiLevelSelect(Select):

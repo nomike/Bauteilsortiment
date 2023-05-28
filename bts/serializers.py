@@ -34,7 +34,7 @@ for name in [
     if inspect.isclass(obj) and issubclass(obj, models.Model)
 ]:
     generated_class = type(
-        name + "Serializer",
+        f"{name}Serializer",
         (GenericSerializer,),
         {
             "Meta": type(
