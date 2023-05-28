@@ -54,7 +54,7 @@ class Location(models.Model):
 
 class AssortmentBox(models.Model):
     """
-    A box cotaining components. Assortment boxes are divided into storage units which are divided into compartments.
+    A box containing components. Assortment boxes are divided into storage units which are divided into compartments.
     """
 
     name = models.CharField(max_length=255, unique=True)
@@ -184,7 +184,7 @@ class ComponentType(models.Model):
 
 class Component(models.Model):
     """
-    A component is a single orderable item. It can sonsist of multiple subcomponents. E.g. a resistor-kit would be a component, the individual resistors would be subcomponents.
+    A component is a single orderable item. It can consist of multiple subcomponents. E.g. a resistor-kit would be a component, the individual resistors would be subcomponents.
     """
 
     part_number = models.CharField(max_length=64, verbose_name="Part number")
@@ -265,7 +265,7 @@ class Inventory(models.Model):
             )
         ]
         ordering = ["storage_unit_compartment", "sub_component"]
-        verbose_name_plural = "invetories"
+        verbose_name_plural = "inventories"
 
 
 class Purchase(models.Model):

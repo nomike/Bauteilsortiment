@@ -18,13 +18,11 @@
 import json
 
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission, User
-from django.core.management import call_command
 from django.test import Client, TestCase
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APIRequestFactory, APITestCase
+from rest_framework.test import APITestCase
 
 from bts.models import *
 
@@ -667,7 +665,7 @@ class MerchantAPITestCase(APITestCase):
         url = reverse("merchant-detail", args=[merchant.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["name"], "Test Merchant")
+        self.assertEqual(response.data["name"], "Test Merchant")  # type: ignore
 
     def test_update_Merchant(self):
         merchant = Merchant.objects.create(name="Test Merchant")
@@ -735,7 +733,7 @@ class ComponentAPITestCase(APITestCase):
             "name": "Test Component",
             "part_number": "1234567890",
             "usual_order_quantity": 1,
-            "merchant": reverse("merchant-detail", args=[self.merchant.id]),
+            "merchant": reverse("merchant-detail", args=[self.merchant.id]),  # type: ignore
         }
         self.invalid_data = {"name": ""}
 
@@ -783,8 +781,8 @@ class SubComponentAPITestCase(APITestCase):
         )
         self.data = {
             "name": "Test SubComponent",
-            "component": reverse("component-detail", args=[self.component.id]),
-            "component_type": reverse("componenttype-detail", args=[self.component_type.id]),
+            "component": reverse("component-detail", args=[self.component.id]),  # type: ignore
+            "component_type": reverse("componenttype-detail", args=[self.component_type.id]),  # type: ignore
         }
         self.invalid_data = {"name": ""}
 
@@ -847,9 +845,9 @@ class InventoryAPITestCase(APITestCase):
             component_type=self.component_type,
         )
         self.data = {
-            "sub_component": reverse("subcomponent-detail", args=[self.subcomponent.id]),
+            "sub_component": reverse("subcomponent-detail", args=[self.subcomponent.id]),  # type: ignore
             "storage_unit_compartment": reverse(
-                "storageunitcompartment-detail", args=[self.storage_unit_compartment.id]
+                "storageunitcompartment-detail", args=[self.storage_unit_compartment.id]  # type: ignore
             ),
             "count": 1,
         }

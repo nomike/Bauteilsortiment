@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.template import Variable, VariableDoesNotExist, Library
-from django.db import models
 import re
 
+from django.db import models
+from django.template import Library, Variable, VariableDoesNotExist
 
 register = Library()
 
@@ -40,7 +40,7 @@ def hash(object, attr):
 
     pseudo_context = {"object": object}
     try:
-        value = Variable("object.%s" % attr).resolve(pseudo_context)
+        value = Variable(f"object.{attr}").resolve(pseudo_context)
     except VariableDoesNotExist:
         value = None
     return value

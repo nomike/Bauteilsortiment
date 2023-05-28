@@ -15,18 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import inspect
-import json
 from typing import Any, Dict
 
-import drawsvg
 import qrcode
 import qrcode.image.svg
 from django.db import models
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.views import View
 from django.views.decorators.cache import never_cache
 from django.views.generic import DetailView, ListView
 from rest_framework import permissions, viewsets
@@ -38,7 +35,6 @@ from bts.models import (
     ComponentType,
     Inventory,
     LabelType,
-    Location,
     Merchant,
     Purchase,
     PurchaseLine,
@@ -48,7 +44,6 @@ from bts.models import (
     SubComponent,
 )
 from bts.serializers import *
-from bts.templatetags import view_extras
 
 """
 Configuration for generic views.
@@ -319,7 +314,7 @@ def labelpage(request, id):
         "label_height": request.GET.get("label_height"),
         "lines_per_row": request.GET.get("lines_per_row"),
     }
-    return render(request, f"bts/labels/generic/labelpage.html", context)
+    return render(request, "bts/labels/generic/labelpage.html", context)
 
 
 def qr_redirect(request, id):
@@ -385,19 +380,23 @@ for name in [
 ]:
     # generate detail view class
     generated_class = type(
-        name + "DetailView", (ModelDetailView,), {"model": getattr(bts.models, name)}
+        f"{name}DetailView",
+        (ModelDetailView,),
+        {"model": getattr(bts.models, name)},
     )
     globals()[generated_class.__name__] = generated_class
 
     # generate list view class
     generated_class = type(
-        name + "ListView", (ModelListView,), {"model": getattr(bts.models, name)}
+        f"{name}ListView",
+        (ModelListView,),
+        {"model": getattr(bts.models, name)},
     )
     globals()[generated_class.__name__] = generated_class
 
     # generate filtered list view class
     generated_class = type(
-        name + "FilteredListView",
+        f"{name}FilteredListView",
         (ModelFilteredListView,),
         {"model": getattr(bts.models, name)},
     )
@@ -405,11 +404,11 @@ for name in [
 
     # generate API viewset class
     generated_class = type(
-        name + "ViewSet",
+        f"{name}ViewSet",
         (GenericViewSet,),
         {
             "queryset": getattr(bts.models, name).objects.all().order_by("id"),
-            "serializer_class": getattr(bts.serializers, name + "Serializer"),
+            "serializer_class": getattr(bts.serializers, f"{name}Serializer"),
             "permission_classes": [permissions.IsAuthenticated],
         },
     )

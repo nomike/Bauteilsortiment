@@ -21,7 +21,7 @@ from django.urls import include, path
 from rest_framework import routers
 
 import bts.models
-from bts.templatetags.view_extras import snake_case
+
 
 from . import views
 
@@ -34,47 +34,36 @@ for object in [
     for name, object in bts.models.__dict__.items()
     if inspect.isclass(object) and issubclass(object, models.Model)
 ]:
-    # generic list
-    urlpatterns.append(
-        path(
-            f"m/{object._meta.object_name}",
-            getattr(views, f"{object._meta.object_name}ListView").as_view(),
-            name=f"{object._meta.object_name}",
+    urlpatterns.extend(
+        (
+            path(
+                f"m/{object._meta.object_name}",
+                getattr(views, f"{object._meta.object_name}ListView").as_view(),
+                name=f"{object._meta.object_name}",
+            ),
+            path(
+                f"m/{object._meta.object_name}/",
+                getattr(views, f"{object._meta.object_name}ListView").as_view(),
+                name=f"{object._meta.object_name}_list",
+            ),
+            path(
+                f"m/{object._meta.object_name}/filtered/<str:field>/<str:value>",
+                getattr(views, f"{object._meta.object_name}FilteredListView").as_view(),
+                name=f"{object._meta.object_name}_filtered_list",
+            ),
+            path(
+                f"m/{object._meta.object_name}/id/<int:pk>",
+                getattr(views, f"{object._meta.object_name}DetailView").as_view(),
+                name=f"{object._meta.object_name}_detail",
+            ),
         )
     )
-    urlpatterns.append(
-        path(
-            f"m/{object._meta.object_name}/",
-            getattr(views, f"{object._meta.object_name}ListView").as_view(),
-            name=f"{object._meta.object_name}_list",
-        )
-    )
-
-    # filtered list
-    urlpatterns.append(
-        path(
-            f"m/{object._meta.object_name}/filtered/<str:field>/<str:value>",
-            getattr(views, f"{object._meta.object_name}FilteredListView").as_view(),
-            name=f"{object._meta.object_name}_filtered_list",
-        )
-    )
-
-    # generic detail page
-    urlpatterns.append(
-        path(
-            f"m/{object._meta.object_name}/id/<int:pk>",
-            getattr(views, f"{object._meta.object_name}DetailView").as_view(),
-            name=f"{object._meta.object_name}_detail",
-        )
-    )
-
     # restfraemwork api
     router.register(
         r"api/v0/" + object._meta.verbose_name_plural.title().replace(" ", ""),
         getattr(views, f"{object._meta.object_name}ViewSet"),
     )
 
-# add specific views
 urlpatterns.extend(
     [
         path("", views.home_view, name="home"),
@@ -92,12 +81,10 @@ urlpatterns.extend(
         path("qr/<str:model>/<int:id>.svg", views.qr_code_svg, name="qr_svg"),
         path("qrr/<int:id>", views.qr_redirect, name="qr_redirect"),
         path("labels/<int:id>", views.labelpage, name="qr_svg"),
-    ]
-)
-
-urlpatterns.extend(
-    [
         path("", include(router.urls)),
-        path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+        path(
+            "api-auth/",
+            include("rest_framework.urls", namespace="rest_framework"),
+        ),
     ]
 )
