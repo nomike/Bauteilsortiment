@@ -23,8 +23,7 @@ import qrcode
 import qrcode.image.svg
 from django.db import models
 from django.db.models import QuerySet
-from django.http import (HttpRequest, HttpResponse, HttpResponseRedirect,
-                         JsonResponse)
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import View
@@ -33,10 +32,21 @@ from django.views.generic import DetailView, ListView
 from rest_framework import permissions, viewsets
 
 import bts.models
-from bts.models import (AssortmentBox, Component, ComponentType, Inventory,
-                        LabelType, Location, Merchant, Purchase, PurchaseLine,
-                        StorageUnit, StorageUnitCompartment, StorageUnitType,
-                        SubComponent)
+from bts.models import (
+    AssortmentBox,
+    Component,
+    ComponentType,
+    Inventory,
+    LabelType,
+    Location,
+    Merchant,
+    Purchase,
+    PurchaseLine,
+    StorageUnit,
+    StorageUnitCompartment,
+    StorageUnitType,
+    SubComponent,
+)
 from bts.serializers import *
 from bts.templatetags import view_extras
 
@@ -256,6 +266,7 @@ class ModelListView(ConfiguredListView):
     A generic list view.
     """
 
+    paginate_by = 10
     model = None
     template_name = "bts/model_list_page.html"
 
