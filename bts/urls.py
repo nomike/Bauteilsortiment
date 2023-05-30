@@ -72,11 +72,6 @@ urlpatterns.extend(
             views.model_json_field_view,
             name="json_field_view",
         ),
-        path(
-            "json/<str:model>/<str:field>/<str:value>",
-            views.model_json_filtered_view,
-            name="json_list_filtered",
-        ),
         path("qr/<str:model>/<int:id>.svg", views.qr_code_svg, name="qr_svg"),
         path("qrr/<int:id>", views.qr_redirect, name="qr_redirect"),
         path("labels/<int:id>", views.labelpage, name="labelpage"),
