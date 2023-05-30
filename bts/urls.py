@@ -67,7 +67,6 @@ for object in [
 urlpatterns.extend(
     [
         path("", views.home_view, name="home"),
-        path("json/<str:model>", views.model_json_view, name="json_list"),
         path(
             "json/<str:model>/<int:id>/field/<str:field>",
             views.model_json_field_view,
