@@ -96,4 +96,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <p>
         <a href="{% url "admin:"|add:app_label|add:"_"|add:model_name|add:"_change" object.id %}">Edit</a> | <a href="{% url "admin:"|add:app_label|add:"_"|add:model_name|add:"_delete" object.id %}">Delete</a>
     </p>
+    {% with tpl=object|get_meta|hash:"object_name"|add:".html" %}
+        {% include_maybe  "bts/"|add:tpl %}
+    {% endwith %}
 {% endblock %}
