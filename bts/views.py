@@ -184,21 +184,6 @@ class ConfiguredDetailView(DetailView):
 
 
 @never_cache
-def model_json_view(request, model: str):
-    """
-    Renders a JSON document with all items of the specified model.
-
-    Args:
-        request (HttpRequest): Django Request Object
-        model (str): The name of the model you want to represent
-
-    Returns:
-        JsonResponse: The JSON document as a JsonResponse HttpResponse object.
-    """
-    return JsonResponse(list(getattr(bts.models, model).objects.values()), safe=False)
-
-
-@never_cache
 def model_json_filtered_view(request, model: str, field: str, value: str):
     """
     Renders a JSON document with all items of the specified model filtered by a foreign key.
