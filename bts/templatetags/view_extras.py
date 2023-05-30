@@ -19,6 +19,8 @@ import re
 from django import template
 from django.db import models
 
+from django.template.loader_tags import do_include
+
 register = template.Library()
 
 
