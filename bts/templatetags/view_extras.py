@@ -16,10 +16,38 @@
 
 import re
 
+from django import template
 from django.db import models
-from django.template import Library, Variable, VariableDoesNotExist
 
-register = Library()
+register = template.Library()
+
+
+@register.tag("include_maybe")
+def do_include_maybe(parser, token):
+    "Source: http://stackoverflow.com/a/18951166/15690"
+    bits = token.split_contents()
+    if len(bits) < 2:
+        raise template.TemplateSyntaxError(
+            "%r tag takes at least one argument: "
+            "the name of the template to be included." % bits[0]
+        )
+
+    try:
+        silent_node = do_include(parser, token)
+    except template.TemplateDoesNotExist:
+        # Django < 1.7
+        return ""
+
+    _orig_render = silent_node.render
+
+    def wrapped_render(*args, **kwargs):
+        try:
+            return _orig_render(*args, **kwargs)
+        except template.TemplateDoesNotExist:
+            return ""
+
+    silent_node.render = wrapped_render
+    return silent_node
 
 
 @register.filter
@@ -40,8 +68,8 @@ def hash(object, attr):
 
     pseudo_context = {"object": object}
     try:
-        value = Variable(f"object.{attr}").resolve(pseudo_context)
-    except VariableDoesNotExist:
+        value = template.Variable(f"object.{attr}").resolve(pseudo_context)
+    except template.VariableDoesNotExist:
         value = None
     return value
 

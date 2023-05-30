@@ -80,7 +80,7 @@ urlpatterns.extend(
         ),
         path("qr/<str:model>/<int:id>.svg", views.qr_code_svg, name="qr_svg"),
         path("qrr/<int:id>", views.qr_redirect, name="qr_redirect"),
-        path("labels/<int:id>", views.labelpage, name="qr_svg"),
+        path("labels/<int:id>", views.labelpage, name="labelpage"),
         path("", include(router.urls)),
         path(
             "api-auth/",
