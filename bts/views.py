@@ -184,24 +184,6 @@ class ConfiguredDetailView(DetailView):
 
 
 @never_cache
-def model_json_filtered_view(request, model: str, field: str, value: str):
-    """
-    Renders a JSON document with all items of the specified model filtered by a foreign key.
-
-    Args:
-        request (HttpRequest): Django Request Object
-        model (str): The name of the model you want to represent
-        filter_model (str): The name of the model you want to filter by
-        id (int): The id you want to filter by
-
-    Returns:
-        JsonResponse: The JSON document as a JsonResponse HttpResponse object.
-    """
-    data = getattr(bts.models, model).objects.filter(**{field: value})
-    return JsonResponse(list(data.values()), safe=False)
-
-
-@never_cache
 def model_json_field_view(request, model: str, id: int, field: str):
     """
     Renders a JSON document containing a single parameter of an ojbect.
