@@ -4,3 +4,4 @@ django-admin
 djangorestframework
 qrcode[pil]
 drawsvg
+django-filter
