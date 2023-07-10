@@ -87,10 +87,8 @@ function fill_select(select_id) {
         dataType: 'json',
         async: false,
         success: function (data) {
-            console.info("###DATA: " + data);
             let count = 0;
             django.jQuery.each(data['results'], function () {
-                console.info("###DATALINE: " + this);
                 select.append(django.jQuery("<option />").val(this.id).text(this[display_field]));
             });
         }
