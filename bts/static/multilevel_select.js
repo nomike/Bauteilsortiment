@@ -77,18 +77,20 @@ function fill_select(select_id) {
 
     let url;
     if (parent_field != null) {
-        url = '/bts/json/' + model + '/' + parent_field + '/' + id;
+        url = '/bts/api/v0/' + model + '/?' + parent_field + '=' + id;
     } else {
-        url = '/bts/json/' + model;
+        url = '/bts/api/v0/' + model + '/';
     }
-
+    console.info(url);
     django.jQuery.ajax({
         url: url,
         dataType: 'json',
         async: false,
         success: function (data) {
+            console.info("###DATA: " + data);
             let count = 0;
-            django.jQuery.each(data, function () {
+            django.jQuery.each(data['results'], function () {
+                console.info("###DATALINE: " + this);
                 select.append(django.jQuery("<option />").val(this.id).text(this[display_field]));
             });
         }

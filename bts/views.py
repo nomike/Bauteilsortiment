@@ -27,6 +27,7 @@ from django.urls import reverse
 from django.views.decorators.cache import never_cache
 from django.views.generic import DetailView, ListView
 from rest_framework import permissions, viewsets
+from rest_framework.pagination import PageNumberPagination
 
 import bts.models
 from bts.models import (
@@ -117,6 +118,12 @@ view_config = {
 }
 
 
+class PageNumberPaginationLarge(PageNumberPagination):
+    page_size = 100
+    max_page_size = 10000
+    page_size_query_param = "_page_size"
+    page_query_param = "_page"
+
 def home_view(request):
     """
     Home view which lists all model categories.
@@ -191,6 +198,14 @@ class GenericViewSet(viewsets.ModelViewSet):
     queryset = None
     serializer_class = None
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self) -> QuerySet[Any]:
+        queryset = self.model.objects.all()
+        # Filter by all query parameters
+        for key, value in [i for i in self.request.query_params.items() if i[0][0] != '_']:
+            queryset = queryset.filter(**{key: value})
+        return queryset
+
 
     def get_permissions(self):
         """
@@ -353,10 +368,12 @@ for name in [
     generated_class = type(
         f"{name}ViewSet",
         (GenericViewSet,),
-        {
+        {   
+            "model": getattr(bts.models, name),
             "queryset": getattr(bts.models, name).objects.all().order_by("id"),
             "serializer_class": getattr(bts.serializers, f"{name}Serializer"),
             "permission_classes": [permissions.IsAuthenticated],
+            "pagination_class": PageNumberPaginationLarge,
         },
     )
     globals()[generated_class.__name__] = generated_class
