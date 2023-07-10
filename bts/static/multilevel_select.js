@@ -109,15 +109,21 @@ function set_field(select_id, value) {
 
     for (let i = select_id; i > 0; i--) {
         django.jQuery.ajax({
-            url: `/bts/json/${fields[i]['model']}/${selected_objects[i]}/field/${fields[i]['parent_field']}`,
+            url: `/bts/api/v0/${fields[i]['model']}/${selected_objects[i]}`,
             dataType: 'json',
             async: false,
             success: function (data) {
-                selected_objects[i - 1] = data;
+                django.jQuery.ajax({
+                    url: data[fields[i]['parent_field']],
+                    dataType: 'json',
+                    async: false,
+                    success: function (data2) {
+                        selected_objects[i - 1] = data2['id'];
+                    }
+                });
             }
         });
     }
-
     for (let i = 0; i <= select_id; i++) {
         fill_select(i);
         django.jQuery('.' + fields[i]['id']).val(selected_objects[i]).change();
