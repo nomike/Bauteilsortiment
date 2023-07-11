@@ -132,13 +132,13 @@ class InventoryAdminForm(forms.ModelForm):
         'id': 'select-storage-unit',
         'model': 'StorageUnits',
         'display_field': 'number',
-        'parent_field': 'assortment_box_id'
+        'parent_field': 'assortment_box'
     },
     {
         'id': 'select-storage-unit-compartment',
         'model': 'StorageUnitCompartments',
         'display_field': 'name',
-        'parent_field': 'storage_unit_id'
+        'parent_field': 'storage_unit'
     }
 ]"""
             )
