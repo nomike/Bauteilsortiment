@@ -151,6 +151,32 @@ class InventoryAdmin(admin.ModelAdmin):
     form = InventoryAdminForm
     save_as = True
 
+class StorageUnitCompartmentAdminForm(forms.ModelForm):
+    class Meta:
+        fields = ["name", "labeltext", "storage_unit", "z_index"]
+        model = StorageUnitCompartment
+        widgets = {
+            "storage_unit": MultiLevelSelect(
+                fields="""[
+    {
+        'id': 'select-assortment-box',
+        'model': 'AssortmentBoxes',
+        'display_field': 'name',
+    },
+    {
+        'id': 'select-storage-unit',
+        'model': 'StorageUnits',
+        'display_field': 'number',
+        'parent_field': 'assortment_box'
+    },
+]"""
+            )
+        }
+
+@admin.register(StorageUnitCompartment)
+class StorageUnitCompartmentAdmin(admin.ModelAdmin):
+    form = StorageUnitCompartmentAdminForm
+    save_as = True
 
 # Register your models here.
 admin.site.register(AssortmentBox)
@@ -160,5 +186,4 @@ admin.site.register(Merchant)
 admin.site.register(Purchase)
 admin.site.register(PurchaseLine)
 admin.site.register(StorageUnit)
-admin.site.register(StorageUnitCompartment)
 admin.site.register(StorageUnitType)
