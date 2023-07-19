@@ -125,20 +125,20 @@ class InventoryAdminForm(forms.ModelForm):
                 fields="""[
     {
         'id': 'select-assortment-box',
-        'model': 'AssortmentBox',
+        'model': 'AssortmentBoxes',
         'display_field': 'name',
     },
     {
         'id': 'select-storage-unit',
-        'model': 'StorageUnit',
+        'model': 'StorageUnits',
         'display_field': 'number',
-        'parent_field': 'assortment_box_id'
+        'parent_field': 'assortment_box'
     },
     {
         'id': 'select-storage-unit-compartment',
-        'model': 'StorageUnitCompartment',
+        'model': 'StorageUnitCompartments',
         'display_field': 'name',
-        'parent_field': 'storage_unit_id'
+        'parent_field': 'storage_unit'
     }
 ]"""
             )
