@@ -17,6 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {% endcomment %}
 {% load static %}
 {% load view_extras %}
+<form method="get">
+    {{ filter.form.as_p }}
+    <input type="submit" />
+</form>
 <table id="components" class="maintable">
     <tr>
         {% for field in list_fields %}
