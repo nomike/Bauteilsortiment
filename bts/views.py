@@ -319,6 +319,16 @@ def qr_code_svg(request, model, id):
     return HttpResponse(img.to_string(encoding="unicode"), content_type="image/svg+xml")
 
 
+class ComponentFilter(django_filters.FilterSet):
+    class Meta:
+        model = Component
+        fields = {
+            "part_number": ["exact", "icontains"],
+            "product_description": ["exact", "icontains"],
+            "merchant": ["exact"],
+        }
+
+
 # Generate generic views for all the models
 for name in [
     obj.__name__
