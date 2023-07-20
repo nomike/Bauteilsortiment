@@ -19,6 +19,8 @@ from typing import Any, Dict
 
 import qrcode
 import qrcode.image.svg
+import django_filters
+
 from django.db import models
 from django.db.models import QuerySet
 from django.http import HttpResponse, JsonResponse
@@ -151,6 +153,18 @@ class ConfiguredListView(ListView):
     Abstract class for a configurable list view.
     Shows a list of objects for a certain Model.
     """
+
+    def get_queryset(self) -> QuerySet[Any]:
+        """
+        Overloads super().get_queryset() to use django_filter to filter the queryset.
+
+        Returns:
+            QuerySet[Any]: The queryset used to render the list.
+        """
+        queryset = super().get_queryset()
+        self.filter = ComponentFilter(self.request.GET, queryset=queryset)
+        return self.filter.qs
+        # return queryset
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         """
