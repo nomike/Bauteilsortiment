@@ -163,7 +163,7 @@ class ConfiguredListView(ListView):
 
 class ConfiguredDetailView(DetailView):
     """
-    Abstract class for a onfigurable detail view.
+    Abstract class for a configurable detail view.
     Renders a tabular detail page for one object, listing parameters and sub-lists (for foreign objects).
     """
 
