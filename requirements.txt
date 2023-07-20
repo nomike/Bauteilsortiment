@@ -5,3 +5,4 @@ djangorestframework
 qrcode[pil]
 drawsvg
 django-filter
+drf-spectacular
