@@ -205,6 +205,11 @@ class GenericViewSet(viewsets.ModelViewSet):
         for key, value in [i for i in self.request.query_params.items() if i[0][0] != '_']:
             queryset = queryset.filter(**{key: value})
         return queryset
+    
+    def list(self, request):
+        response = super().list(request)
+        response['Cache-Control'] = 'no-cache'
+        return response
 
 
     def get_permissions(self):
