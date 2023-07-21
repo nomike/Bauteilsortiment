@@ -38,8 +38,8 @@ along with this program. If not, see
 <body>
     {% for storage_unit in storage_units %}
     <div class="grid" style="{{ storage_unit.storage_unit_type.label_type }}">
-        <div class="grid_qr">{{ assortment_box }}<img src="{% url "qr_redirect" storage_unit.id %}?box_size=1000" />{{ storage_unit.number }}</div>
         {% with storage_unit_compartments=storage_unit.storage_unit_compartments.all|dictsortreversed:"z_index" %}
+        <div class="grid_qr">{% if storage_unit_compartments|length > 1 %}<img src="/static/images/backbox.svg">{% endif %}{{ assortment_box }}<img src="{% url "qr_redirect" storage_unit.id %}?box_size=1000" />{{ storage_unit.number }}{% if storage_unit_compartments|length > 1 %}<img src="/static/images/frontbox.svg">{% endif %}</div>
             {% if storage_unit_compartments|length > 1 %}
                 {% if storage_unit_compartments.1.labeltext %}
                     <div class="grid_text">{{ storage_unit_compartments.1.labeltext }}</div>
