@@ -25,14 +25,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://kit.fontawesome.com/3b5f69e83b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'cookieconsent.css' %}">
     <link rel="stylesheet" href="{% static 'style.css' %}" />
     <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}"/>
     <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
+    <script src="{% static 'cookieconsent.js' %}"></script>
+    <script src="{% static 'cookieconsent-init.js' %}"></script>
     <h1>{% block page_title %}{% endblock %}</h1>
 {% block body %}
 {% endblock %}
 </body>
 </html>
+
