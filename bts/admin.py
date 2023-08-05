@@ -178,6 +178,11 @@ class StorageUnitCompartmentAdmin(admin.ModelAdmin):
     form = StorageUnitCompartmentAdminForm
     save_as = True
 
+@admin.register(StorageUnit)
+class StorageUnitAdmin(admin.ModelAdmin):
+    search_fields = ["name", "number"]
+    save_as = True
+
 # Register your models here.
 admin.site.register(AssortmentBox)
 admin.site.register(LabelType)
@@ -185,5 +190,4 @@ admin.site.register(Location)
 admin.site.register(Merchant)
 admin.site.register(Purchase)
 admin.site.register(PurchaseLine)
-admin.site.register(StorageUnit)
 admin.site.register(StorageUnitType)
