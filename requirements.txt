@@ -1,6 +1,8 @@
 django
-django-extensions
 django-admin
+django-extensions
 djangorestframework
-qrcode[pil]
 drawsvg
+pyyaml
+qrcode[pil]
+uritemplate

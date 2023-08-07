@@ -1,0 +1,2417 @@
+openapi: 3.0.2
+info:
+  title: Bauteilsortiment API
+  version: 0.0.1
+paths:
+  /bts/api/v0/LabelTypes/:
+    get:
+      operationId: listLabelTypes
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LabelType'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createLabelType
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LabelType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LabelType'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelType'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/LabelTypes/{id}/:
+    get:
+      operationId: retrieveLabelType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this label type.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelType'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateLabelType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this label type.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LabelType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LabelType'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelType'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateLabelType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this label type.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LabelType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LabelType'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelType'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyLabelType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this label type.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Locations/:
+    get:
+      operationId: listLocations
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Location'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createLocation
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Locations/{id}/:
+    get:
+      operationId: retrieveLocation
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this location.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateLocation
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this location.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateLocation
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this location.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyLocation
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this location.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/AssortmentBoxes/:
+    get:
+      operationId: listAssortmentBoxs
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AssortmentBox'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createAssortmentBox
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssortmentBox'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssortmentBox'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssortmentBox'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssortmentBox'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/AssortmentBoxes/{id}/:
+    get:
+      operationId: retrieveAssortmentBox
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this assortment box.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssortmentBox'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateAssortmentBox
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this assortment box.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssortmentBox'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssortmentBox'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssortmentBox'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssortmentBox'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateAssortmentBox
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this assortment box.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssortmentBox'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssortmentBox'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssortmentBox'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssortmentBox'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyAssortmentBox
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this assortment box.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/StorageUnitTypes/:
+    get:
+      operationId: listStorageUnitTypes
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StorageUnitType'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createStorageUnitType
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUnitType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageUnitType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageUnitType'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnitType'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/StorageUnitTypes/{id}/:
+    get:
+      operationId: retrieveStorageUnitType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit type.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnitType'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateStorageUnitType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit type.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUnitType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageUnitType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageUnitType'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnitType'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateStorageUnitType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit type.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUnitType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageUnitType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageUnitType'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnitType'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyStorageUnitType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit type.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/StorageUnits/:
+    get:
+      operationId: listStorageUnits
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StorageUnit'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createStorageUnit
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUnit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageUnit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageUnit'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnit'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/StorageUnits/{id}/:
+    get:
+      operationId: retrieveStorageUnit
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnit'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateStorageUnit
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUnit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageUnit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageUnit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnit'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateStorageUnit
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUnit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageUnit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageUnit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnit'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyStorageUnit
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/StorageUnitCompartments/:
+    get:
+      operationId: listStorageUnitCompartments
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StorageUnitCompartment'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createStorageUnitCompartment
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUnitCompartment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageUnitCompartment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageUnitCompartment'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnitCompartment'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/StorageUnitCompartments/{id}/:
+    get:
+      operationId: retrieveStorageUnitCompartment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit compartment.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnitCompartment'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateStorageUnitCompartment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit compartment.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUnitCompartment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageUnitCompartment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageUnitCompartment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnitCompartment'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateStorageUnitCompartment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit compartment.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUnitCompartment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageUnitCompartment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageUnitCompartment'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUnitCompartment'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyStorageUnitCompartment
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this storage unit compartment.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Merchants/:
+    get:
+      operationId: listMerchants
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Merchant'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createMerchant
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Merchant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Merchant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Merchant'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Merchant'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Merchants/{id}/:
+    get:
+      operationId: retrieveMerchant
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this merchant.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Merchant'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateMerchant
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this merchant.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Merchant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Merchant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Merchant'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Merchant'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateMerchant
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this merchant.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Merchant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Merchant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Merchant'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Merchant'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyMerchant
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this merchant.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/ComponentTypes/:
+    get:
+      operationId: listComponentTypes
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComponentType'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createComponentType
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComponentType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ComponentType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ComponentType'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentType'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/ComponentTypes/{id}/:
+    get:
+      operationId: retrieveComponentType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this component type.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentType'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateComponentType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this component type.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComponentType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ComponentType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ComponentType'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentType'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateComponentType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this component type.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComponentType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ComponentType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ComponentType'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentType'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyComponentType
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this component type.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Components/:
+    get:
+      operationId: listComponents
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Component'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createComponent
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Component'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Component'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Component'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Components/{id}/:
+    get:
+      operationId: retrieveComponent
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this component.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateComponent
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this component.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Component'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Component'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Component'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateComponent
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this component.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Component'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Component'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Component'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyComponent
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this component.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/SubComponents/:
+    get:
+      operationId: listSubComponents
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SubComponent'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createSubComponent
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubComponent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SubComponent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SubComponent'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubComponent'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/SubComponents/{id}/:
+    get:
+      operationId: retrieveSubComponent
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this sub component.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubComponent'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateSubComponent
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this sub component.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubComponent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SubComponent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SubComponent'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubComponent'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateSubComponent
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this sub component.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubComponent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SubComponent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SubComponent'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubComponent'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroySubComponent
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this sub component.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Inventories/:
+    get:
+      operationId: listInventorys
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Inventory'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createInventory
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Inventories/{id}/:
+    get:
+      operationId: retrieveInventory
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this inventory.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updateInventory
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this inventory.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdateInventory
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this inventory.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Inventory'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyInventory
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this inventory.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Purchases/:
+    get:
+      operationId: listPurchases
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Purchase'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createPurchase
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/Purchases/{id}/:
+    get:
+      operationId: retrievePurchase
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this purchase.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updatePurchase
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this purchase.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdatePurchase
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this purchase.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Purchase'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyPurchase
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this purchase.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/PurchaseLines/:
+    get:
+      operationId: listPurchaseLines
+      description: ''
+      parameters:
+      - name: _page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: _page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?_page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PurchaseLine'
+          description: ''
+      tags:
+      - bts
+    post:
+      operationId: createPurchaseLine
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseLine'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PurchaseLine'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PurchaseLine'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseLine'
+          description: ''
+      tags:
+      - bts
+  /bts/api/v0/PurchaseLines/{id}/:
+    get:
+      operationId: retrievePurchaseLine
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this purchase line.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseLine'
+          description: ''
+      tags:
+      - bts
+    put:
+      operationId: updatePurchaseLine
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this purchase line.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseLine'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PurchaseLine'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PurchaseLine'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseLine'
+          description: ''
+      tags:
+      - bts
+    patch:
+      operationId: partialUpdatePurchaseLine
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this purchase line.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseLine'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PurchaseLine'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PurchaseLine'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseLine'
+          description: ''
+      tags:
+      - bts
+    delete:
+      operationId: destroyPurchaseLine
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this purchase line.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - bts
+components:
+  schemas:
+    LabelType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        width:
+          type: integer
+        height:
+          type: integer
+        lines_per_row:
+          type: integer
+        rows_per_label:
+          type: integer
+      required:
+      - name
+      - width
+      - height
+      - lines_per_row
+      - rows_per_label
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+      required:
+      - name
+    AssortmentBox:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        location:
+          type: string
+          nullable: true
+        coordinates:
+          type: string
+          nullable: true
+          description: Spreadsheet style coordinates (e.g. A1, B5, ...)
+          maxLength: 255
+        color:
+          type: string
+          nullable: true
+          maxLength: 255
+        layout:
+          type: string
+          nullable: true
+          description: Layout of the storage units in the assortment box in columns
+            and rows (e.g. 5x12, 5x12+2x3+1, ...)
+          maxLength: 255
+      required:
+      - name
+    StorageUnitType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        width:
+          type: integer
+          nullable: true
+        height:
+          type: integer
+          nullable: true
+        depth:
+          type: integer
+          nullable: true
+        label_type:
+          type: string
+          nullable: true
+      required:
+      - name
+    StorageUnit:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        number:
+          type: integer
+        assortment_box:
+          type: string
+        storage_unit_type:
+          type: string
+          nullable: true
+      required:
+      - name
+      - number
+      - assortment_box
+    StorageUnitCompartment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          nullable: true
+          maxLength: 255
+        labeltext:
+          type: string
+          nullable: true
+          maxLength: 255
+        storage_unit:
+          type: string
+        z_index:
+          type: integer
+          nullable: true
+      required:
+      - storage_unit
+    Merchant:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          nullable: true
+          maxLength: 255
+        url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 255
+          pattern: "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\\
+            .(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|\\[[0-9a-f:.]+\\\
+            ]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1-\uFFFF0-9])?(?:\\\
+            .(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1-\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\\
+            .?|localhost))(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?\\z"
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+    ComponentType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 64
+        parent:
+          type: string
+          nullable: true
+      required:
+      - name
+    Component:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        part_number:
+          type: string
+          maxLength: 64
+        usual_order_quantity:
+          type: integer
+        primary_datasheet:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 254
+          pattern: "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\\
+            .(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|\\[[0-9a-f:.]+\\\
+            ]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1-\uFFFF0-9])?(?:\\\
+            .(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1-\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\\
+            .?|localhost))(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?\\z"
+        detailed_description:
+          type: string
+          nullable: true
+          maxLength: 254
+        product_description:
+          type: string
+          nullable: true
+          maxLength: 254
+        merchant:
+          type: string
+        cache_expiry:
+          type: string
+          format: date-time
+        notes:
+          type: string
+          nullable: true
+      required:
+      - part_number
+      - merchant
+    SubComponent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 64
+        resell_price:
+          type: string
+          format: decimal
+          multipleOf: 1.0e-05
+          maximum: 1000000000000000
+          minimum: -1000000000000000
+          nullable: true
+        component:
+          type: string
+        order_unit_price:
+          type: number
+          nullable: true
+        component_type:
+          type: string
+          nullable: true
+      required:
+      - name
+      - component
+    Inventory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sub_component:
+          type: string
+        storage_unit_compartment:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        count:
+          type: integer
+        exact_match:
+          type: boolean
+          description: Is this the actual SubComponent, or is it just one with similar
+            enough specs?
+      required:
+      - sub_component
+      - storage_unit_compartment
+      - count
+    Purchase:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        merchant:
+          type: string
+        order_number:
+          type: string
+          maxLength: 64
+        timestamp:
+          type: string
+          format: date-time
+      required:
+      - merchant
+      - order_number
+    PurchaseLine:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        component:
+          type: string
+        quantity:
+          type: integer
+        unit_price:
+          type: number
+        purchase:
+          type: string
+      required:
+      - component
+      - quantity
+      - unit_price
+      - purchase
