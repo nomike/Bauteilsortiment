@@ -3,6 +3,7 @@ django-admin
 django-extensions
 djangorestframework
 drawsvg
+pyoctopart
 pyyaml
 qrcode[pil]
 uritemplate
