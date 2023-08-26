@@ -1,7 +1,9 @@
 openapi: 3.0.2
 info:
   title: Bauteilsortiment API
-  version: 0.0.1
+  version: 0.0.1  3
+servers:
+- url: https://bts/api/v0
 paths:
   /bts/api/v0/LabelTypes/:
     get:
@@ -46,7 +48,7 @@ paths:
                       $ref: '#/components/schemas/LabelType'
           description: ''
       tags:
-      - bts
+      - BTS Label Types Endpoints
     post:
       operationId: createLabelType
       description: ''
@@ -70,7 +72,7 @@ paths:
                 $ref: '#/components/schemas/LabelType'
           description: ''
       tags:
-      - bts
+      - BTS Label Types Endpoints
   /bts/api/v0/LabelTypes/{id}/:
     get:
       operationId: retrieveLabelType
@@ -90,7 +92,7 @@ paths:
                 $ref: '#/components/schemas/LabelType'
           description: ''
       tags:
-      - bts
+      - BTS Label Types Endpoints
     put:
       operationId: updateLabelType
       description: ''
@@ -120,7 +122,7 @@ paths:
                 $ref: '#/components/schemas/LabelType'
           description: ''
       tags:
-      - bts
+      - BTS Label Types Endpoints
     patch:
       operationId: partialUpdateLabelType
       description: ''
@@ -150,7 +152,7 @@ paths:
                 $ref: '#/components/schemas/LabelType'
           description: ''
       tags:
-      - bts
+      - BTS Label Types Endpoints
     delete:
       operationId: destroyLabelType
       description: ''
@@ -165,7 +167,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Label Types Endpoints
   /bts/api/v0/Locations/:
     get:
       operationId: listLocations
@@ -209,7 +211,7 @@ paths:
                       $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - bts
+      - BTS Locations Endpoints
     post:
       operationId: createLocation
       description: ''
@@ -233,7 +235,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - bts
+      - BTS Locations Endpoints
   /bts/api/v0/Locations/{id}/:
     get:
       operationId: retrieveLocation
@@ -253,7 +255,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - bts
+      - BTS Locations Endpoints
     put:
       operationId: updateLocation
       description: ''
@@ -283,7 +285,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - bts
+      - BTS Locations Endpoints
     patch:
       operationId: partialUpdateLocation
       description: ''
@@ -313,7 +315,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - bts
+      - BTS Locations Endpoints
     delete:
       operationId: destroyLocation
       description: ''
@@ -328,7 +330,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Locations Endpoints
   /bts/api/v0/AssortmentBoxes/:
     get:
       operationId: listAssortmentBoxs
@@ -372,7 +374,7 @@ paths:
                       $ref: '#/components/schemas/AssortmentBox'
           description: ''
       tags:
-      - bts
+      - BTS Assortment Boxes Endpoints
     post:
       operationId: createAssortmentBox
       description: ''
@@ -396,7 +398,7 @@ paths:
                 $ref: '#/components/schemas/AssortmentBox'
           description: ''
       tags:
-      - bts
+      - BTS Assortment Boxes Endpoints
   /bts/api/v0/AssortmentBoxes/{id}/:
     get:
       operationId: retrieveAssortmentBox
@@ -416,7 +418,7 @@ paths:
                 $ref: '#/components/schemas/AssortmentBox'
           description: ''
       tags:
-      - bts
+      - BTS Assortment Boxes Endpoints
     put:
       operationId: updateAssortmentBox
       description: ''
@@ -446,7 +448,7 @@ paths:
                 $ref: '#/components/schemas/AssortmentBox'
           description: ''
       tags:
-      - bts
+      - BTS Assortment Boxes Endpoints
     patch:
       operationId: partialUpdateAssortmentBox
       description: ''
@@ -476,7 +478,7 @@ paths:
                 $ref: '#/components/schemas/AssortmentBox'
           description: ''
       tags:
-      - bts
+      - BTS Assortment Boxes Endpoints
     delete:
       operationId: destroyAssortmentBox
       description: ''
@@ -491,7 +493,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Assortment Boxes Endpoints
   /bts/api/v0/StorageUnitTypes/:
     get:
       operationId: listStorageUnitTypes
@@ -535,7 +537,7 @@ paths:
                       $ref: '#/components/schemas/StorageUnitType'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Types Endpoints
     post:
       operationId: createStorageUnitType
       description: ''
@@ -559,7 +561,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnitType'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Types Endpoints
   /bts/api/v0/StorageUnitTypes/{id}/:
     get:
       operationId: retrieveStorageUnitType
@@ -579,7 +581,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnitType'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Types Endpoints
     put:
       operationId: updateStorageUnitType
       description: ''
@@ -609,7 +611,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnitType'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Types Endpoints
     patch:
       operationId: partialUpdateStorageUnitType
       description: ''
@@ -639,7 +641,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnitType'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Types Endpoints
     delete:
       operationId: destroyStorageUnitType
       description: ''
@@ -654,7 +656,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Types Endpoints
   /bts/api/v0/StorageUnits/:
     get:
       operationId: listStorageUnits
@@ -698,7 +700,7 @@ paths:
                       $ref: '#/components/schemas/StorageUnit'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Endpoints
     post:
       operationId: createStorageUnit
       description: ''
@@ -722,7 +724,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnit'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Endpoints
   /bts/api/v0/StorageUnits/{id}/:
     get:
       operationId: retrieveStorageUnit
@@ -742,7 +744,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnit'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Endpoints
     put:
       operationId: updateStorageUnit
       description: ''
@@ -772,7 +774,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnit'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Endpoints
     patch:
       operationId: partialUpdateStorageUnit
       description: ''
@@ -802,7 +804,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnit'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Endpoints
     delete:
       operationId: destroyStorageUnit
       description: ''
@@ -817,7 +819,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Endpoints
   /bts/api/v0/StorageUnitCompartments/:
     get:
       operationId: listStorageUnitCompartments
@@ -861,7 +863,7 @@ paths:
                       $ref: '#/components/schemas/StorageUnitCompartment'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Compartments Endpoints
     post:
       operationId: createStorageUnitCompartment
       description: ''
@@ -885,7 +887,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnitCompartment'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Compartments Endpoints
   /bts/api/v0/StorageUnitCompartments/{id}/:
     get:
       operationId: retrieveStorageUnitCompartment
@@ -905,7 +907,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnitCompartment'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Compartments Endpoints
     put:
       operationId: updateStorageUnitCompartment
       description: ''
@@ -935,7 +937,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnitCompartment'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Compartments Endpoints
     patch:
       operationId: partialUpdateStorageUnitCompartment
       description: ''
@@ -965,7 +967,7 @@ paths:
                 $ref: '#/components/schemas/StorageUnitCompartment'
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Compartments Endpoints
     delete:
       operationId: destroyStorageUnitCompartment
       description: ''
@@ -980,7 +982,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Storage Unit Compartments Endpoints
   /bts/api/v0/Merchants/:
     get:
       operationId: listMerchants
@@ -1024,7 +1026,7 @@ paths:
                       $ref: '#/components/schemas/Merchant'
           description: ''
       tags:
-      - bts
+      - BTS Merchants Endpoints
     post:
       operationId: createMerchant
       description: ''
@@ -1048,7 +1050,7 @@ paths:
                 $ref: '#/components/schemas/Merchant'
           description: ''
       tags:
-      - bts
+      - BTS Merchants Endpoints
   /bts/api/v0/Merchants/{id}/:
     get:
       operationId: retrieveMerchant
@@ -1068,7 +1070,7 @@ paths:
                 $ref: '#/components/schemas/Merchant'
           description: ''
       tags:
-      - bts
+      - BTS Merchants Endpoints
     put:
       operationId: updateMerchant
       description: ''
@@ -1098,7 +1100,7 @@ paths:
                 $ref: '#/components/schemas/Merchant'
           description: ''
       tags:
-      - bts
+      - BTS Merchants Endpoints
     patch:
       operationId: partialUpdateMerchant
       description: ''
@@ -1128,7 +1130,7 @@ paths:
                 $ref: '#/components/schemas/Merchant'
           description: ''
       tags:
-      - bts
+      - BTS Merchants Endpoints
     delete:
       operationId: destroyMerchant
       description: ''
@@ -1143,7 +1145,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Merchants Endpoints
   /bts/api/v0/ComponentTypes/:
     get:
       operationId: listComponentTypes
@@ -1187,7 +1189,7 @@ paths:
                       $ref: '#/components/schemas/ComponentType'
           description: ''
       tags:
-      - bts
+      - BTS Component Types Endpoints
     post:
       operationId: createComponentType
       description: ''
@@ -1211,7 +1213,7 @@ paths:
                 $ref: '#/components/schemas/ComponentType'
           description: ''
       tags:
-      - bts
+      - BTS Component Types Endpoints
   /bts/api/v0/ComponentTypes/{id}/:
     get:
       operationId: retrieveComponentType
@@ -1231,7 +1233,7 @@ paths:
                 $ref: '#/components/schemas/ComponentType'
           description: ''
       tags:
-      - bts
+      - BTS Component Types Endpoints
     put:
       operationId: updateComponentType
       description: ''
@@ -1261,7 +1263,7 @@ paths:
                 $ref: '#/components/schemas/ComponentType'
           description: ''
       tags:
-      - bts
+      - BTS Component Types Endpoints
     patch:
       operationId: partialUpdateComponentType
       description: ''
@@ -1291,7 +1293,7 @@ paths:
                 $ref: '#/components/schemas/ComponentType'
           description: ''
       tags:
-      - bts
+      - BTS Component Types Endpoints
     delete:
       operationId: destroyComponentType
       description: ''
@@ -1306,7 +1308,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Component Types Endpoints
   /bts/api/v0/Components/:
     get:
       operationId: listComponents
@@ -1350,7 +1352,7 @@ paths:
                       $ref: '#/components/schemas/Component'
           description: ''
       tags:
-      - bts
+      - BTS Component Endpoints
     post:
       operationId: createComponent
       description: ''
@@ -1374,7 +1376,7 @@ paths:
                 $ref: '#/components/schemas/Component'
           description: ''
       tags:
-      - bts
+      - BTS Component Endpoints
   /bts/api/v0/Components/{id}/:
     get:
       operationId: retrieveComponent
@@ -1394,7 +1396,7 @@ paths:
                 $ref: '#/components/schemas/Component'
           description: ''
       tags:
-      - bts
+      - BTS Component Endpoints
     put:
       operationId: updateComponent
       description: ''
@@ -1424,7 +1426,7 @@ paths:
                 $ref: '#/components/schemas/Component'
           description: ''
       tags:
-      - bts
+      - BTS Component Endpoints
     patch:
       operationId: partialUpdateComponent
       description: ''
@@ -1454,7 +1456,7 @@ paths:
                 $ref: '#/components/schemas/Component'
           description: ''
       tags:
-      - bts
+      - BTS Component Endpoints
     delete:
       operationId: destroyComponent
       description: ''
@@ -1469,7 +1471,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Component Endpoints
   /bts/api/v0/SubComponents/:
     get:
       operationId: listSubComponents
@@ -1513,7 +1515,7 @@ paths:
                       $ref: '#/components/schemas/SubComponent'
           description: ''
       tags:
-      - bts
+      - BTS Sub Component Endpoints
     post:
       operationId: createSubComponent
       description: ''
@@ -1537,7 +1539,7 @@ paths:
                 $ref: '#/components/schemas/SubComponent'
           description: ''
       tags:
-      - bts
+      - BTS Sub Component Endpoints
   /bts/api/v0/SubComponents/{id}/:
     get:
       operationId: retrieveSubComponent
@@ -1557,7 +1559,7 @@ paths:
                 $ref: '#/components/schemas/SubComponent'
           description: ''
       tags:
-      - bts
+      - BTS Sub Component Endpoints
     put:
       operationId: updateSubComponent
       description: ''
@@ -1587,7 +1589,7 @@ paths:
                 $ref: '#/components/schemas/SubComponent'
           description: ''
       tags:
-      - bts
+      - BTS Sub Component Endpoints
     patch:
       operationId: partialUpdateSubComponent
       description: ''
@@ -1617,7 +1619,7 @@ paths:
                 $ref: '#/components/schemas/SubComponent'
           description: ''
       tags:
-      - bts
+      - BTS Sub Component Endpoints
     delete:
       operationId: destroySubComponent
       description: ''
@@ -1632,7 +1634,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Sub Component Endpoints
   /bts/api/v0/Inventories/:
     get:
       operationId: listInventorys
@@ -1676,7 +1678,7 @@ paths:
                       $ref: '#/components/schemas/Inventory'
           description: ''
       tags:
-      - bts
+      - BTS Inventories Endpoints
     post:
       operationId: createInventory
       description: ''
@@ -1700,7 +1702,7 @@ paths:
                 $ref: '#/components/schemas/Inventory'
           description: ''
       tags:
-      - bts
+      - BTS Inventories Endpoints
   /bts/api/v0/Inventories/{id}/:
     get:
       operationId: retrieveInventory
@@ -1720,7 +1722,7 @@ paths:
                 $ref: '#/components/schemas/Inventory'
           description: ''
       tags:
-      - bts
+      - BTS Inventories Endpoints
     put:
       operationId: updateInventory
       description: ''
@@ -1750,7 +1752,7 @@ paths:
                 $ref: '#/components/schemas/Inventory'
           description: ''
       tags:
-      - bts
+      - BTS Inventories Endpoints
     patch:
       operationId: partialUpdateInventory
       description: ''
@@ -1780,7 +1782,7 @@ paths:
                 $ref: '#/components/schemas/Inventory'
           description: ''
       tags:
-      - bts
+      - BTS Inventories Endpoints
     delete:
       operationId: destroyInventory
       description: ''
@@ -1795,7 +1797,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Inventories Endpoints
   /bts/api/v0/Purchases/:
     get:
       operationId: listPurchases
@@ -1839,7 +1841,7 @@ paths:
                       $ref: '#/components/schemas/Purchase'
           description: ''
       tags:
-      - bts
+      -  BTS Purchases Endpoints
     post:
       operationId: createPurchase
       description: ''
@@ -1863,7 +1865,7 @@ paths:
                 $ref: '#/components/schemas/Purchase'
           description: ''
       tags:
-      - bts
+      -  BTS Purchases Endpoints
   /bts/api/v0/Purchases/{id}/:
     get:
       operationId: retrievePurchase
@@ -1883,7 +1885,7 @@ paths:
                 $ref: '#/components/schemas/Purchase'
           description: ''
       tags:
-      - bts
+      -  BTS Purchases Endpoints
     put:
       operationId: updatePurchase
       description: ''
@@ -1913,7 +1915,7 @@ paths:
                 $ref: '#/components/schemas/Purchase'
           description: ''
       tags:
-      - bts
+      -  BTS Purchases Endpoints
     patch:
       operationId: partialUpdatePurchase
       description: ''
@@ -1943,7 +1945,7 @@ paths:
                 $ref: '#/components/schemas/Purchase'
           description: ''
       tags:
-      - bts
+      -  BTS Purchases Endpoints
     delete:
       operationId: destroyPurchase
       description: ''
@@ -1958,7 +1960,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      -  BTS Purchases Endpoints
   /bts/api/v0/PurchaseLines/:
     get:
       operationId: listPurchaseLines
@@ -2002,7 +2004,7 @@ paths:
                       $ref: '#/components/schemas/PurchaseLine'
           description: ''
       tags:
-      - bts
+      - BTS Purchase Lines Endpoints
     post:
       operationId: createPurchaseLine
       description: ''
@@ -2026,7 +2028,7 @@ paths:
                 $ref: '#/components/schemas/PurchaseLine'
           description: ''
       tags:
-      - bts
+      - BTS Purchase Lines Endpoints
   /bts/api/v0/PurchaseLines/{id}/:
     get:
       operationId: retrievePurchaseLine
@@ -2046,7 +2048,7 @@ paths:
                 $ref: '#/components/schemas/PurchaseLine'
           description: ''
       tags:
-      - bts
+      - BTS Purchase Lines Endpoints
     put:
       operationId: updatePurchaseLine
       description: ''
@@ -2076,7 +2078,7 @@ paths:
                 $ref: '#/components/schemas/PurchaseLine'
           description: ''
       tags:
-      - bts
+      - BTS Purchase Lines Endpoints
     patch:
       operationId: partialUpdatePurchaseLine
       description: ''
@@ -2106,7 +2108,7 @@ paths:
                 $ref: '#/components/schemas/PurchaseLine'
           description: ''
       tags:
-      - bts
+      - BTS Purchase Lines Endpoints
     delete:
       operationId: destroyPurchaseLine
       description: ''
@@ -2121,7 +2123,7 @@ paths:
         '204':
           description: ''
       tags:
-      - bts
+      - BTS Purchase Lines Endpoints
 components:
   schemas:
     LabelType:
@@ -2415,3 +2417,32 @@ components:
       - quantity
       - unit_price
       - purchase
+      
+  
+tags:
+  - name: BTS Label Types Endpoints
+    description: ''
+  - name: BTS Locations Endpoints
+    description:  ""
+  - name: BTS Assortment Boxes Endpoints
+    description: ""
+  - name: BTS Storage Unit Endpoints
+    description: ""
+  - name: BTS Storage Unit Types Endpoints
+    description: ""
+  - name: BTS Storage Unit Compartments Endpoints
+    description: ""
+  - name: BTS Merchants Endpoints
+    description: ""
+  - name: BTS Component Endpoints
+    description: ""
+  - name: BTS Sub Component Endpoints
+    description: ""
+  - name: BTS Component Types Endpoints
+    description: ""  
+  - name: BTS Inventories Endpoints
+    description: "" 
+  - name: BTS Purchases Endpoints
+    description: ""
+  - name: BTS Purchase Lines Endpoints
+    description: ""
